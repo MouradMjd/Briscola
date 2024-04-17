@@ -27,11 +27,19 @@ public class DeckImpl extends AbstractDeck {
     }
 
     public Card takeBriscola() {
+        if(isEmpty())
+        {
+            return null;
+        }
         return mazzo.getLast();
     }
 
     @Override
     public Card popCard() {
+        if(isEmpty())
+        {
+            return null;
+        }
         Card card=mazzo.getFirst();
         mazzo.remove(card);
         return card;
