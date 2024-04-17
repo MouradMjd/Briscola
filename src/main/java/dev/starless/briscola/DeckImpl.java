@@ -1,12 +1,11 @@
 package dev.starless.briscola;
 
 import dev.starless.briscola.api.cards.Card;
-import dev.starless.briscola.api.cards.Seed;
 import dev.starless.briscola.api.cards.CardType;
+import dev.starless.briscola.api.cards.Seed;
 import dev.starless.briscola.api.deck.AbstractDeck;
 
 import java.util.Collections;
-import java.util.Optional;
 
 public class DeckImpl extends AbstractDeck {
 
