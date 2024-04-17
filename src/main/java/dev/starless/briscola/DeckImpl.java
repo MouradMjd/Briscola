@@ -26,16 +26,15 @@ public class DeckImpl extends AbstractDeck {
         Collections.shuffle(mazzo);
     }
 
-    public Optional<Card> popBriscola() {
-        // TODO: IMPLEMENT
-        // DO NOT PUT IT THE INTERFACE
-        return null;
+    public Card takeBriscola() {
+        return mazzo.getLast();
     }
 
     @Override
-    public Optional<Card> popCard() {
-        //TODO: IMPLEMENT
-        return null;
+    public Card popCard() {
+        Card card=mazzo.getFirst();
+        mazzo.remove(card);
+        return card;
     }
 
     @Override
