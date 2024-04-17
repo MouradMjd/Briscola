@@ -1,4 +1,4 @@
-package dev.starless.briscola.api.cards;
+package us.teamronda.briscola.api.cards;
 
 public enum CardType {
 

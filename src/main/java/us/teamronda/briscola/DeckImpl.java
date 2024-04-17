@@ -1,9 +1,9 @@
-package dev.starless.briscola;
+package us.teamronda.briscola;
 
-import dev.starless.briscola.api.cards.Card;
-import dev.starless.briscola.api.cards.CardType;
-import dev.starless.briscola.api.cards.Seed;
-import dev.starless.briscola.api.deck.AbstractDeck;
+import us.teamronda.briscola.api.cards.Card;
+import us.teamronda.briscola.api.cards.CardType;
+import us.teamronda.briscola.api.cards.Seed;
+import us.teamronda.briscola.api.deck.AbstractDeck;
 
 import java.util.Collections;
 

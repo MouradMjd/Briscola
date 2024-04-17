@@ -1,6 +1,6 @@
-package dev.starless.briscola.api.deck;
+package us.teamronda.briscola.api.deck;
 
-import dev.starless.briscola.api.cards.Card;
+import us.teamronda.briscola.api.cards.Card;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,6 +1,6 @@
-package dev.starless.briscola.api;
+package us.teamronda.briscola.api;
 
-import dev.starless.briscola.DeckImpl;
+import us.teamronda.briscola.DeckImpl;
 
 import java.util.Scanner;
 

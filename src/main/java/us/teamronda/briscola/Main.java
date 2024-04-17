@@ -1,4 +1,4 @@
-package dev.starless.briscola;
+package us.teamronda.briscola;
 
 public class Main {
 

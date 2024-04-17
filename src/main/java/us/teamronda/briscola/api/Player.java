@@ -1,7 +1,7 @@
-package dev.starless.briscola.api;
+package us.teamronda.briscola.api;
 
-import dev.starless.briscola.api.cards.Card;
-import dev.starless.briscola.api.player.AbstractPlayer;
+import us.teamronda.briscola.api.cards.Card;
+import us.teamronda.briscola.api.player.AbstractPlayer;
 import lombok.Getter;
 
 import java.util.List;
