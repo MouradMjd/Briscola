@@ -1,6 +1,6 @@
-package dev.starless.briscola.objects;
+package dev.starless.briscola.api.cards;
 
-public enum Tipo {
+public enum CardType {
 
     // Tipo tipo = new Tipo(11);
     ASSO(11),
@@ -18,11 +18,11 @@ public enum Tipo {
     // class Tipo {
     private final int punti;
 
-    Tipo() {
+    CardType() {
         this(0);
     }
 
-    Tipo(int punti) {
+    CardType(int punti) {
         this.punti = punti;
     }
 
