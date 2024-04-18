@@ -9,16 +9,17 @@ import java.util.List;
 @Getter
 public abstract class AbstractPlayer implements IPlayer {
 
+    // These are default values related to our implementation
     private static final int DEFAULT_SIZE_HAND = 3;
     private static final int DEFAULT_STARTING_POINTS = 0;
 
-    private final String nome;
-    protected final List<Card> mano;
-    protected int punti;
+    private final String name;
+    protected final List<Card> hand;
+    protected int points;
 
-    public AbstractPlayer(String nome) {
-        this.nome = nome;
-        this.mano = new ArrayList<>(3);
-        this.punti = DEFAULT_STARTING_POINTS;
+    public AbstractPlayer(String name) {
+        this.name = name;
+        this.hand = new ArrayList<>(3);
+        this.points = DEFAULT_STARTING_POINTS;
     }
 }

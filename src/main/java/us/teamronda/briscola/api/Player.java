@@ -14,24 +14,24 @@ public class Player extends AbstractPlayer {
     }
 
     public void addCard(Card card) {
-        mano.add(card);
+        hand.add(card);
     }
 
     @Override
     public Card pollCard(int index) {
-        if (index < 0 || index >= mano.size()) {
-            throw new IllegalArgumentException("Index can be only 0 to " + mano.size());
+        if (index < 0 || index >= hand.size()) {
+            throw new IllegalArgumentException("Index can be only 0 to " + hand.size());
         }
 
-        return mano.remove(index);
+        return hand.remove(index);
     }
 
     public void addPoints(List<Card> cardsWon) {
-        punti += cardsWon.stream().mapToInt(Card::getPunti).sum();
+        points += cardsWon.stream().mapToInt(Card::getPoints).sum();
     }
 
     @Override
     public void subtractPoints(List<Card> cards) {
-        // NOT USED IN OUR GAME
+        // NOT USED IN OUR IMPLEMENTATION
     }
 }

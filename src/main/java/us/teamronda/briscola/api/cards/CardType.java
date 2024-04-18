@@ -1,32 +1,16 @@
 package us.teamronda.briscola.api.cards;
 
+// This enum represents the number or figure on a card
 public enum CardType {
 
-    // Tipo tipo = new Tipo(11);
-    ASSO(11),
+    ASSO,
     DUE,
-    TRE(10),
+    TRE,
     QUATTRO,
     CINQUE,
     SEI,
     SETTE,
-    FANTE(2),
-    CAVALLO(3),
-    RE(4);
-
-    // classe
-    // class Tipo {
-    private final int punti;
-
-    CardType() {
-        this(0);
-    }
-
-    CardType(int punti) {
-        this.punti = punti;
-    }
-
-    public int getPunti() {
-        return punti;
-    }
+    FANTE,
+    CAVALLO,
+    RE
 }

@@ -11,46 +11,34 @@ public class DeckImpl extends AbstractDeck {
 
     @Override
     public void create() {
-        mazzo.clear();
+        cards.clear();
 
         for (CardType type : CardType.values()) {
             for (Seed seed : Seed.values()) {
-                mazzo.add(new Card(type, seed));
+                cards.add(new Card(type, seed));
             }
         }
     }
 
     @Override
     public void shuffle() {
-        Collections.shuffle(mazzo);
+        Collections.shuffle(cards);
     }
 
     public Card takeBriscola() {
-        if(isEmpty())
-        {
+        if (isEmpty()) {
             return null;
         }
-        return mazzo.getLast();
+        return cards.getLast();
     }
 
     @Override
     public Card popCard() {
-        if(isEmpty())
-        {
+        if (isEmpty()) {
             return null;
         }
-        Card card=mazzo.getFirst();
-        mazzo.remove(card);
+        Card card = cards.getFirst();
+        cards.remove(card);
         return card;
-    }
-
-    @Override
-    public int getSize() {
-        return mazzo.size();
-    }
-
-    @Override
-    public boolean isEmpty() {
-        return mazzo.isEmpty();
     }
 }

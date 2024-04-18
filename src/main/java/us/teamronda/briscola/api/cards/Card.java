@@ -1,8 +1,22 @@
 package us.teamronda.briscola.api.cards;
 
-public record Card(CardType tipo, Seed seed) {
+/**
+ * Object representing a playing card
+ *
+ * @param type Number or figure of the card
+ * @param seed Seed of the card
+ */
+public record Card(CardType type, Seed seed) implements ICard {
 
-    public int getPunti() {
-        return tipo.getPunti();
+    @Override
+    public int getPoints() {
+        return switch (type) {
+            case ASSO -> 11;
+            case TRE -> 10;
+            case FANTE -> 2;
+            case CAVALLO -> 3;
+            case RE -> 4;
+            default -> 0;
+        };
     }
 }
