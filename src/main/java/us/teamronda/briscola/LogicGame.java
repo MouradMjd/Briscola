@@ -42,4 +42,19 @@ public class LogicGame extends AbstractGameLoop {
 
         return false;
     }
+
+    @Override
+    public void start() {
+
+    }
+
+    @Override
+    public void stop() {
+
+    }
+
+    @Override
+    public void tick() {
+
+    }
 }
