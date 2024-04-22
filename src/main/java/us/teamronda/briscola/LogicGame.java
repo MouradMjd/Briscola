@@ -1,10 +1,11 @@
 package us.teamronda.briscola;
 
 import us.teamronda.briscola.api.Player;
+import us.teamronda.briscola.api.game.AbstractGameLoop;
 
 import java.util.Scanner;
 
-public class LogicGame {
+public class LogicGame extends AbstractGameLoop {
 
     public void Game() {
         DeckImpl mazzo = new DeckImpl();
@@ -18,5 +19,20 @@ public class LogicGame {
         while (true) {
 
         }
+    }
+
+    @Override
+    public void start() {
+
+    }
+
+    @Override
+    public void stop() {
+
+    }
+
+    @Override
+    public void tick() {
+
     }
 }

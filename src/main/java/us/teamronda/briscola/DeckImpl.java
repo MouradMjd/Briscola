@@ -1,5 +1,6 @@
 package us.teamronda.briscola;
 
+import lombok.Getter;
 import us.teamronda.briscola.api.cards.Card;
 import us.teamronda.briscola.api.cards.CardType;
 import us.teamronda.briscola.api.cards.Seed;
@@ -7,9 +8,10 @@ import us.teamronda.briscola.api.deck.AbstractDeck;
 
 import java.util.Collections;
 
+@Getter
 public class DeckImpl extends AbstractDeck {
 
-    private Seed trumpSeed;
+    private Card trumpCard;
 
     @Override
     public void create() {
@@ -28,8 +30,7 @@ public class DeckImpl extends AbstractDeck {
         store its seed in a variable
         and append it at the end of the deck
          */
-        Card trumpCard = popCard();
-        trumpSeed = trumpCard.seed();
+        trumpCard = popCard();
         cards.addLast(trumpCard);
     }
 
@@ -44,9 +45,7 @@ public class DeckImpl extends AbstractDeck {
             return null;
         }
 
-        Card card = cards.getFirst();
-        cards.remove(card);
-        return card;
+        return cards.removeFirst();
     }
 
     /**
@@ -56,6 +55,6 @@ public class DeckImpl extends AbstractDeck {
      * @param card Card object to check
      */
     public boolean hasTrumpSeed(Card card) {
-        return trumpSeed != null && trumpSeed.equals(card.seed());
+        return trumpCard != null && trumpCard.seed().equals(card.seed());
     }
 }
