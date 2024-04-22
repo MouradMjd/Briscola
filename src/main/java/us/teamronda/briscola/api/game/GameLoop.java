@@ -14,5 +14,5 @@ public interface GameLoop {
 
     // This method represents a single turn
     // played by all the users
-    void tick();
+    boolean tick();
 }
