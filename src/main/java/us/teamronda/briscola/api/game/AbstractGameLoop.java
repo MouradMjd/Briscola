@@ -1,5 +1,6 @@
 package us.teamronda.briscola.api.game;
 
+import us.teamronda.briscola.DeckImpl;
 import us.teamronda.briscola.api.player.IPlayer;
 
 import java.util.HashSet;
@@ -35,10 +36,10 @@ public abstract class AbstractGameLoop implements GameLoop {
         return players.size();
     }
 
-    public void giveHands()
+    public void givehand(DeckImpl deck)
     {
         for (IPlayer player : players) {
-
+        player.getHand(deck);
         }
     }
 }

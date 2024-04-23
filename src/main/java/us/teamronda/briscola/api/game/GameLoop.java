@@ -10,7 +10,7 @@ public interface GameLoop {
 
     // This method stops the game and
     // prepares for the next game
-    void stop();
+    boolean stop();
 
     // This method represents a single turn
     // played by all the users
