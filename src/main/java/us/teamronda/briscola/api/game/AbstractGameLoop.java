@@ -11,7 +11,7 @@ public abstract class AbstractGameLoop implements GameLoop {
     We use a set since players need to be unique:
     two players cannot share the same username.
      */
-    private final Set<IPlayer> players;
+    protected final Set<IPlayer> players;
 
     public AbstractGameLoop() {
         this.players = new HashSet<>();
