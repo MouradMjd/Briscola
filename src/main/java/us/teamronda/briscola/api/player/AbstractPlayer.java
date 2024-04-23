@@ -24,6 +24,7 @@ public abstract class AbstractPlayer implements IPlayer {
         this.points = DEFAULT_STARTING_POINTS;
     }
 
+    @Override
     public void getHand(DeckImpl deck) {
         for (int i = 0; i < DEFAULT_SIZE_HAND-1; i++)
         {
