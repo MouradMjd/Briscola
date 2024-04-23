@@ -1,5 +1,6 @@
 package us.teamronda.briscola.api.player;
 
+import us.teamronda.briscola.DeckImpl;
 import us.teamronda.briscola.api.cards.Card;
 import lombok.Getter;
 
@@ -21,5 +22,12 @@ public abstract class AbstractPlayer implements IPlayer {
         this.username = username;
         this.hand = new ArrayList<>(DEFAULT_SIZE_HAND);
         this.points = DEFAULT_STARTING_POINTS;
+    }
+
+    public void getHand(DeckImpl deck) {
+        for (int i = 0; i < DEFAULT_SIZE_HAND-1; i++)
+        {
+        hand.add(deck.popCard());
+        }
     }
 }

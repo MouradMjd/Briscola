@@ -7,6 +7,12 @@ import java.util.Scanner;
 
 public class LogicGame extends AbstractGameLoop {
 
+    DeckImpl mazzo;
+
+    public LogicGame() {
+        this.mazzo = new DeckImpl();
+    }
+
     public void Game() {
       start();
       while (true)
@@ -22,13 +28,13 @@ public class LogicGame extends AbstractGameLoop {
 
     @Override
     public void start() {
-        DeckImpl mazzo = new DeckImpl();
         Scanner scanner = new Scanner(System.in);
         System.out.println("Inserisci il nome p1: ");
         String input = scanner.nextLine();
-        Player p1 = new Player(input);
+        players.add(new Player(input));
         input = scanner.nextLine();
-        Player p2 = new Player(input);
+        players.add(new Player(input));
+
         scanner.close();
     }
 
@@ -43,18 +49,7 @@ public class LogicGame extends AbstractGameLoop {
         return false;
     }
 
-    @Override
-    public void start() {
+  
 
-    }
 
-    @Override
-    public void stop() {
-
-    }
-
-    @Override
-    public void tick() {
-
-    }
 }

@@ -1,5 +1,6 @@
 package us.teamronda.briscola.api;
 
+import us.teamronda.briscola.DeckImpl;
 import us.teamronda.briscola.api.cards.Card;
 import us.teamronda.briscola.api.player.AbstractPlayer;
 import lombok.Getter;

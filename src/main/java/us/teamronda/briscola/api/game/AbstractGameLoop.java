@@ -1,5 +1,6 @@
 package us.teamronda.briscola.api.game;
 
+import us.teamronda.briscola.api.Player;
 import us.teamronda.briscola.api.player.IPlayer;
 
 import java.util.HashSet;
@@ -33,5 +34,12 @@ public abstract class AbstractGameLoop implements GameLoop {
     // Returns how many players are participating in the game
     public int getPlayerCount() {
         return players.size();
+    }
+
+    public void givehand()
+    {
+        for (IPlayer player : players) {
+
+        }
     }
 }
