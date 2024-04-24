@@ -13,14 +13,11 @@ public abstract class AbstractGameLoop implements GameLoop {
     We use a set since players need to be unique:
     two players cannot share the same username.
      */
-    protected final Set<AbstractPlayer> players;
-    protected final List<AbstractPlayer> listPlayers;
-    protected HashMap<AbstractPlayer,Card> cardsPlayed;
-    private final Random rnd = new Random();
+    protected final List<AbstractPlayer> players;
+    protected Map<AbstractPlayer,Card> cardsPlayed;
 
     public AbstractGameLoop() {
-        this.players = new HashSet<>();
-        this.listPlayers = new ArrayList<>(players);
+        this.players = new ArrayList<>();
         this.cardsPlayed = new HashMap<>();
     }
 
@@ -39,15 +36,26 @@ public abstract class AbstractGameLoop implements GameLoop {
     if false is returned then the username of the player needs to be changed.
     */
     public boolean addPlayer(AbstractPlayer player) {
-        if (!players.add(player)) return false;
-        listPlayers.add(player);
-        return true;
+        if (isUsernameDuplicate(player.getUsername())) return false;
+
+        return players.add(player);
+    }
+
+    // Makes the player the first to play again.
+    // We do not need username checks here, it should have been
+    // checked before.
+    public void movePlayerToFirstPosition(AbstractPlayer player) {
+        removePlayer(player);
+        players.addFirst(player);
     }
 
     // Removes a player from the game
     public void removePlayer(AbstractPlayer player) {
         players.remove(player);
-        listPlayers.remove(player);
+    }
+
+    private boolean isUsernameDuplicate(String username) {
+        return players.stream().anyMatch(player -> player.getUsername().equalsIgnoreCase(username));
     }
 
     // Returns how many players are participating in the game
@@ -62,7 +70,7 @@ public abstract class AbstractGameLoop implements GameLoop {
     }
 
     public void viewAllPlayerHands() {
-        for (AbstractPlayer player : listPlayers) {
+        for (AbstractPlayer player : players) {
             System.out.println(player.toStringHand());
         }
     }

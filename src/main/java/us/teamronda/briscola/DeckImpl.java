@@ -26,15 +26,7 @@ public class DeckImpl extends AbstractDeck {
         }
 
         // Mischialo sto mazzo
-        shuffle();
-
-        /*
-        We take the first card,
-        store its seed in a variable
-        and append it at the end of the deck
-         */
-        trumpCard = popCard();
-        cards.addLast(trumpCard);
+        this.shuffle();
     }
 
     @Override
@@ -59,5 +51,14 @@ public class DeckImpl extends AbstractDeck {
      */
     public boolean hasTrumpSeed(Card card) {
         return trumpCard != null && trumpCard.seed().equals(card.seed());
+    }
+    public void takeBriscola()
+    {
+        trumpCard = popCard();
+        cards.addLast(trumpCard);
+    }
+    public void popcardformore()
+    {
+        cards.remove(new Card(CardType.DUE,Seed.BASTONI));
     }
 }

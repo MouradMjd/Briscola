@@ -34,6 +34,7 @@ public abstract class AbstractPlayer implements IPlayer {
 
     public String toStringHand() {
         return "Player{" +
+                "username=" + username +
                 "hand=" + hand +
                 '}';
     }
