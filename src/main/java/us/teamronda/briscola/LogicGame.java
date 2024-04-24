@@ -1,31 +1,24 @@
 package us.teamronda.briscola;
 
 import us.teamronda.briscola.api.Player;
+import us.teamronda.briscola.api.cards.Card;
 import us.teamronda.briscola.api.game.AbstractGameLoop;
+import us.teamronda.briscola.api.player.AbstractPlayer;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Scanner;
 
 public class LogicGame extends AbstractGameLoop {
     /**
      * we create the deck to use it in all our methods
      */
-    DeckImpl mazzo;
+    private final DeckImpl deck;
+    private final Scanner scanner;
 
     public LogicGame() {
-        this.mazzo = new DeckImpl();
-    }
-
-    /**
-     * part of game logic that calls game management methods to handle future changes
-     */
-    public void Game() {
-      start();
-      while (true)
-      {
-          if (stop()) {
-              break;
-          }
-      }
+        this.deck = new DeckImpl();
+        this.scanner = new Scanner(System.in);
     }
 
     @Override
@@ -33,14 +26,26 @@ public class LogicGame extends AbstractGameLoop {
      * initial part of the game that does not have to be done recursively
      */
     public void start() {
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Inserisci il nome p1: ");
+        // Crea il mazzo
+        deck.create();
+        System.out.println("La briscola è: " + deck.getTrumpCard());
+
+        // Crea il primo giocatore
+        System.out.print("Inserisci il nome p1: ");
         String input = scanner.nextLine();
-        players.add(new Player(input));
+        addPlayer(new Player(input));
+
+        // Crea il secondo giocatore
+        System.out.print("Inserisci il nome p2: ");
         input = scanner.nextLine();
-        players.add(new Player(input));
-        givehand(mazzo);
-        scanner.close();
+        addPlayer(new Player(input));
+
+        // Dai le carte in mano a tutti
+        giveHand(deck);
+        viewAllPlayerHands();
+
+        // Inizia un giocatore a caso
+        Collections.shuffle(listPlayers);
     }
 
     /**
@@ -48,18 +53,59 @@ public class LogicGame extends AbstractGameLoop {
      * @return
      */
     @Override
-    public boolean tick() {
-        return false;
+    public void tick() {
+
+        for (AbstractPlayer player : listPlayers) {
+            System.out.printf("Player %s inserisci l'indice della carta:%n", player.getUsername());
+            int cardIndex = scanner.nextInt()-1;
+            Card Cartchosefirstplayer = player.pollCard(cardIndex);
+            System.out.printf("Hai scelto la carta: %s%n", Cartchosefirstplayer.toString());
+            cardsPlayed.put(player,Cartchosefirstplayer);
+        }
+
+
+
+        for (int i = 0; i < listPlayers.size()-1; i++) {
+            if (deck.hasTrumpSeed(cardsPlayed.get(listPlayers.get(i)))&&!deck.hasTrumpSeed(cardsPlayed.get(listPlayers.get(i+1))))
+            {
+                listPlayers.get(i).addPoints(cardsPlayed.values());
+            }
+            if (!deck.hasTrumpSeed(cardsPlayed.get(listPlayers.get(i)))&&deck.hasTrumpSeed(cardsPlayed.get(listPlayers.get(i+1))))
+            {
+                listPlayers.get(i+1).addPoints(cardsPlayed.values());
+            }
+        }
+
+        listPlayers.forEach(player -> System.out.printf("Il giocatore %s ha %d punti.%n",
+                player.getUsername(),
+                player.getPoints()));
+
+        cardsPlayed.clear();
     }
+
+    @Override
+    public void stop() {
+        // TODO: show the ranking
+    }
+
     /**
-     *method that stops the game by seeing if the deck ii empty
+     * Method that stops the game by seeing if the deck is empty
+     * and if the player have no cards in hand
      */
     @Override
-    public boolean stop() {
-    return mazzo.isEmpty();
+    public boolean isGameOngoing() {
+        boolean deckEmpty = deck.isEmpty();
+        boolean handsEmpty = players.stream()
+                .map(AbstractPlayer::getHand)
+                .allMatch(List::isEmpty);
+
+        return !deckEmpty || !handsEmpty;
     }
 
-  
-
-
+    public int getPointsOnTheTable() {
+        return cardsPlayed.values()
+                .stream()
+                .mapToInt(Card::getPoints)
+                .sum();
+    }
 }

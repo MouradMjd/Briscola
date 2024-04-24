@@ -1,10 +1,10 @@
 package us.teamronda.briscola.api;
 
-import us.teamronda.briscola.DeckImpl;
+import lombok.Getter;
 import us.teamronda.briscola.api.cards.Card;
 import us.teamronda.briscola.api.player.AbstractPlayer;
-import lombok.Getter;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 
@@ -28,12 +28,12 @@ public class Player extends AbstractPlayer {
         return hand.remove(index);
     }
 
-    public void addPoints(List<Card> cardsWon) {
+    public void addPoints(Collection<Card> cardsWon) {
         points += cardsWon.stream().mapToInt(Card::getPoints).sum();
     }
 
     @Override
-    public void subtractPoints(List<Card> cards) {
+    public void subtractPoints(Collection<Card> cards) {
         // NOT USED IN OUR IMPLEMENTATION
     }
 

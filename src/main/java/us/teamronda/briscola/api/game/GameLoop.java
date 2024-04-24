@@ -10,9 +10,12 @@ public interface GameLoop {
 
     // This method stops the game and
     // prepares for the next game
-    boolean stop();
+    void stop();
+
+    // This method returns true if the
+    boolean isGameOngoing();
 
     // This method represents a single turn
     // played by all the users
-    boolean tick();
+    void tick();
 }

@@ -25,6 +25,9 @@ public class DeckImpl extends AbstractDeck {
             }
         }
 
+        // Mischialo sto mazzo
+        shuffle();
+
         /*
         We take the first card,
         store its seed in a variable

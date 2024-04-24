@@ -3,6 +3,7 @@ package us.teamronda.briscola.api.player;
 import us.teamronda.briscola.DeckImpl;
 import us.teamronda.briscola.api.cards.Card;
 
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -17,7 +18,7 @@ public interface IPlayer {
 
     void getHand(DeckImpl deck);
 
-    void addPoints(List<Card> cards);
+    void addPoints(Collection<Card> cards);
 
-    void subtractPoints(List<Card> cards);
+    void subtractPoints(Collection<Card> cards);
 }
