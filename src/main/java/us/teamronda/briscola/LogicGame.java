@@ -1,7 +1,7 @@
 package us.teamronda.briscola;
 
 import us.teamronda.briscola.api.Player;
-import us.teamronda.briscola.api.cards.Card;
+import us.teamronda.briscola.api.Card;
 import us.teamronda.briscola.api.game.AbstractGameLoop;
 import us.teamronda.briscola.api.player.AbstractPlayer;
 

@@ -1,7 +1,7 @@
 package us.teamronda.briscola;
 
 import lombok.Getter;
-import us.teamronda.briscola.api.cards.Card;
+import us.teamronda.briscola.api.Card;
 import us.teamronda.briscola.api.cards.CardType;
 import us.teamronda.briscola.api.cards.Seed;
 import us.teamronda.briscola.api.deck.AbstractDeck;

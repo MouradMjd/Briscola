@@ -1,13 +1,11 @@
 package us.teamronda.briscola.api;
 
 import lombok.Getter;
-import us.teamronda.briscola.api.cards.Card;
 import us.teamronda.briscola.api.player.AbstractPlayer;
 import us.teamronda.briscola.api.player.IPlayer;
 
 import java.util.Collection;
 import java.util.Comparator;
-import java.util.List;
 import java.util.Objects;
 
 @Getter

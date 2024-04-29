@@ -1,4 +1,8 @@
-package us.teamronda.briscola.api.cards;
+package us.teamronda.briscola.api;
+
+import us.teamronda.briscola.api.cards.CardType;
+import us.teamronda.briscola.api.cards.ICard;
+import us.teamronda.briscola.api.cards.Seed;
 
 /**
  * Object representing a playing card
