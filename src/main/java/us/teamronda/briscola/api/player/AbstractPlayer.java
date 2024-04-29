@@ -32,9 +32,15 @@ public abstract class AbstractPlayer implements IPlayer {
         }
     }
 
+    @Override
+    public int getPoints() {
+        return points;
+    }
+
     public String toStringHand() {
         return "Player{" +
                 "username=" + username +
+                "points=" + points +
                 "hand=" + hand +
                 '}';
     }

@@ -4,13 +4,12 @@ import us.teamronda.briscola.DeckImpl;
 import us.teamronda.briscola.api.cards.Card;
 
 import java.util.Collection;
-import java.util.List;
 
 /**
  * This interfaces define some generic methods
  * needed for the Player object
  */
-public interface IPlayer {
+public interface IPlayer extends Comparable<IPlayer> {
 
     void addCard(Card card);
 
@@ -21,4 +20,6 @@ public interface IPlayer {
     void addPoints(Collection<Card> cards);
 
     void subtractPoints(Collection<Card> cards);
+
+    int getPoints();
 }

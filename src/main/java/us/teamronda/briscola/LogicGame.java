@@ -5,10 +5,7 @@ import us.teamronda.briscola.api.cards.Card;
 import us.teamronda.briscola.api.game.AbstractGameLoop;
 import us.teamronda.briscola.api.player.AbstractPlayer;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-import java.util.Scanner;
+import java.util.*;
 
 public class LogicGame extends AbstractGameLoop {
     /**
@@ -60,7 +57,6 @@ public class LogicGame extends AbstractGameLoop {
 
     /**
      * this method have to deal with all the recursive part of the game logic for 2 players
-     * @return
      */
     //@Override
     public void tick2() {
@@ -205,7 +201,12 @@ public class LogicGame extends AbstractGameLoop {
 
     @Override
     public void stop() {
-        // TODO: show the ranking
+        Collections.sort(players);
+        System.out.println("Classifica:");
+        for (int i = 0; i < players.size(); i++) {
+            AbstractPlayer player = players.get(i);
+            System.out.printf("%d. %s con %d punti!%n", i, player.getUsername(), player.getPoints());
+        }
     }
 
     /**
