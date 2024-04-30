@@ -57,8 +57,4 @@ public class DeckImpl extends AbstractDeck {
         trumpCard = popCard();
         cards.addLast(trumpCard);
     }
-    public void popcardformore()
-    {
-        cards.remove(new Card(CardType.DUE,Seed.BASTONI));
-    }
 }

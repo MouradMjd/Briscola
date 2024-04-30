@@ -1,11 +1,14 @@
 package us.teamronda.briscola;
 
-import us.teamronda.briscola.api.Player;
 import us.teamronda.briscola.api.Card;
+import us.teamronda.briscola.api.Player;
 import us.teamronda.briscola.api.game.AbstractGameLoop;
 import us.teamronda.briscola.api.player.AbstractPlayer;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.Map;
+import java.util.Random;
+import java.util.Scanner;
 
 public class LogicGame extends AbstractGameLoop {
     /**
@@ -26,26 +29,15 @@ public class LogicGame extends AbstractGameLoop {
     public void start() {
         // Crea il mazzo
         deck.create();
-        System.out.print("Numero di giocatori (Max 5): ");
-        int nPlayers = scanner.nextInt();
-
-        if (nPlayers>5||nPlayers<0){
-            System.out.println("Numero invalido di giocatori");
-            System.exit(1);
-        }
-
-        if (nPlayers % 2 != 0) {
-            deck.popcardformore();
-        }
-
+        //take out the briscola
         deck.takeBriscola();
         System.out.println("La briscola è: " + deck.getTrumpCard());
 
-        for (int i = 0; i < nPlayers; i++) {
-            System.out.print("Inserisci il nome p" + (i+1) +": ");
-            String input = scanner.next();
-            addPlayer(new Player(input));
-        }
+        
+        System.out.print("Inserisci il nome:");
+        String input = scanner.next();
+        addPlayer(new Player(input));
+        addPlayer(new Player("bot_lillo"));
         
         // Dai le carte in mano a tutti
         giveHand(deck);
@@ -138,11 +130,22 @@ public class LogicGame extends AbstractGameLoop {
     @Override
     public void tick() {
         for (AbstractPlayer player : players) {
-            System.out.printf("Player %s inserisci l'indice della carta:%n", player.getUsername());
-            int cardIndex = scanner.nextInt() - 1;
+            Card chosenCard;
+            if(player.getUsername().equalsIgnoreCase("bot_lillo"))
+            {
+                //how the bot plays (he's literally a bot)
+                Random x = new Random();
+                chosenCard = player.pollCard(x.nextInt(0, player.getHand().size()));
+            }
+            else
+            {
+                //how the real person plays
+                System.out.printf("Player %s inserisci l'indice della carta: ", player.getUsername());
+                int cardIndex = scanner.nextInt() - 1;
+                chosenCard = player.pollCard(cardIndex);
+            }
 
-            Card chosenCard = player.pollCard(cardIndex);
-            System.out.printf("Hai scelto la carta: %s%n", chosenCard.toString());
+            System.out.printf("%s ha scelto la carta: %s%n", player.getUsername(), chosenCard.toString());
             cardsPlayed.put(player,chosenCard);
         }
 
@@ -205,7 +208,7 @@ public class LogicGame extends AbstractGameLoop {
         System.out.println("Classifica:");
         for (int i = 0; i < players.size(); i++) {
             AbstractPlayer player = players.get(i);
-            System.out.printf("%d. %s con %d punti!%n", i, player.getUsername(), player.getPoints());
+            System.out.printf("%d. %s con %d punti!%n", i + 1, player.getUsername(), player.getPoints());
         }
     }
 
@@ -215,11 +218,10 @@ public class LogicGame extends AbstractGameLoop {
      */
     @Override
     public boolean isGameOngoing() {
-        boolean deckEmpty = deck.isEmpty();
-        boolean handsEmpty = players.stream()
-                .map(AbstractPlayer::getHand)
-                .allMatch(List::isEmpty);
-
-        return !deckEmpty || !handsEmpty;
+        int allpoints = 0;
+        for (AbstractPlayer player : players) {
+            allpoints += player.getPoints();
+        }
+        return allpoints != 120;
     }
 }
