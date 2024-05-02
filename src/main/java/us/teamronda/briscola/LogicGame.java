@@ -4,6 +4,7 @@ import us.teamronda.briscola.api.Card;
 import us.teamronda.briscola.api.Player;
 import us.teamronda.briscola.api.game.AbstractGameLoop;
 import us.teamronda.briscola.api.player.AbstractPlayer;
+import us.teamronda.briscola.utils.ScoringUtils;
 
 import java.util.Collections;
 import java.util.Map;
@@ -16,10 +17,12 @@ public class LogicGame extends AbstractGameLoop {
      */
     private final DeckImpl deck;
     private final Scanner scanner;
+    private int totalPoints;
 
     public LogicGame() {
         this.deck = new DeckImpl();
         this.scanner = new Scanner(System.in);
+        this.totalPoints = 0;
     }
 
     @Override
@@ -124,7 +127,6 @@ public class LogicGame extends AbstractGameLoop {
 
     /**
      * this method have to deal with all the recursive part of the game logic for more players
-     * @return
      */
     @Override
     public void tick() {
@@ -179,7 +181,8 @@ public class LogicGame extends AbstractGameLoop {
         // Update the points
         for (AbstractPlayer otherPlayer : players) {
             if (otherPlayer.equals(winnerPlayer)) {
-                otherPlayer.addPoints(cardsPlayed.values());
+                totalPoints += otherPlayer.addPoints(cardsPlayed.values());
+                break; // Just stop right here, since we already updated the winner's points
             }
         }
 
@@ -193,7 +196,8 @@ public class LogicGame extends AbstractGameLoop {
 
         // Make the winner play first next round.
         // (It works because we support only two players)
-        this.movePlayerToFirstPosition(winnerPlayer);
+        players.remove(winnerPlayer);
+        players.addFirst(winnerPlayer);
 
         // Make the players draw a card from the deck
         for (AbstractPlayer player : players) {
@@ -217,10 +221,6 @@ public class LogicGame extends AbstractGameLoop {
      */
     @Override
     public boolean isGameOngoing() {
-        int allpoints = 0;
-        for (AbstractPlayer player : players) {
-            allpoints += player.getPoints();
-        }
-        return allpoints != 120;
+        return totalPoints != ScoringUtils.MAX_POINTS;
     }
 }

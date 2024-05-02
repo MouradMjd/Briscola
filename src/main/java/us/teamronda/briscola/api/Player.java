@@ -3,6 +3,7 @@ package us.teamronda.briscola.api;
 import lombok.Getter;
 import us.teamronda.briscola.api.player.AbstractPlayer;
 import us.teamronda.briscola.api.player.IPlayer;
+import us.teamronda.briscola.utils.ScoringUtils;
 
 import java.util.Collection;
 import java.util.Comparator;
@@ -17,6 +18,7 @@ public class Player extends AbstractPlayer {
         super(username);
     }
 
+    @Override
     public void addCard(Card card) {
         hand.add(card);
     }
@@ -30,13 +32,17 @@ public class Player extends AbstractPlayer {
         return hand.remove(index);
     }
 
-    public void addPoints(Collection<Card> cardsWon) {
-        points += cardsWon.stream().mapToInt(Card::getPoints).sum();
+    @Override
+    public int addPoints(Collection<Card> cardsWon) {
+        int addedPoints = ScoringUtils.calculatePoints(cardsWon);
+        points += addedPoints;
+        return addedPoints;
     }
 
     @Override
-    public void subtractPoints(Collection<Card> cards) {
+    public int subtractPoints(Collection<Card> cards) {
         // NOT USED IN OUR IMPLEMENTATION
+        return 0;
     }
 
     @Override

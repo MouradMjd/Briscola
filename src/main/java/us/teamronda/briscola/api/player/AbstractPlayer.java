@@ -25,8 +25,8 @@ public abstract class AbstractPlayer implements IPlayer {
     }
 
     @Override
-    public void getHand(DeckImpl deck) {
-        for (int i = 0; i < DEFAULT_SIZE_HAND; i++) {
+    public void fillHand(DeckImpl deck) {
+        for (int i = 0; i < DEFAULT_SIZE_HAND - hand.size(); i++) {
             hand.add(deck.popCard());
         }
     }

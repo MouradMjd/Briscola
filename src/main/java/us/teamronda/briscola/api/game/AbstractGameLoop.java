@@ -41,14 +41,6 @@ public abstract class AbstractGameLoop implements GameLoop {
         return players.add(player);
     }
 
-    // Makes the player the first to play again.
-    // We do not need username checks here, it should have been
-    // checked before.
-    public void movePlayerToFirstPosition(AbstractPlayer player) {
-        removePlayer(player);
-        players.addFirst(player);
-    }
-
     // Removes a player from the game
     public void removePlayer(AbstractPlayer player) {
         players.remove(player);
@@ -65,7 +57,7 @@ public abstract class AbstractGameLoop implements GameLoop {
 
     public void giveHand(DeckImpl deck) {
         for (IPlayer player : players) {
-            player.getHand(deck);
+            player.fillHand(deck);
         }
     }
 

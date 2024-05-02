@@ -8,9 +8,8 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
+import us.teamronda.briscola.api.Card;
 import us.teamronda.briscola.gui.AnimationType;
-
-import java.net.URL;
 
 public class CardComponent extends StackPane {
 
@@ -25,11 +24,11 @@ public class CardComponent extends StackPane {
     private boolean transitioning;
     private boolean obscured;
 
-    public CardComponent(String imageAsset, AnimationType animation) {
-        this(imageAsset, animation, false);
+    public CardComponent(Card card, AnimationType animation) {
+        this(card, animation, false);
     }
 
-    public CardComponent(String imageAsset, AnimationType animation, boolean obscured) {
+    public CardComponent(Card card, AnimationType animation, boolean obscured) {
         this.animation = animation;
         this.transitioning = false;
         this.obscured = obscured;
@@ -37,8 +36,8 @@ public class CardComponent extends StackPane {
         this.setPrefSize(CARD_WIDTH, CARD_HEIGHT);
         this.setMinSize(Region.USE_PREF_SIZE, Region.USE_PREF_SIZE);
 
-        front = createSide(imageAsset);
-        back = createSide("/assets/cards/back.png");
+        front = createSide(CardAssets.getCardImage(card));
+        back = createSide(CardAssets.BACK);
         if (obscured) {
             front.setScaleX(0);
         } else {
@@ -73,14 +72,9 @@ public class CardComponent extends StackPane {
         hideSide.play();
     }
 
-    private Rectangle createSide(String imageSource) {
-        URL assetResource = getClass().getResource(imageSource);
-        if (assetResource == null) {
-            throw new IllegalArgumentException("Image asset not found: " + imageSource);
-        }
-
+    private Rectangle createSide(Image image) {
         Rectangle rectangle = new Rectangle(CARD_WIDTH, CARD_HEIGHT);
-        rectangle.setFill(new ImagePattern(new Image(assetResource.toString())));
+        rectangle.setFill(new ImagePattern(image));
 
         if (animation.hasAnimation()) {
             TranslateTransition translate = new TranslateTransition();

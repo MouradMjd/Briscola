@@ -15,11 +15,11 @@ public interface IPlayer extends Comparable<IPlayer> {
 
     Card pollCard(int index);
 
-    void getHand(DeckImpl deck);
+    void fillHand(DeckImpl deck);
 
-    void addPoints(Collection<Card> cards);
+    int addPoints(Collection<Card> cards);
 
-    void subtractPoints(Collection<Card> cards);
+    int subtractPoints(Collection<Card> cards);
 
     int getPoints();
 }
