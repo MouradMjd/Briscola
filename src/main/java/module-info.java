@@ -3,6 +3,11 @@ module us.teamronda.briscola {
     requires javafx.fxml;
     requires static lombok;
 
+    // Components and controllers
+    opens us.teamronda.briscola.gui.components to javafx.fxml;
+    opens us.teamronda.briscola.gui.controllers to javafx.fxml;
+
+    // Application class' package
     opens us.teamronda.briscola to javafx.fxml;
     exports us.teamronda.briscola;
 }

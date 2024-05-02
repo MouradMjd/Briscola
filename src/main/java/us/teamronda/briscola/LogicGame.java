@@ -33,7 +33,6 @@ public class LogicGame extends AbstractGameLoop {
         deck.takeBriscola();
         System.out.println("La briscola è: " + deck.getTrumpCard());
 
-        
         System.out.print("Inserisci il nome:");
         String input = scanner.next();
         addPlayer(new Player(input));
