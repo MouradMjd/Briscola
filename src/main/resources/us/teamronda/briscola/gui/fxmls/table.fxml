@@ -7,7 +7,7 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="BOTTOM_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="us.teamronda.briscola.gui.controllers.TableController">
+<VBox alignment="BOTTOM_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="700.0" styleClass="wood-background" stylesheets="@css/background.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="us.teamronda.briscola.gui.controllers.TableController">
    <children>
       <HBox fx:id="opponentBox" alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
          <VBox.margin>
@@ -20,13 +20,13 @@
                <children>
                   <Label fx:id="opponentPointsLabel" text="Punti: 0">
                      <font>
-                        <Font size="20.0" />
+                        <Font name="DavidaOpti-Bold" size="20.0" />
                      </font>
                   </Label>
                   <Rectangle arcHeight="5.0" arcWidth="5.0" height="150.0" stroke="TRANSPARENT" strokeType="INSIDE" width="100.0" />
                   <Label fx:id="playerPointsLabel" text="Punti: 0">
                      <font>
-                        <Font size="20.0" />
+                        <Font name="DavidaOpti-Bold" size="20.0" />
                      </font>
                   </Label>
                </children>

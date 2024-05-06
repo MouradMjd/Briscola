@@ -1,0 +1,4 @@
+.wood-background {
+    -fx-background-image: url('../images/table.jpg'); /* Percorso dell'immagine di sfondo */
+    -fx-background-size: cover; /* Dimensioni dell'immagine di sfondo */
+}
