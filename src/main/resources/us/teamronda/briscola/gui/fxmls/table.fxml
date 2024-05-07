@@ -13,6 +13,11 @@
          <VBox.margin>
             <Insets top="10.0" />
          </VBox.margin>
+         <children>
+            <Rectangle fx:id="bc1" arcHeight="5.0" arcWidth="5.0" height="150.0" stroke="TRANSPARENT" strokeType="INSIDE" width="100.0" />
+            <Rectangle fx:id="bc2" arcHeight="5.0" arcWidth="5.0" height="150.0" stroke="TRANSPARENT" strokeType="INSIDE" width="100.0" />
+            <Rectangle fx:id="bc3" arcHeight="5.0" arcWidth="5.0" height="150.0" stroke="TRANSPARENT" strokeType="INSIDE" width="100.0" />
+         </children>
       </HBox>
       <HBox alignment="CENTER_LEFT" prefHeight="280.0" spacing="20.0">
          <children>
@@ -23,7 +28,7 @@
                         <Font name="DavidaOpti-Bold" size="20.0" />
                      </font>
                   </Label>
-                  <Rectangle arcHeight="5.0" arcWidth="5.0" height="150.0" stroke="TRANSPARENT" strokeType="INSIDE" width="100.0" />
+                  <Rectangle fx:id="ideck" arcHeight="5.0" arcWidth="5.0" height="150.0" stroke="TRANSPARENT" strokeType="INSIDE" width="100.0"  />
                   <Label fx:id="playerPointsLabel" text="Punti: 0">
                      <font>
                         <Font name="DavidaOpti-Bold" size="20.0" />
@@ -34,7 +39,11 @@
                   <Insets left="10.0" />
                </HBox.margin>
             </VBox>
-            <HBox prefHeight="100.0" prefWidth="440.0" />
+            <HBox prefHeight="100.0" prefWidth="440.0">
+               <children>
+                  <Rectangle fx:id="bcp1" arcHeight="5.0" arcWidth="5.0" height="150.0" stroke="TRANSPARENT" strokeType="INSIDE" width="100.0" />
+                  <Rectangle fx:id="cp1" arcHeight="5.0" arcWidth="5.0" height="150.0" stroke="TRANSPARENT" strokeType="INSIDE" width="100.0" />
+               </children></HBox>
             <VBox alignment="CENTER" prefWidth="100.0" spacing="10.0">
                <padding>
                   <Insets right="10.0" />
@@ -57,6 +66,11 @@
          <VBox.margin>
             <Insets bottom="10.0" />
          </VBox.margin>
+         <children>
+            <Rectangle fx:id="c1" arcHeight="5.0" arcWidth="5.0" height="150.0" stroke="TRANSPARENT" strokeType="INSIDE" width="100.0" />
+            <Rectangle fx:id="c2" arcHeight="5.0" arcWidth="5.0" height="150.0" stroke="TRANSPARENT" strokeType="INSIDE" width="100.0" />
+            <Rectangle fx:id="c3" arcHeight="5.0" arcWidth="5.0" height="150.0" stroke="TRANSPARENT" strokeType="INSIDE" width="100.0" />
+         </children>
       </HBox>
    </children>
 </VBox>

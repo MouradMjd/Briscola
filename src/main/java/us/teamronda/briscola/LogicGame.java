@@ -1,5 +1,7 @@
 package us.teamronda.briscola;
 
+import javafx.fxml.FXML;
+import javafx.scene.layout.VBox;
 import us.teamronda.briscola.api.Card;
 import us.teamronda.briscola.api.Player;
 import us.teamronda.briscola.api.game.AbstractGameLoop;
@@ -18,8 +20,11 @@ public class LogicGame extends AbstractGameLoop {
     private final DeckImpl deck;
     private final Scanner scanner;
     private int totalPoints;
-
+    @FXML
+    private VBox table;
     public LogicGame() {
+        start();
+
         this.deck = new DeckImpl();
         this.scanner = new Scanner(System.in);
         this.totalPoints = 0;
