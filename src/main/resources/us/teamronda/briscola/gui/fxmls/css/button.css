@@ -2,7 +2,7 @@
 
 @font-face {
     font-family:'DavidaOpti';
-    src: url('us/teamronda/briscola/gui/fxmls/fonts/Davida.ttf');
+    src: url('/us/teamronda/briscola/gui/fxmls/fonts/Davida.ttf');
 }
 .button-29 {
     -fx-background-color: #fbeee0;
