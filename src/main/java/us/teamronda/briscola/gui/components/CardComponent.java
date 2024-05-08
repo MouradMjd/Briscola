@@ -19,8 +19,8 @@ import us.teamronda.briscola.gui.AnimationType;
 public class CardComponent extends StackPane {
 
     private static final long ANIMATION_DURATION = 125;
-    private static final int CARD_WIDTH = 100;
-    private static final int CARD_HEIGHT = 150;
+    private static final int CARD_WIDTH = 89;
+    private static final int CARD_HEIGHT = 168;
 
     private final Rectangle front;
     private final Rectangle back;
