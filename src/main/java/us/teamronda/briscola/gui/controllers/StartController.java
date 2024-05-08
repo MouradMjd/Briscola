@@ -9,13 +9,13 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import lombok.Getter;
 import us.teamronda.briscola.LogicGame;
 import us.teamronda.briscola.api.Player;
 
 import java.io.IOException;
 
 public class StartController {
-
     @FXML
     public TextField usernameField;
 
@@ -24,13 +24,12 @@ public class StartController {
     private Stage stage;
     private Scene scene;
     private Parent roor;
-    private LogicGame partita;
 
 
     @FXML
     public void initialize(ActionEvent e) throws IOException {
         if (verication()) {
-            Player p = new Player(usernameField.getText());
+            LogicGame.initp(usernameField.getText());
             switchToTable();
         }
     }

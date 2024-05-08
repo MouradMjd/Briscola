@@ -15,6 +15,7 @@ import us.teamronda.briscola.LogicGame;
 import us.teamronda.briscola.api.cards.ICard;
 import us.teamronda.briscola.api.player.IPlayer;
 import us.teamronda.briscola.gui.AnimationType;
+import us.teamronda.briscola.gui.controllers.TableController;
 
 public class CardComponent extends StackPane {
 
@@ -52,7 +53,6 @@ public class CardComponent extends StackPane {
         this.getChildren().addAll(back, front);
         this.setOnMouseClicked(event -> {
             System.out.println("HO SCELTO LA CARTA: " + card.getType() + " di " + card.getSeed());
-
             // Prendo il giocatore che gioca
             IPlayer player = LogicGame.getInstance().getWhoIsPlaying();
             // Rimuovo la carta giocata

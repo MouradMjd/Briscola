@@ -73,8 +73,8 @@ public class TableController {
     }
 
     public void clearTable() {
-        cardsplayed.getChildren().clear();
         opponentBox.getChildren().clear();
         playerBox.getChildren().clear();
+        cardsplayed.getChildren().clear();
     }
 }

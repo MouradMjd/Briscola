@@ -9,25 +9,30 @@ import us.teamronda.briscola.api.game.AbstractGameLoop;
 import us.teamronda.briscola.api.player.IPlayer;
 import us.teamronda.briscola.gui.AnimationType;
 import us.teamronda.briscola.gui.components.CardComponent;
+import us.teamronda.briscola.gui.controllers.StartController;
 import us.teamronda.briscola.gui.controllers.TableController;
 import us.teamronda.briscola.utils.ScoringUtils;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.concurrent.TimeUnit;
 
 public class LogicGame extends AbstractGameLoop {
 
     @Getter private static final LogicGame instance = new LogicGame();
+    @Getter private static  Player p;
 
     @Getter private final Deck deck;
     private int totalPoints;
+    Timer executor = new Timer();
 
     public LogicGame() {
         this.deck = new Deck();
         this.totalPoints = 0;
+    }
+    public static void  initp(String name)
+    {
+        p=new Player(name);
     }
 
     @Override
@@ -41,7 +46,8 @@ public class LogicGame extends AbstractGameLoop {
 
         // Aggiungi il bot
         addPlayer(new Player("bot_lillo", true));
-        addPlayer(new Player("test"));
+        //player
+        addPlayer(p);
 
         // Inizia un giocatore a caso
         orderPlayers();
@@ -71,9 +77,14 @@ public class LogicGame extends AbstractGameLoop {
 
         // Everyone has played, so let's see who won!
         if (cardsPlayed.size() == getPlayerCount()) {
+
             ICard winnerCard = null;
             IPlayer winnerPlayer = null;
-
+            try{
+                Thread.sleep(3000);
+            }catch(Exception e){
+                e.printStackTrace();
+            }
             for (Map.Entry<IPlayer, ICard> entry : cardsPlayed.entrySet()) {
                 ICard card = entry.getValue();
                 if (winnerCard == null) {
