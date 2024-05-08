@@ -32,6 +32,8 @@ public class CardAssets {
     }
 
     private String getId(Seed seed, CardType type) {
-        return type.name().toLowerCase().concat("_").concat(seed.name().toLowerCase());
+        return type.name().toLowerCase()
+                .concat("_")
+                .concat(seed.name().toLowerCase());
     }
 }

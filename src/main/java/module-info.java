@@ -9,5 +9,13 @@ module us.teamronda.briscola {
 
     // Application class' package
     opens us.teamronda.briscola to javafx.fxml;
+
+    // Expose the api's packages
+    exports us.teamronda.briscola.api;
+    exports us.teamronda.briscola.api.cards;
+    exports us.teamronda.briscola.api.deck;
+    exports us.teamronda.briscola.api.game;
+    exports us.teamronda.briscola.api.player;
+
     exports us.teamronda.briscola;
 }

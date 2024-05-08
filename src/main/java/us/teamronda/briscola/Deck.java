@@ -3,13 +3,14 @@ package us.teamronda.briscola;
 import lombok.Getter;
 import us.teamronda.briscola.api.Card;
 import us.teamronda.briscola.api.cards.CardType;
+import us.teamronda.briscola.api.cards.ICard;
 import us.teamronda.briscola.api.cards.Seed;
 import us.teamronda.briscola.api.deck.AbstractDeck;
 
 import java.util.Collections;
 
 @Getter
-public class DeckImpl extends AbstractDeck {
+public class Deck extends AbstractDeck {
 
     private Card trumpCard;
 
@@ -49,9 +50,10 @@ public class DeckImpl extends AbstractDeck {
      *
      * @param card Card object to check
      */
-    public boolean hasTrumpSeed(Card card) {
-        return trumpCard != null && trumpCard.seed().equals(card.seed());
+    public boolean hasTrumpSeed(ICard card) {
+        return trumpCard != null && trumpCard.seed().equals(card.getSeed());
     }
+
     public void takeBriscola()
     {
         trumpCard = popCard();

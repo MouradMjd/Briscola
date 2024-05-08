@@ -1,6 +1,7 @@
 package us.teamronda.briscola.api.player;
 
-import us.teamronda.briscola.DeckImpl;
+import lombok.AccessLevel;
+import us.teamronda.briscola.Deck;
 import us.teamronda.briscola.api.Card;
 import lombok.Getter;
 
@@ -11,21 +12,35 @@ import java.util.List;
 public abstract class AbstractPlayer implements IPlayer {
 
     // These are default values related to our implementation
-    private static final int DEFAULT_SIZE_HAND = 3;
+    public static final int DEFAULT_SIZE_HAND = 3;
     private static final int DEFAULT_STARTING_POINTS = 0;
 
-    protected final String username;
+    private final String username;
     protected final List<Card> hand;
-    protected int points;
+
+    // Values used in overridden methods
+    @Getter(AccessLevel.NONE) private final boolean bot;
+    @Getter(AccessLevel.NONE) protected int points;
 
     public AbstractPlayer(String username) {
+        this(username, false);
+    }
+
+    public AbstractPlayer(String username, boolean bot) {
         this.username = username;
+        this.bot = bot;
+
         this.hand = new ArrayList<>(DEFAULT_SIZE_HAND);
         this.points = DEFAULT_STARTING_POINTS;
     }
 
     @Override
-    public void fillHand(DeckImpl deck) {
+    public String getUsername() {
+        return username;
+    }
+
+    @Override
+    public void fillHand(Deck deck) {
         for (int i = 0; i < DEFAULT_SIZE_HAND - hand.size(); i++) {
             hand.add(deck.popCard());
         }
@@ -36,7 +51,13 @@ public abstract class AbstractPlayer implements IPlayer {
         return points;
     }
 
-    public String toStringHand() {
+    @Override
+    public boolean isBot() {
+        return bot;
+    }
+
+    @Override
+    public String toString() {
         return "Player{" +
                 "username=" + username +
                 "points=" + points +

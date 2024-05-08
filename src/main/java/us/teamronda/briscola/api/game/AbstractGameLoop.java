@@ -1,7 +1,7 @@
 package us.teamronda.briscola.api.game;
 
-import us.teamronda.briscola.DeckImpl;
-import us.teamronda.briscola.api.Card;
+import us.teamronda.briscola.Deck;
+import us.teamronda.briscola.api.cards.ICard;
 import us.teamronda.briscola.api.player.AbstractPlayer;
 import us.teamronda.briscola.api.player.IPlayer;
 
@@ -9,40 +9,38 @@ import java.util.*;
 
 public abstract class AbstractGameLoop implements GameLoop {
 
-    /*
-    We use a set since players need to be unique:
-    two players cannot share the same username.
-     */
-    protected final List<AbstractPlayer> players;
-    protected Map<AbstractPlayer,Card> cardsPlayed;
+    // We use a set since players need to be unique:
+    // two players cannot share the same username.
+    private final Set<IPlayer> players;
+
+    protected LinkedList<IPlayer> turnOrder;
+    protected Map<IPlayer, ICard> cardsPlayed;
 
     public AbstractGameLoop() {
-        this.players = new ArrayList<>();
+        this.players = new HashSet<>();
+        this.turnOrder = new LinkedList<>();
         this.cardsPlayed = new HashMap<>();
     }
 
-    // Starts the game loop
-    public void startGameLoop() {
-        this.start();
-        while (this.isGameOngoing())
-        {
-            this.tick();
-        }
-        this.stop();
-    }
-
-    /*
-    This method returns a boolean for convenience purposes:
-    if false is returned then the username of the player needs to be changed.
-    */
-    public boolean addPlayer(AbstractPlayer player) {
+    /**
+     * This method returns a boolean for convenience purposes:
+     * if false is returned then the username of the player needs to be changed.
+     *
+     * @param player {@link IPlayer} object to be added
+     * @return true if the underlying set of players was modified
+     */
+    public boolean addPlayer(IPlayer player) {
         if (isUsernameDuplicate(player.getUsername())) return false;
 
         return players.add(player);
     }
 
-    // Removes a player from the game
-    public void removePlayer(AbstractPlayer player) {
+    /**
+     * Removes a player from the game
+     *
+     * @param player {@link IPlayer} to be removed
+     */
+    public void removePlayer(IPlayer player) {
         players.remove(player);
     }
 
@@ -50,20 +48,73 @@ public abstract class AbstractGameLoop implements GameLoop {
         return players.stream().anyMatch(player -> player.getUsername().equalsIgnoreCase(username));
     }
 
-    // Returns how many players are participating in the game
+    /**
+     * Update the points of a player using the points
+     * from a set of cards
+     *
+     * @param winner {@link IPlayer} player
+     * @param cards A {@link Collection} of {@link ICard}
+     * @return the points the cards were worth
+     */
+    public int updatePoints(IPlayer winner, Collection<ICard> cards) {
+        for (IPlayer otherPlayer : players) {
+            if (otherPlayer.equals(winner)) {
+                return otherPlayer.addPoints(cards);
+            }
+        }
+
+        return -1;
+    }
+
+    /**
+     * Gets the players in the game
+     *
+     * @return An <b>IMMUTABLE</b> List of players
+     */
+    public List<IPlayer> getPlayers() {
+        return List.copyOf(players);
+    }
+
+    /**
+     * Returns how many players are participating in the game
+     */
     public int getPlayerCount() {
         return players.size();
     }
 
-    public void giveHand(DeckImpl deck) {
+    /**
+     * Utility method that fills the players' hand until
+     * the limit set in {@link AbstractPlayer} is met
+     *
+     * @param deck The {@link us.teamronda.briscola.api.deck.IDeck} to draw from
+     */
+    public void fillHands(Deck deck) {
         for (IPlayer player : players) {
             player.fillHand(deck);
         }
     }
 
-    public void viewAllPlayerHands() {
-        for (AbstractPlayer player : players) {
-            System.out.println(player.toStringHand());
-        }
+    /**
+     * Used at game start to select a random order
+     */
+    public void orderPlayers() {
+        turnOrder.clear();
+        turnOrder.addAll(players);
+        Collections.shuffle(turnOrder);
+    }
+
+    /**
+     * Make the winner play and keep the rest of the turn order
+     *
+     * @param winner The {@link IPlayer} that won the round
+     */
+    public void orderPlayers(IPlayer winner) {
+        int winnerIndex = turnOrder.indexOf(winner);
+        List<IPlayer> first = turnOrder.subList(winnerIndex, turnOrder.size());
+        List<IPlayer> latter = turnOrder.subList(0, winnerIndex).reversed();
+
+        turnOrder.clear();
+        turnOrder.addAll(first);
+        turnOrder.addAll(latter);
     }
 }

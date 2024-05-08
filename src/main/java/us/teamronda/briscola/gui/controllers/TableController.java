@@ -2,31 +2,23 @@ package us.teamronda.briscola.gui.controllers;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
-import javafx.scene.paint.ImagePattern;
-import javafx.scene.shape.Rectangle;
 import us.teamronda.briscola.LogicGame;
-import us.teamronda.briscola.api.game.AbstractGameLoop;
+import us.teamronda.briscola.gui.AnimationType;
+import us.teamronda.briscola.gui.components.CardAssets;
+import us.teamronda.briscola.gui.components.CardComponent;
 
-import java.io.IOException;
-import java.util.Objects;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class TableController {
 
+    @FXML private StackPane deckBox;
     @FXML private HBox playerBox;
     @FXML private HBox opponentBox;
-    @FXML private Rectangle c1;
-    @FXML private Rectangle c2;
-    @FXML private Rectangle c3;
-    @FXML private Rectangle bc1;
-    @FXML private Rectangle bc2;
-    @FXML private Rectangle bc3;
-    @FXML private Rectangle cp1;
-    @FXML private Rectangle bcp1;
-    @FXML private Rectangle ideck;
 
     @FXML private Label opponentPointsLabel;
     @FXML private Label playerPointsLabel;
@@ -37,21 +29,22 @@ public class TableController {
     // Viene chiamato automaticamente da JavaFX
     // appena viene mostrata la finestra
     public void initialize() {
-    //deck card
-        loadCardImage("mazzo.png",ideck);
-    //bot cards
-        loadCardImage("back.png",bc1);
-        loadCardImage("back.png",bc2);
-        loadCardImage("back.png",bc3);
-       ideck.setOnMouseClicked(mouseEvent -> { System.out.println("Deck clicked");});
-    }
-    // Metodo per caricare e visualizzare un'immagine all'interno di un rettangolo
-    private void loadCardImage(String imagePath, Rectangle rectangle) {
-        try {
-            Image cardImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/assets/cards/"+imagePath)));
-            rectangle.setFill(new ImagePattern(cardImage));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        CardAssets.load(); // Load on startup?
+
+        LogicGame game = LogicGame.getInstance();
+        game.start();
+
+        List<CardComponent> cardComponents = game.getRemainingCards().stream()
+                .map(card -> new CardComponent(card, AnimationType.NONE, true))
+                .collect(Collectors.toCollection(ArrayList::new));
+
+        CardComponent trumpCard = cardComponents.getLast();
+        trumpCard.setAnimationType(AnimationType.RIGHT);
+        trumpCard.rotateHorizontally();
+        trumpCard.flip();
+
+        Collections.reverse(cardComponents);
+
+        deckBox.getChildren().addAll(cardComponents);
     }
 }

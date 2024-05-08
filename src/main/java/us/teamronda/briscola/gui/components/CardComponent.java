@@ -1,13 +1,16 @@
 package us.teamronda.briscola.gui.components;
 
+import javafx.animation.RotateTransition;
 import javafx.animation.ScaleTransition;
 import javafx.animation.TranslateTransition;
+import javafx.geometry.Point3D;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
+import lombok.Setter;
 import us.teamronda.briscola.api.Card;
 import us.teamronda.briscola.gui.AnimationType;
 
@@ -20,16 +23,16 @@ public class CardComponent extends StackPane {
     private final Rectangle front;
     private final Rectangle back;
 
-    private final AnimationType animation;
+    @Setter private AnimationType animationType;
     private boolean transitioning;
     private boolean obscured;
 
-    public CardComponent(Card card, AnimationType animation) {
-        this(card, animation, false);
+    public CardComponent(Card card, AnimationType animationType) {
+        this(card, animationType, false);
     }
 
-    public CardComponent(Card card, AnimationType animation, boolean obscured) {
-        this.animation = animation;
+    public CardComponent(Card card, AnimationType animationType, boolean obscured) {
+        this.animationType = animationType;
         this.transitioning = false;
         this.obscured = obscured;
 
@@ -72,35 +75,41 @@ public class CardComponent extends StackPane {
         hideSide.play();
     }
 
+    public void rotateHorizontally() {
+        RotateTransition rotation = new RotateTransition(Duration.millis(ANIMATION_DURATION), this);
+        rotation.setAxis(new Point3D(0, 0, 1)); // Rotate on the Z axis
+        rotation.setByAngle(90);
+        rotation.play();
+    }
+
     private Rectangle createSide(Image image) {
         Rectangle rectangle = new Rectangle(CARD_WIDTH, CARD_HEIGHT);
         rectangle.setFill(new ImagePattern(image));
+        rectangle.setArcHeight(10D);
+        rectangle.setArcWidth(10D);
 
-        if (animation.hasAnimation()) {
-            TranslateTransition translate = new TranslateTransition();
-            translate.setNode(this);
-            translate.setFromX(this.getLayoutX());
-            translate.setFromY(this.getLayoutY());
-            translate.setToY(animation.equals(AnimationType.UP) ? this.getLayoutY() - 10 : this.getLayoutY());
-            translate.setToX(animation.equals(AnimationType.RIGHT) ? this.getLayoutX() + 10 : this.getLayoutX());
-            translate.setDuration(Duration.millis(200));
+        TranslateTransition animation = new TranslateTransition();
+        animation.setNode(this);
+        animation.setFromX(this.getLayoutX());
+        animation.setFromY(this.getLayoutY());
+        animation.setToY(animationType.equals(AnimationType.UP) ? this.getLayoutY() - 10 : this.getLayoutY());
+        animation.setToX(animationType.equals(AnimationType.RIGHT) ? this.getLayoutX() + 10 : this.getLayoutX());
+        animation.setDuration(Duration.millis(200));
 
-            rectangle.setOnMouseEntered(event -> {
-                System.out.println(event);
+        rectangle.setOnMouseEntered(event -> {
+            if (!animationType.hasAnimation()) return;
+            animation.stop();
+            animation.setRate(1);
+            animation.play();
+        });
 
-                translate.stop();
-                translate.setRate(1);
-                translate.play();
-            });
+        rectangle.setOnMouseExited(event -> {
+            if (!animationType.hasAnimation()) return;
 
-            rectangle.setOnMouseExited(event -> {
-                System.out.println(event);
-
-                translate.stop();
-                translate.setRate(-1);
-                translate.play();
-            });
-        }
+            animation.stop();
+            animation.setRate(-1);
+            animation.play();
+        });
 
         return rectangle;
     }

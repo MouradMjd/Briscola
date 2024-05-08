@@ -21,17 +21,30 @@ public abstract class AbstractDeck implements IDeck {
         this.cards = new ArrayList<>(DEFAULT_DECK_SIZE);
     }
 
-    // Returns the starting size of the deck
+    /**
+     * @return an <b>IMMUTABLE</b> List of cards left in the deck
+     */
+    public List<Card> getCards() {
+        return List.copyOf(cards);
+    }
+
+    /**
+     * @return the starting size of the deck
+     */
     public int getMaxSize() {
         return DEFAULT_DECK_SIZE;
     }
 
-    // Returns the number of cards in the deck currently
+    /**
+     * @return the number of cards in the deck currently
+     */
     public int getCardsRemaining() {
         return cards.size();
     }
 
-    // Returns true is the deck has no cards
+    /**
+     * @return true is the deck has no cards
+     */
     public boolean isEmpty() {
         return cards.isEmpty();
     }

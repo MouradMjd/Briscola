@@ -3,48 +3,39 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="BOTTOM_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="700.0" styleClass="wood-background" stylesheets="@css/background.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="us.teamronda.briscola.gui.controllers.TableController">
+<VBox alignment="BOTTOM_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="700.0" styleClass="wood-background" stylesheets="@css/unified.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="us.teamronda.briscola.gui.controllers.TableController">
    <children>
-      <HBox fx:id="opponentBox" alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
+      <HBox fx:id="opponentBox" alignment="CENTER" prefHeight="100.0" prefWidth="250.0" spacing="10.0">
          <VBox.margin>
             <Insets top="10.0" />
          </VBox.margin>
-         <children>
-            <Rectangle fx:id="bc1" arcHeight="5.0" arcWidth="5.0" height="150.0" stroke="TRANSPARENT" strokeType="INSIDE" width="100.0" />
-            <Rectangle fx:id="bc2" arcHeight="5.0" arcWidth="5.0" height="150.0" stroke="TRANSPARENT" strokeType="INSIDE" width="100.0" />
-            <Rectangle fx:id="bc3" arcHeight="5.0" arcWidth="5.0" height="150.0" stroke="TRANSPARENT" strokeType="INSIDE" width="100.0" />
-         </children>
       </HBox>
       <HBox alignment="CENTER_LEFT" prefHeight="280.0" spacing="20.0">
          <children>
             <VBox alignment="CENTER" spacing="20.0">
                <children>
-                  <Label styleClass="Label" fx:id="opponentPointsLabel" text="Punti: 0">
+                  <Label fx:id="opponentPointsLabel" styleClass="Label" text="Punti: 0">
                      <font>
-                        <Font name="DavidaOpti-Bold" size="20.0" />
+                        <Font size="20.0" />
                      </font>
                   </Label>
-                  <Rectangle fx:id="ideck" arcHeight="5.0" arcWidth="5.0" height="150.0" stroke="TRANSPARENT" strokeType="INSIDE" width="100.0"  />
-                  <Label styleClass="Label" fx:id="playerPointsLabel" text="Punti: 0">
+                  <StackPane fx:id="deckBox" />
+                  <Label fx:id="playerPointsLabel" styleClass="Label" text="Punti: 0">
                      <font>
-                        <Font name="DavidaOpti-Bold" size="20.0" />
+                        <Font size="20.0" />
                      </font>
                   </Label>
                </children>
                <HBox.margin>
-                  <Insets left="10.0" />
+                  <Insets left="25.0" />
                </HBox.margin>
             </VBox>
-            <HBox prefHeight="100.0" prefWidth="440.0">
-               <children>
-                  <Rectangle fx:id="bcp1" arcHeight="5.0" arcWidth="5.0" height="150.0" stroke="TRANSPARENT" strokeType="INSIDE" width="100.0" />
-                  <Rectangle fx:id="cp1" arcHeight="5.0" arcWidth="5.0" height="150.0" stroke="TRANSPARENT" strokeType="INSIDE" width="100.0" />
-               </children></HBox>
-            <VBox alignment="CENTER" prefWidth="100.0" spacing="10.0">
+            <HBox prefHeight="100.0" prefWidth="440.0" />
+            <VBox alignment="CENTER" prefWidth="110.0" spacing="10.0">
                <padding>
                   <Insets right="10.0" />
                </padding>
@@ -52,12 +43,12 @@
                   <Insets right="10.0" />
                </HBox.margin>
                <children>
-                  <Label fx:id="turnLabel" text="Turno #1337">
+                  <Label fx:id="turnLabel" styleClass="Label" text="Turno #1337">
                      <font>
                         <Font size="15.0" />
                      </font>
                   </Label>
-                  <Label fx:id="timeLabel" text="Tempo: 00:00:00" />
+                  <Label fx:id="timeLabel" styleClass="Label" text="Tempo: 00:00:00" />
                </children>
             </VBox>
          </children>
@@ -66,11 +57,6 @@
          <VBox.margin>
             <Insets bottom="10.0" />
          </VBox.margin>
-         <children>
-            <Rectangle fx:id="c1" arcHeight="5.0" arcWidth="5.0" height="150.0" stroke="TRANSPARENT" strokeType="INSIDE" width="100.0" />
-            <Rectangle fx:id="c2" arcHeight="5.0" arcWidth="5.0" height="150.0" stroke="TRANSPARENT" strokeType="INSIDE" width="100.0" />
-            <Rectangle fx:id="c3" arcHeight="5.0" arcWidth="5.0" height="150.0" stroke="TRANSPARENT" strokeType="INSIDE" width="100.0" />
-         </children>
       </HBox>
    </children>
 </VBox>

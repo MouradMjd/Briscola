@@ -1,5 +1,8 @@
 package us.teamronda.briscola.api.game;
 
+import us.teamronda.briscola.api.cards.ICard;
+import us.teamronda.briscola.api.player.IPlayer;
+
 /**
  * This interface represents a simple game loop
  */
@@ -15,7 +18,6 @@ public interface GameLoop {
     // This method returns true if the
     boolean isGameOngoing();
 
-    // This method represents a single turn
-    // played by all the users
-    void tick();
+    // This method represents a single turn of a player
+    void tick(IPlayer player, ICard playedCard);
 }

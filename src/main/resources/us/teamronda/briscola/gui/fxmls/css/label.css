@@ -1,9 +1,0 @@
-@font-face {
-    font-family:'DavidaOpti';
-    src: url('/us/teamronda/briscola/gui/fxmls/fonts/Davida.ttf');
-}
-.Label {
-    -fx-background-color: transparent;
-    -fx-font-family: DavidaOpti;
-    -fx-font-size:40px;
-}
