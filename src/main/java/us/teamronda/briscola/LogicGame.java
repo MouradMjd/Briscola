@@ -6,18 +6,23 @@ import us.teamronda.briscola.api.Player;
 import us.teamronda.briscola.api.cards.ICard;
 import us.teamronda.briscola.api.deck.AbstractDeck;
 import us.teamronda.briscola.api.game.AbstractGameLoop;
-import us.teamronda.briscola.api.player.AbstractPlayer;
 import us.teamronda.briscola.api.player.IPlayer;
+import us.teamronda.briscola.gui.AnimationType;
+import us.teamronda.briscola.gui.components.CardComponent;
+import us.teamronda.briscola.gui.controllers.TableController;
 import us.teamronda.briscola.utils.ScoringUtils;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class LogicGame extends AbstractGameLoop {
 
     @Getter private static final LogicGame instance = new LogicGame();
 
-    private final Deck deck;
+    @Getter private final Deck deck;
     private int totalPoints;
 
     public LogicGame() {
@@ -36,12 +41,15 @@ public class LogicGame extends AbstractGameLoop {
 
         // Aggiungi il bot
         addPlayer(new Player("bot_lillo", true));
-        
-        // Dai le carte in mano a tutti
-        fillHands(deck);
+        addPlayer(new Player("test"));
 
         // Inizia un giocatore a caso
         orderPlayers();
+
+        // Dai le carte in mano a tutti
+        fillHands(deck);
+
+        tickBots();
     }
 
     /**
@@ -49,16 +57,17 @@ public class LogicGame extends AbstractGameLoop {
      * until a real player is found.
      */
     private void tickBots() {
-        IPlayer currentPlayer = turnOrder.peek();
-        while (currentPlayer != null && currentPlayer.isBot()) {
-            this.tick(currentPlayer, currentPlayer.pollCard(ThreadLocalRandom.current().nextInt(0, AbstractPlayer.DEFAULT_SIZE_HAND)));
+        IPlayer currentPlayer;
+        while ((currentPlayer = getWhoIsPlaying()) != null && currentPlayer.isBot()) {
+            // Make the player played
+            this.tick(currentPlayer, currentPlayer.pollCard(ThreadLocalRandom.current().nextInt(0, currentPlayer.getHand().size())));
         }
     }
 
     @Override
     public void tick(IPlayer player, ICard playedCard) {
         cardsPlayed.put(player, playedCard);
-        // TODO: update GUI
+        TableController.getInstance().getCardsplayed().getChildren().add(new CardComponent(playedCard, AnimationType.NONE));
 
         // Everyone has played, so let's see who won!
         if (cardsPlayed.size() == getPlayerCount()) {
@@ -103,19 +112,22 @@ public class LogicGame extends AbstractGameLoop {
 
             // If the game is still ongoing
             if (isGameOngoing()) {
+                // Clear the table
+                TableController.getInstance().clearTable();
                 // Make the players draw a card from the deck
-                fillHands(deck);
+                TableController.getInstance().fillPlayerHands(this);
 
                 // Make the bots play again
                 this.tickBots();
-
-                // TODO: make the player play
             } else {
                 stop();
             }
         } else if(!player.isBot()) { // If the real player has played
+            playerIndex++;
             // make the bots play as well
             this.tickBots();
+        } else {
+            playerIndex++;
         }
     }
 

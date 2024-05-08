@@ -3,7 +3,6 @@ package us.teamronda.briscola.gui;
 public enum AnimationType {
 
     UP(true),
-    RIGHT(true),
     NONE(false);
 
     private final boolean hasAnimation;

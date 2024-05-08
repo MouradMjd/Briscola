@@ -5,6 +5,7 @@ import us.teamronda.briscola.api.Card;
 import us.teamronda.briscola.api.cards.ICard;
 
 import java.util.Collection;
+import java.util.List;
 
 /**
  * This interfaces define some generic methods
@@ -16,13 +17,17 @@ public interface IPlayer extends Comparable<IPlayer> {
 
     void addCard(Card card);
 
-    Card pollCard(int index);
+    ICard pollCard(int index);
+
+    void pollCard(ICard card);
 
     void fillHand(Deck deck);
 
     int addPoints(Collection<ICard> cards);
 
     int subtractPoints(Collection<ICard> cards);
+
+    List<ICard> getHand();
 
     int getPoints();
 

@@ -20,4 +20,6 @@ public interface GameLoop {
 
     // This method represents a single turn of a player
     void tick(IPlayer player, ICard playedCard);
+
+    IPlayer getWhoIsPlaying();
 }

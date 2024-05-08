@@ -13,13 +13,15 @@ public abstract class AbstractGameLoop implements GameLoop {
     // two players cannot share the same username.
     private final Set<IPlayer> players;
 
-    protected LinkedList<IPlayer> turnOrder;
+    protected List<IPlayer> turnOrder;
     protected Map<IPlayer, ICard> cardsPlayed;
+    protected int playerIndex;
 
     public AbstractGameLoop() {
         this.players = new HashSet<>();
-        this.turnOrder = new LinkedList<>();
+        this.turnOrder = new ArrayList<>();
         this.cardsPlayed = new HashMap<>();
+        this.playerIndex = 0;
     }
 
     /**
@@ -42,6 +44,11 @@ public abstract class AbstractGameLoop implements GameLoop {
      */
     public void removePlayer(IPlayer player) {
         players.remove(player);
+    }
+
+    @Override
+    public IPlayer getWhoIsPlaying() {
+        return turnOrder.get(playerIndex);
     }
 
     private boolean isUsernameDuplicate(String username) {
@@ -89,7 +96,7 @@ public abstract class AbstractGameLoop implements GameLoop {
      * @param deck The {@link us.teamronda.briscola.api.deck.IDeck} to draw from
      */
     public void fillHands(Deck deck) {
-        for (IPlayer player : players) {
+        for (IPlayer player : turnOrder) {
             player.fillHand(deck);
         }
     }
@@ -109,12 +116,9 @@ public abstract class AbstractGameLoop implements GameLoop {
      * @param winner The {@link IPlayer} that won the round
      */
     public void orderPlayers(IPlayer winner) {
-        int winnerIndex = turnOrder.indexOf(winner);
-        List<IPlayer> first = turnOrder.subList(winnerIndex, turnOrder.size());
-        List<IPlayer> latter = turnOrder.subList(0, winnerIndex).reversed();
+        turnOrder.remove(winner);
+        turnOrder.addFirst(winner);
 
-        turnOrder.clear();
-        turnOrder.addAll(first);
-        turnOrder.addAll(latter);
+        playerIndex = 0;
     }
 }

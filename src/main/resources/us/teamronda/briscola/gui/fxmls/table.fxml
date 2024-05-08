@@ -34,7 +34,10 @@
                   <Insets left="25.0" />
                </HBox.margin>
             </VBox>
-            <HBox prefHeight="100.0" prefWidth="440.0" />
+            <HBox fx:id="cardsplayed" alignment="TOP_CENTER" prefHeight="100.0" prefWidth="440.0" spacing="20.0">
+               <padding>
+                  <Insets left="50.0" right="50.0" />
+               </padding></HBox>
             <VBox alignment="CENTER" prefWidth="110.0" spacing="10.0">
                <padding>
                   <Insets right="10.0" />

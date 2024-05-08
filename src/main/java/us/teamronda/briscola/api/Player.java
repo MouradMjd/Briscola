@@ -29,12 +29,13 @@ public class Player extends AbstractPlayer {
     }
 
     @Override
-    public Card pollCard(int index) {
-        if (index < 0 || index >= hand.size()) {
-            throw new IllegalArgumentException("Index can be only 0 to " + hand.size());
-        }
-
+    public ICard pollCard(int index) {
         return hand.remove(index);
+    }
+
+    @Override
+    public void pollCard(ICard card) {
+        hand.remove(card);
     }
 
     @Override
@@ -49,6 +50,7 @@ public class Player extends AbstractPlayer {
         // NOT USED IN OUR IMPLEMENTATION
         return 0;
     }
+
 
     @Override
     public int hashCode() {

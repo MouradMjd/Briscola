@@ -12,6 +12,11 @@ import us.teamronda.briscola.api.cards.Seed;
 public record Card(CardType type, Seed seed) implements us.teamronda.briscola.api.cards.ICard {
 
     @Override
+    public CardType getType() {
+        return type;
+    }
+
+    @Override
     public Seed getSeed() {
         return seed;
     }

@@ -4,6 +4,7 @@ import javafx.scene.image.Image;
 import lombok.experimental.UtilityClass;
 import us.teamronda.briscola.api.Card;
 import us.teamronda.briscola.api.cards.CardType;
+import us.teamronda.briscola.api.cards.ICard;
 import us.teamronda.briscola.api.cards.Seed;
 
 import java.util.HashMap;
@@ -27,13 +28,11 @@ public class CardAssets {
         }
     }
 
-    public Image getCardImage(Card card) {
-        return CARDS_IMAGES.get(getId(card.seed(), card.type()));
+    public Image getCardImage(ICard card) {
+        return CARDS_IMAGES.get(getId(card.getSeed(), card.getType()));
     }
 
     private String getId(Seed seed, CardType type) {
-        return type.name().toLowerCase()
-                .concat("_")
-                .concat(seed.name().toLowerCase());
+        return type.name().toLowerCase() + "_" + seed.name().toLowerCase();
     }
 }

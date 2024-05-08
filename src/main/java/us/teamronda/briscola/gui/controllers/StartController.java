@@ -17,7 +17,7 @@ import java.io.IOException;
 public class StartController {
 
     @FXML
-    private TextField usernameField;
+    public TextField usernameField;
 
     @FXML
     private Button playButton;

@@ -11,7 +11,9 @@ import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 import lombok.Setter;
-import us.teamronda.briscola.api.Card;
+import us.teamronda.briscola.LogicGame;
+import us.teamronda.briscola.api.cards.ICard;
+import us.teamronda.briscola.api.player.IPlayer;
 import us.teamronda.briscola.gui.AnimationType;
 
 public class CardComponent extends StackPane {
@@ -27,11 +29,11 @@ public class CardComponent extends StackPane {
     private boolean transitioning;
     private boolean obscured;
 
-    public CardComponent(Card card, AnimationType animationType) {
+    public CardComponent(ICard card, AnimationType animationType) {
         this(card, animationType, false);
     }
 
-    public CardComponent(Card card, AnimationType animationType, boolean obscured) {
+    public CardComponent(ICard card, AnimationType animationType, boolean obscured) {
         this.animationType = animationType;
         this.transitioning = false;
         this.obscured = obscured;
@@ -48,6 +50,16 @@ public class CardComponent extends StackPane {
         }
 
         this.getChildren().addAll(back, front);
+        this.setOnMouseClicked(event -> {
+            System.out.println("HO SCELTO LA CARTA: " + card.getType() + " di " + card.getSeed());
+
+            // Prendo il giocatore che gioca
+            IPlayer player = LogicGame.getInstance().getWhoIsPlaying();
+            // Rimuovo la carta giocata
+            player.pollCard(card);
+            // Salvo l'azione del giocatore
+            LogicGame.getInstance().tick(player, card);
+        });
     }
 
     /*
@@ -93,7 +105,6 @@ public class CardComponent extends StackPane {
         animation.setFromX(this.getLayoutX());
         animation.setFromY(this.getLayoutY());
         animation.setToY(animationType.equals(AnimationType.UP) ? this.getLayoutY() - 10 : this.getLayoutY());
-        animation.setToX(animationType.equals(AnimationType.RIGHT) ? this.getLayoutX() + 10 : this.getLayoutX());
         animation.setDuration(Duration.millis(200));
 
         rectangle.setOnMouseEntered(event -> {

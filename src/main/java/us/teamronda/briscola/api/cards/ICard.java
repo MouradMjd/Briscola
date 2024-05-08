@@ -2,6 +2,9 @@ package us.teamronda.briscola.api.cards;
 
 public interface ICard {
 
+    CardType getType();
+
+
     /**
      * Gets the card's seed
      *

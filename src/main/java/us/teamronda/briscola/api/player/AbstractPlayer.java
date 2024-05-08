@@ -4,6 +4,7 @@ import lombok.AccessLevel;
 import us.teamronda.briscola.Deck;
 import us.teamronda.briscola.api.Card;
 import lombok.Getter;
+import us.teamronda.briscola.api.cards.ICard;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +17,7 @@ public abstract class AbstractPlayer implements IPlayer {
     private static final int DEFAULT_STARTING_POINTS = 0;
 
     private final String username;
-    protected final List<Card> hand;
+    @Getter protected final List<ICard> hand;
 
     // Values used in overridden methods
     @Getter(AccessLevel.NONE) private final boolean bot;
