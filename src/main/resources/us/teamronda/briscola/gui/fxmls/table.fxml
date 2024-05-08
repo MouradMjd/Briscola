@@ -23,13 +23,13 @@
          <children>
             <VBox alignment="CENTER" spacing="20.0">
                <children>
-                  <Label fx:id="opponentPointsLabel" text="Punti: 0">
+                  <Label styleClass="Label" fx:id="opponentPointsLabel" text="Punti: 0">
                      <font>
                         <Font name="DavidaOpti-Bold" size="20.0" />
                      </font>
                   </Label>
                   <Rectangle fx:id="ideck" arcHeight="5.0" arcWidth="5.0" height="150.0" stroke="TRANSPARENT" strokeType="INSIDE" width="100.0"  />
-                  <Label fx:id="playerPointsLabel" text="Punti: 0">
+                  <Label styleClass="Label" fx:id="playerPointsLabel" text="Punti: 0">
                      <font>
                         <Font name="DavidaOpti-Bold" size="20.0" />
                      </font>

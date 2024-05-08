@@ -1,5 +1,9 @@
 /* custom-button.css */
 
+@font-face {
+    font-family:'DavidaOpti';
+    src: url('us/teamronda/briscola/gui/fxmls/fonts/Davida.ttf');
+}
 .button-29 {
     -fx-background-color: #fbeee0;
     -fx-border-color: #422800;
@@ -7,6 +11,7 @@
     -fx-border-radius: 30px;
     -fx-background-radius: 30px;
     -fx-text-fill: #422800;
+    -fx-font-family: DavidaOpti;
     -fx-font-weight: bold;
     -fx-font-size: 18px;
     -fx-padding: 0 18px;

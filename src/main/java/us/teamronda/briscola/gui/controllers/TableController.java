@@ -9,6 +9,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 import us.teamronda.briscola.LogicGame;
+import us.teamronda.briscola.api.game.AbstractGameLoop;
 
 import java.io.IOException;
 import java.util.Objects;
@@ -32,7 +33,6 @@ public class TableController {
 
     @FXML private Label turnLabel;
     @FXML private Label timeLabel;
-    private LogicGame game;
 
     // Viene chiamato automaticamente da JavaFX
     // appena viene mostrata la finestra
@@ -43,6 +43,7 @@ public class TableController {
         loadCardImage("back.png",bc1);
         loadCardImage("back.png",bc2);
         loadCardImage("back.png",bc3);
+       ideck.setOnMouseClicked(mouseEvent -> { System.out.println("Deck clicked");});
     }
     // Metodo per caricare e visualizzare un'immagine all'interno di un rettangolo
     private void loadCardImage(String imagePath, Rectangle rectangle) {
