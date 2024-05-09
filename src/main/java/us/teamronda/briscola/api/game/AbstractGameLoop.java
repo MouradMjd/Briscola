@@ -4,6 +4,7 @@ import us.teamronda.briscola.Deck;
 import us.teamronda.briscola.api.cards.ICard;
 import us.teamronda.briscola.api.player.AbstractPlayer;
 import us.teamronda.briscola.api.player.IPlayer;
+import us.teamronda.briscola.gui.controllers.TableController;
 
 import java.util.*;
 
@@ -64,7 +65,16 @@ public abstract class AbstractGameLoop implements GameLoop {
     public int updatePoints(IPlayer winner, Collection<ICard> cards) {
         for (IPlayer otherPlayer : players) {
             if (otherPlayer.equals(winner)) {
-                return otherPlayer.addPoints(cards);
+                int addpoints= otherPlayer.addPoints(cards);
+                if(winner.getUsername().equals("bot_lillo"))
+                {
+                    TableController.getInstance().setpointinbox(winner.getPoints(), 0);
+                }
+                else
+                {
+                    TableController.getInstance().setpointinbox(0, winner.getPoints());
+                }
+                return addpoints;
             }
         }
 

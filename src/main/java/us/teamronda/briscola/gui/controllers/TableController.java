@@ -22,11 +22,11 @@ public class TableController {
     @Getter private static TableController instance = new TableController();
 
     @FXML private StackPane deckBox; // Rettangolo del mazzo
-    @FXML private HBox playerBox; // Rettangolo del giocatore
-    @FXML private HBox opponentBox; // Rettangolo del bot
+    @FXML private  HBox playerBox; // Rettangolo del giocatore
+    @FXML private  HBox opponentBox; // Rettangolo del bot
     @FXML @Getter private HBox cardsplayed;
-    @FXML private Label opponentPointsLabel;
-    @FXML private Label playerPointsLabel;
+    @FXML private  Label opponentPointsLabel;
+    @FXML private  Label playerPointsLabel;
 
     @FXML private Label turnLabel;
     @FXML private Label timeLabel;
@@ -53,6 +53,19 @@ public class TableController {
         Collections.reverse(cardComponents);
 
         deckBox.getChildren().addAll(cardComponents);
+    }
+
+    public  void setpointinbox(int oppoints,int playpoints)
+    {
+        if(oppoints==0)
+        {
+            playerPointsLabel.setText("Punti:"+playpoints);
+        }
+        else
+        {
+            opponentPointsLabel.setText("Punti:"+oppoints);
+        }
+
     }
 
     public void fillPlayerHands(LogicGame game) {

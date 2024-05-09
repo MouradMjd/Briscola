@@ -85,9 +85,6 @@ public class LogicGame extends AbstractGameLoop {
             }catch(Exception e){
                 e.printStackTrace();
             }
-            for (Map.Entry<IPlayer, ICard> entry : cardsPlayed.entrySet()) {
-                ICard card = entry.getValue();
-
             // Evaluate correctly the card order
             for (IPlayer listPlayer : getPlayers()) {
                 ICard card = cardsPlayed.get(listPlayer);
@@ -117,13 +114,13 @@ public class LogicGame extends AbstractGameLoop {
             // Update the winner's points
             // and add them to the total
             totalPoints += updatePoints(winnerPlayer, cardsPlayed.values());
-
             // Clear played cards
             cardsPlayed.clear();
 
             // Make the winner play first next round.
             // (It works because we support only two players)
             orderPlayers(winnerPlayer);
+
 
             // If the game is still ongoing
             if (isGameOngoing()) {

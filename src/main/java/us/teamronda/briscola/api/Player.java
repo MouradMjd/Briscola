@@ -45,6 +45,7 @@ public class Player extends AbstractPlayer {
         return addedPoints;
     }
 
+
     @Override
     public int subtractPoints(Collection<ICard> cards) {
         // NOT USED IN OUR IMPLEMENTATION
