@@ -24,10 +24,12 @@ public class LogicGame extends AbstractGameLoop {
 
     @Getter private final Deck deck;
     private int totalPoints;
+    private int turnNumber;
 
     public LogicGame() {
         this.deck = new Deck();
         this.totalPoints = 0;
+        this.turnNumber = 1;
     }
 
     @Override
@@ -47,6 +49,9 @@ public class LogicGame extends AbstractGameLoop {
 
         // Dai le carte in mano a tutti
         fillHands(deck);
+
+        // Initialize the turn label
+        TableController.getInstance().updateTurnLabel(turnNumber);
 
         // Start game "loop"
         tickBots();
@@ -109,12 +114,14 @@ public class LogicGame extends AbstractGameLoop {
             // and add them to the total
             int cardsWorth = updatePoints(winnerPlayer, cardsPlayed.values());
             totalPoints += cardsWorth;
+            // Increment turn number
+            turnNumber++;
 
             // Update the points on the GUI
             if(winnerPlayer.isBot()) {
-                TableController.getInstance().updatePoints(cardsWorth, 0);
+                TableController.getInstance().updatePointsLabel(player.getPoints(), 0);
             } else {
-                TableController.getInstance().updatePoints(0, cardsWorth);
+                TableController.getInstance().updatePointsLabel(0, player.getPoints());
             }
 
             // Show who won
@@ -136,11 +143,14 @@ public class LogicGame extends AbstractGameLoop {
                     // Switch back to the JavaFX thread
                     // to operate on the GUI
                     Platform.runLater(() -> {
+                        TableController controller = TableController.getInstance();
                         // Clear the table
-                        TableController.getInstance().clearTable();
+                        controller.clearTable();
+                        // Update the turn label
+                        controller.updateTurnLabel(turnNumber);
+
                         // Update the player's hands
                         getPlayers().forEach(TableController.getInstance()::updateHand);
-
                         // Unblock the handBox of the player
                         TableController.getInstance().updateHandStatus(false);
 
@@ -171,6 +181,11 @@ public class LogicGame extends AbstractGameLoop {
             IPlayer player = players.get(i);
             System.out.printf("%d. %s con %d punti!%n", i + 1, player.getUsername(), player.getPoints());
         }
+
+        // Reset the variables
+        totalPoints = 0;
+        playerIndex = 0;
+        turnNumber = 1;
     }
 
     /**

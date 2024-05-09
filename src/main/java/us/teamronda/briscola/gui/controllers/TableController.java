@@ -27,7 +27,7 @@ public class TableController {
     @FXML private Label opponentPointsLabel;
     @FXML private Label playerPointsLabel;
 
-    @FXML private Label turnLabel;
+    @FXML @Getter private Label turnLabel;
     @FXML private Label timeLabel;
 
     // Viene chiamato automaticamente da JavaFX
@@ -46,6 +46,7 @@ public class TableController {
         // Fill the players' hands
         game.getPlayers().forEach(this::updateHand);
 
+        // Fill the deck box with CardComponents
         List<CardComponent> cardComponents = game.getRemainingCards().stream()
                 .map(card -> new CardComponent(card, false, true))
                 .collect(Collectors.toCollection(ArrayList::new));
@@ -54,6 +55,8 @@ public class TableController {
         trumpCard.rotateHorizontally();
         trumpCard.flip();
 
+        // The stackpane places the first elements of the list
+        // at the bottom, so we need to reverse it
         Collections.reverse(cardComponents);
 
         deckBox.getChildren().addAll(cardComponents);
@@ -63,7 +66,11 @@ public class TableController {
         playerBox.setDisable(disable);
     }
 
-    public void updatePoints(int opPoints, int playerPoints) {
+    public void updateTurnLabel(int turns) {
+        turnLabel.setText("Turn #" + turns);
+    }
+
+    public void updatePointsLabel(int opPoints, int playerPoints) {
         if (opPoints == 0) {
             playerPointsLabel.setText("Punti: " + playerPoints);
         } else {
