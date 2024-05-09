@@ -24,6 +24,7 @@ public class StartController {
     private Stage stage;
     private Scene scene;
     private Parent roor;
+    //gigi
 
 
     @FXML
