@@ -65,19 +65,9 @@ public abstract class AbstractGameLoop implements GameLoop {
     public int updatePoints(IPlayer winner, Collection<ICard> cards) {
         for (IPlayer otherPlayer : players) {
             if (otherPlayer.equals(winner)) {
-                int addpoints= otherPlayer.addPoints(cards);
-                if(winner.getUsername().equals("bot_lillo"))
-                {
-                    TableController.getInstance().setpointinbox(winner.getPoints(), 0);
-                }
-                else
-                {
-                    TableController.getInstance().setpointinbox(0, winner.getPoints());
-                }
-                return addpoints;
+                return otherPlayer.addPoints(cards);
             }
         }
-
         return -1;
     }
 

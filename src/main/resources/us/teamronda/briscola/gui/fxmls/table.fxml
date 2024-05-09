@@ -34,7 +34,7 @@
                   <Insets left="25.0" />
                </HBox.margin>
             </VBox>
-            <HBox fx:id="cardsplayed" alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="440.0" spacing="20.0">
+            <HBox fx:id="cardsPlayed" alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="440.0" spacing="20.0">
                <padding>
                   <Insets left="50.0" right="50.0" />
                </padding></HBox>

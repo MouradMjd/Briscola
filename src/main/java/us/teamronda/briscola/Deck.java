@@ -54,7 +54,7 @@ public class Deck extends AbstractDeck {
         return trumpCard != null && trumpCard.seed().equals(card.getSeed());
     }
 
-    public void takeBriscola()
+    public void selectTrumpCard()
     {
         trumpCard = popCard();
         cards.addLast(trumpCard);

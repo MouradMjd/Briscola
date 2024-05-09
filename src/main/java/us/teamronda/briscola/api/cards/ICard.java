@@ -2,6 +2,11 @@ package us.teamronda.briscola.api.cards;
 
 public interface ICard {
 
+    /**
+     * Gets the card's figure or number
+     *
+     * @return a {@link CardType} enum
+     */
     CardType getType();
 
 

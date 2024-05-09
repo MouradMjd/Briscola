@@ -9,28 +9,20 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import lombok.Getter;
 import us.teamronda.briscola.LogicGame;
 import us.teamronda.briscola.api.Player;
 
 import java.io.IOException;
 
 public class StartController {
-    @FXML
-    public TextField usernameField;
 
-    @FXML
-    private Button playButton;
-    private Stage stage;
-    private Scene scene;
-    private Parent roor;
-    //gigi
-
+    @FXML public TextField usernameField;
+    @FXML private Button playButton;
 
     @FXML
     public void initialize(ActionEvent e) throws IOException {
         if (verication()) {
-            LogicGame.initp(usernameField.getText());
+            LogicGame.getInstance().addPlayer(new Player(usernameField.getText()));
             switchToTable();
         }
     }

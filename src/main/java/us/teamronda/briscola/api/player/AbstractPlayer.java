@@ -42,7 +42,11 @@ public abstract class AbstractPlayer implements IPlayer {
 
     @Override
     public void fillHand(Deck deck) {
-        for (int i = 0; i < DEFAULT_SIZE_HAND - hand.size(); i++) {
+        // If we do not store the initial size of the hand,
+        // it will change when we add cards!
+        int initialSize = hand.size();
+
+        for (int i = 0; i < DEFAULT_SIZE_HAND - initialSize; i++) {
             hand.add(deck.popCard());
         }
     }

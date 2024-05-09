@@ -52,7 +52,6 @@ public class Player extends AbstractPlayer {
         return 0;
     }
 
-
     @Override
     public int hashCode() {
         return Objects.hashCode(getUsername());

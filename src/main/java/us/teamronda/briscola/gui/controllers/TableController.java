@@ -8,12 +8,10 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import lombok.Getter;
 import us.teamronda.briscola.LogicGame;
-import us.teamronda.briscola.api.Player;
-import us.teamronda.briscola.api.cards.ICard;
 import us.teamronda.briscola.api.player.IPlayer;
-import us.teamronda.briscola.gui.AnimationType;
 import us.teamronda.briscola.gui.components.CardAssets;
 import us.teamronda.briscola.gui.components.CardComponent;
+import us.teamronda.briscola.utils.TimerUtils;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -23,29 +21,33 @@ public class TableController {
     @Getter private static TableController instance = new TableController();
 
     @FXML private StackPane deckBox; // Rettangolo del mazzo
-    @FXML private  HBox playerBox; // Rettangolo del giocatore
-    @FXML private  HBox opponentBox; // Rettangolo del bot
-    @FXML @Getter private HBox cardsplayed;
-    @FXML private  Label opponentPointsLabel;
-    @FXML private  Label playerPointsLabel;
+    @FXML private HBox playerBox; // Rettangolo del giocatore
+    @FXML private HBox opponentBox; // Rettangolo del bot
+    @FXML @Getter private HBox cardsPlayed;
+    @FXML private Label opponentPointsLabel;
+    @FXML private Label playerPointsLabel;
 
     @FXML private Label turnLabel;
     @FXML private Label timeLabel;
-    Timer executor = new Timer();
 
     // Viene chiamato automaticamente da JavaFX
     // appena viene mostrata la finestra
+    @FXML
     public void initialize() {
+        // JavaFX uses reflection to access the controller
+        // and inject the FXML fields, so creating a new static
+        // instance (like for this controller) will not work.
         instance = this;
-        CardAssets.load(); // Load on startup?
+        CardAssets.load(); // Load card assets
 
         LogicGame game = LogicGame.getInstance();
         game.start();
 
-        fillPlayerHands(game);
+        // Fill the players' hands
+        game.getPlayers().forEach(this::updateHand);
 
         List<CardComponent> cardComponents = game.getRemainingCards().stream()
-                .map(card -> new CardComponent(card, AnimationType.NONE, true))
+                .map(card -> new CardComponent(card, false, true))
                 .collect(Collectors.toCollection(ArrayList::new));
 
         CardComponent trumpCard = cardComponents.getLast();
@@ -57,54 +59,42 @@ public class TableController {
         deckBox.getChildren().addAll(cardComponents);
     }
 
-    public  void setpointinbox(int oppoints,int playpoints)
-    {
-        if(oppoints==0)
-        {
-            playerPointsLabel.setText("Punti:"+playpoints);
-        }
-        else
-        {
-            opponentPointsLabel.setText("Punti:"+oppoints);
-        }
-
+    public void updateHandStatus(boolean disable) {
+        playerBox.setDisable(disable);
     }
 
-    public void fillPlayerHands(LogicGame game) {
-        //give cards
-        for (IPlayer player : game.getPlayers()) {
-            player.fillHand(game.getDeck());
-
-            if (player.isBot()) {
-                for (ICard iCard : player.getHand()) {
-                    opponentBox.getChildren().add(new CardComponent(iCard, AnimationType.NONE, true));
-                }
-            } else {
-                for (ICard iCard : player.getHand()) {
-                    playerBox.getChildren().add(new CardComponent(iCard, AnimationType.UP));
-                }
-            }
+    public void updatePoints(int opPoints, int playerPoints) {
+        if (opPoints == 0) {
+            playerPointsLabel.setText("Punti: " + playerPoints);
+        } else {
+            opponentPointsLabel.setText("Punti: " + opPoints);
         }
+    }
+
+    public void updateHand(IPlayer player) {
+        HBox box = player.isBot() ? opponentBox : playerBox;
+        box.getChildren().clear();
+
+        List<CardComponent> cardComponents = player.getHand().stream()
+                .map(card -> new CardComponent(card, !player.isBot(), player.isBot()))
+                .collect(Collectors.toCollection(ArrayList::new));
+
+        box.getChildren().addAll(cardComponents);
     }
 
     public void clearTable() {
         opponentBox.getChildren().clear();
         playerBox.getChildren().clear();
-        cardsplayed.getChildren().clear();
+        cardsPlayed.getChildren().clear();
     }
-    public void allertwhowin(IPlayer winner)
-    {
+
+    public void winnerPopup(IPlayer winner) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Hey!");
         alert.setHeaderText(null);
-        alert.setContentText("WINNER:"+winner.getUsername());
+        alert.setContentText("WINNER: " + winner.getUsername());
         alert.show();
-        executor.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                Platform.runLater(alert::close);
-            }
-        },2000);
 
+        TimerUtils.schedule(() -> Platform.runLater(alert::close), 1500);
     }
 }

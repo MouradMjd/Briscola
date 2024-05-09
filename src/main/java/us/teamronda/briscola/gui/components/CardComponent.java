@@ -5,38 +5,37 @@ import javafx.animation.ScaleTransition;
 import javafx.animation.TranslateTransition;
 import javafx.geometry.Point3D;
 import javafx.scene.image.Image;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
-import lombok.Setter;
 import us.teamronda.briscola.LogicGame;
 import us.teamronda.briscola.api.cards.ICard;
 import us.teamronda.briscola.api.player.IPlayer;
-import us.teamronda.briscola.gui.AnimationType;
 import us.teamronda.briscola.gui.controllers.TableController;
 
 public class CardComponent extends StackPane {
 
-    private static final long ANIMATION_DURATION = 125;
+    private static final long ANIMATION_DURATION = 125L;
     private static final int CARD_WIDTH = 89;
     private static final int CARD_HEIGHT = 168;
 
     private final Rectangle front;
     private final Rectangle back;
 
-    @Setter private AnimationType animationType;
     private boolean transitioning;
     private boolean obscured;
+    private final boolean playable;
 
-    public CardComponent(ICard card, AnimationType animationType) {
-        this(card, animationType, false);
+    public CardComponent(ICard card, boolean playable) {
+        this(card, playable, false);
     }
 
-    public CardComponent(ICard card, AnimationType animationType, boolean obscured) {
-        this.animationType = animationType;
+    public CardComponent(ICard card, boolean playable, boolean obscured) {
         this.transitioning = false;
+        this.playable = playable;
         this.obscured = obscured;
 
         this.setPrefSize(CARD_WIDTH, CARD_HEIGHT);
@@ -52,6 +51,14 @@ public class CardComponent extends StackPane {
 
         this.getChildren().addAll(back, front);
         this.setOnMouseClicked(event -> {
+            if (!playable) return;
+
+            // Prevent double-clicking
+            this.setOnMouseClicked(MouseEvent::consume);
+
+            // Block the handBox of the player
+            TableController.getInstance().updateHandStatus(true);
+
             System.out.println("HO SCELTO LA CARTA: " + card.getType() + " di " + card.getSeed());
             // Prendo il giocatore che gioca
             IPlayer player = LogicGame.getInstance().getWhoIsPlaying();
@@ -100,27 +107,26 @@ public class CardComponent extends StackPane {
         rectangle.setArcHeight(10D);
         rectangle.setArcWidth(10D);
 
-        TranslateTransition animation = new TranslateTransition();
-        animation.setNode(this);
-        animation.setFromX(this.getLayoutX());
-        animation.setFromY(this.getLayoutY());
-        animation.setToY(animationType.equals(AnimationType.UP) ? this.getLayoutY() - 10 : this.getLayoutY());
-        animation.setDuration(Duration.millis(200));
+        if (playable) {
+            TranslateTransition animation = new TranslateTransition();
+            animation.setNode(this);
+            animation.setFromX(this.getLayoutX());
+            animation.setFromY(this.getLayoutY());
+            animation.setToY(this.getLayoutY() - 10);
+            animation.setDuration(Duration.millis(200));
 
-        rectangle.setOnMouseEntered(event -> {
-            if (!animationType.hasAnimation()) return;
-            animation.stop();
-            animation.setRate(1);
-            animation.play();
-        });
+            rectangle.setOnMouseEntered(event -> {
+                animation.stop();
+                animation.setRate(1);
+                animation.play();
+            });
 
-        rectangle.setOnMouseExited(event -> {
-            if (!animationType.hasAnimation()) return;
-
-            animation.stop();
-            animation.setRate(-1);
-            animation.play();
-        });
+            rectangle.setOnMouseExited(event -> {
+                animation.stop();
+                animation.setRate(-1);
+                animation.play();
+            });
+        }
 
         return rectangle;
     }

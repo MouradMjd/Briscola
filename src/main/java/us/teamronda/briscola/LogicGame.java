@@ -1,5 +1,6 @@
 package us.teamronda.briscola;
 
+import javafx.application.Platform;
 import lombok.Getter;
 import us.teamronda.briscola.api.Card;
 import us.teamronda.briscola.api.Player;
@@ -7,54 +8,47 @@ import us.teamronda.briscola.api.cards.ICard;
 import us.teamronda.briscola.api.deck.AbstractDeck;
 import us.teamronda.briscola.api.game.AbstractGameLoop;
 import us.teamronda.briscola.api.player.IPlayer;
-import us.teamronda.briscola.gui.AnimationType;
 import us.teamronda.briscola.gui.components.CardComponent;
-import us.teamronda.briscola.gui.controllers.StartController;
 import us.teamronda.briscola.gui.controllers.TableController;
 import us.teamronda.briscola.utils.ScoringUtils;
+import us.teamronda.briscola.utils.TimerUtils;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
-import java.util.concurrent.TimeUnit;
 
 public class LogicGame extends AbstractGameLoop {
 
     @Getter private static final LogicGame instance = new LogicGame();
-    @Getter private static  Player p;
 
     @Getter private final Deck deck;
     private int totalPoints;
-    Timer executor = new Timer();
 
     public LogicGame() {
         this.deck = new Deck();
         this.totalPoints = 0;
     }
-    public static void  initp(String name)
-    {
-        p=new Player(name);
-    }
 
     @Override
     public void start() {
-        // Crea il mazzo
+        // Create the deck and shuffle it
         deck.create();
 
-        //take out the briscola
-        deck.takeBriscola();
+        // Select the trump card
+        deck.selectTrumpCard();
         System.out.println("La briscola è: " + deck.getTrumpCard());
 
-        // Aggiungi il bot
+        // Add the bot
         addPlayer(new Player("bot_lillo", true));
-        //player
-        addPlayer(p);
 
-        // Inizia un giocatore a caso
+        // Shuffle play
         orderPlayers();
 
         // Dai le carte in mano a tutti
         fillHands(deck);
 
+        // Start game "loop"
         tickBots();
     }
 
@@ -72,19 +66,19 @@ public class LogicGame extends AbstractGameLoop {
 
     @Override
     public void tick(IPlayer player, ICard playedCard) {
+        // Register the played card
         cardsPlayed.put(player, playedCard);
-        TableController.getInstance().getCardsplayed().getChildren().add(new CardComponent(playedCard, AnimationType.NONE));
+
+        // Update the player's hand
+        TableController.getInstance().updateHand(player);
+        // Update the table
+        TableController.getInstance().getCardsPlayed().getChildren().add(new CardComponent(playedCard, false));
 
         // Everyone has played, so let's see who won!
         if (cardsPlayed.size() == getPlayerCount()) {
-
             ICard winnerCard = null;
             IPlayer winnerPlayer = null;
-            try{
-                Thread.sleep(3000);
-            }catch(Exception e){
-                e.printStackTrace();
-            }
+
             // Evaluate correctly the card order
             for (IPlayer listPlayer : getPlayers()) {
                 ICard card = cardsPlayed.get(listPlayer);
@@ -113,9 +107,19 @@ public class LogicGame extends AbstractGameLoop {
 
             // Update the winner's points
             // and add them to the total
-            totalPoints += updatePoints(winnerPlayer, cardsPlayed.values());
-            //show who win
-            TableController.getInstance().allertwhowin(winnerPlayer);
+            int cardsWorth = updatePoints(winnerPlayer, cardsPlayed.values());
+            totalPoints += cardsWorth;
+
+            // Update the points on the GUI
+            if(winnerPlayer.isBot()) {
+                TableController.getInstance().updatePoints(cardsWorth, 0);
+            } else {
+                TableController.getInstance().updatePoints(0, cardsWorth);
+            }
+
+            // Show who won
+            TableController.getInstance().winnerPopup(winnerPlayer);
+
             // Clear played cards
             cardsPlayed.clear();
 
@@ -123,20 +127,31 @@ public class LogicGame extends AbstractGameLoop {
             // (It works because we support only two players)
             orderPlayers(winnerPlayer);
 
+            // Make the players draw a card from the deck
+            fillHands(deck);
 
             // If the game is still ongoing
             if (isGameOngoing()) {
-                // Clear the table
-                TableController.getInstance().clearTable();
-                // Make the players draw a card from the deck
-                TableController.getInstance().fillPlayerHands(this);
+                TimerUtils.schedule(() -> {
+                    // Switch back to the JavaFX thread
+                    // to operate on the GUI
+                    Platform.runLater(() -> {
+                        // Clear the table
+                        TableController.getInstance().clearTable();
+                        // Update the player's hands
+                        getPlayers().forEach(TableController.getInstance()::updateHand);
 
-                // Make the bots play again
-                this.tickBots();
+                        // Unblock the handBox of the player
+                        TableController.getInstance().updateHandStatus(false);
+
+                        // Make the bots play again
+                        this.tickBots();
+                    });
+                }, 3000);
             } else {
                 stop();
             }
-        } else if(!player.isBot()) { // If the real player has played
+        } else if (!player.isBot()) { // If the real player has played
             playerIndex++;
             // make the bots play as well
             this.tickBots();
