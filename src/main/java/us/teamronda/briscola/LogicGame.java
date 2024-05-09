@@ -87,20 +87,24 @@ public class LogicGame extends AbstractGameLoop {
             }
             for (Map.Entry<IPlayer, ICard> entry : cardsPlayed.entrySet()) {
                 ICard card = entry.getValue();
+
+            // Evaluate correctly the card order
+            for (IPlayer listPlayer : getPlayers()) {
+                ICard card = cardsPlayed.get(listPlayer);
                 if (winnerCard == null) {
                     winnerCard = card;
-                    winnerPlayer = entry.getKey();
+                    winnerPlayer = listPlayer;
                 } else if (winnerCard.getSeed().equals(card.getSeed())) {
                     if (card.getPoints() > winnerCard.getPoints()) {
                         winnerCard = card;
-                        winnerPlayer = entry.getKey();
+                        winnerPlayer = listPlayer;
                     }
                 } else if (deck.hasTrumpSeed(card)) {
                     // At this point we do not need to check if the
                     // winnerCard is a trump card, because that case
                     // (both trump cards) is handled by the previous condition.
                     winnerCard = card;
-                    winnerPlayer = entry.getKey();
+                    winnerPlayer = listPlayer;
                 }
             }
 
