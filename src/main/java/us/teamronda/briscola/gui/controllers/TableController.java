@@ -1,20 +1,21 @@
 package us.teamronda.briscola.gui.controllers;
 
+import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import lombok.Getter;
 import us.teamronda.briscola.LogicGame;
+import us.teamronda.briscola.api.Player;
 import us.teamronda.briscola.api.cards.ICard;
 import us.teamronda.briscola.api.player.IPlayer;
 import us.teamronda.briscola.gui.AnimationType;
 import us.teamronda.briscola.gui.components.CardAssets;
 import us.teamronda.briscola.gui.components.CardComponent;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class TableController {
@@ -30,6 +31,7 @@ public class TableController {
 
     @FXML private Label turnLabel;
     @FXML private Label timeLabel;
+    Timer executor = new Timer();
 
     // Viene chiamato automaticamente da JavaFX
     // appena viene mostrata la finestra
@@ -89,5 +91,20 @@ public class TableController {
         opponentBox.getChildren().clear();
         playerBox.getChildren().clear();
         cardsplayed.getChildren().clear();
+    }
+    public void allertwhowin(IPlayer winner)
+    {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Hey!");
+        alert.setHeaderText(null);
+        alert.setContentText("WINNER:"+winner.getUsername());
+        alert.show();
+        executor.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                Platform.runLater(alert::close);
+            }
+        },2000);
+
     }
 }

@@ -114,6 +114,8 @@ public class LogicGame extends AbstractGameLoop {
             // Update the winner's points
             // and add them to the total
             totalPoints += updatePoints(winnerPlayer, cardsPlayed.values());
+            //show who win
+            TableController.getInstance().allertwhowin(winnerPlayer);
             // Clear played cards
             cardsPlayed.clear();
 
