@@ -37,7 +37,6 @@ public class LogicGame extends AbstractGameLoop {
 
         // Select the trump card
         deck.selectTrumpCard();
-        System.out.println("La briscola è: " + deck.getTrumpCard());
 
         // Add the bot
         addPlayer(new Player("bot_lillo", true));
@@ -156,6 +155,7 @@ public class LogicGame extends AbstractGameLoop {
                 // Make the bots play again
                 this.tickBots();
             } else {
+                // Otherwise, just stop the game
                 stop();
             }
         } else if (!player.isBot()) { // If the real player has played
