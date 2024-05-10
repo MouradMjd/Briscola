@@ -59,7 +59,6 @@ public class CardComponent extends StackPane {
             // Block the handBox of the player
             TableController.getInstance().updateHandStatus(true);
 
-            System.out.println("HO SCELTO LA CARTA: " + card.getType() + " di " + card.getSeed());
             // Prendo il giocatore che gioca
             IPlayer player = LogicGame.getInstance().getWhoIsPlaying();
             // Rimuovo la carta giocata

@@ -1,6 +1,5 @@
 package us.teamronda.briscola;
 
-import javafx.application.Platform;
 import lombok.Getter;
 import us.teamronda.briscola.api.Card;
 import us.teamronda.briscola.api.Player;
@@ -11,7 +10,6 @@ import us.teamronda.briscola.api.player.IPlayer;
 import us.teamronda.briscola.gui.components.CardComponent;
 import us.teamronda.briscola.gui.controllers.TableController;
 import us.teamronda.briscola.utils.ScoringUtils;
-import us.teamronda.briscola.utils.TimerUtils;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -91,7 +89,13 @@ public class LogicGame extends AbstractGameLoop {
                     winnerCard = card;
                     winnerPlayer = listPlayer;
                 } else if (winnerCard.getSeed().equals(card.getSeed())) {
+                    // If the points are different, the highest wins
                     if (card.getPoints() > winnerCard.getPoints()) {
+                        winnerCard = card;
+                        winnerPlayer = listPlayer;
+                    } else if (card.getPoints() == winnerCard.getPoints() &&
+                            card.getType().ordinal() > winnerCard.getType().ordinal()) {
+                        // If the points are the same, the highest card wins
                         winnerCard = card;
                         winnerPlayer = listPlayer;
                     }
@@ -117,7 +121,7 @@ public class LogicGame extends AbstractGameLoop {
             turnNumber++;
 
             // Update the points on the GUI
-            if(winnerPlayer.isBot()) {
+            if (winnerPlayer.isBot()) {
                 TableController.getInstance().updatePointsLabel(player.getPoints(), 0);
             } else {
                 TableController.getInstance().updatePointsLabel(0, player.getPoints());

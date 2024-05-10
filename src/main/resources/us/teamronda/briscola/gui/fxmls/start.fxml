@@ -10,7 +10,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="409.0" prefWidth="601.0" styleClass="wood-background" stylesheets="@css/unified.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="us.teamronda.briscola.gui.controllers.StartController">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="409.0" prefWidth="601.0" styleClass="wood-background" stylesheets="@../../../../../assets/css/unified.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="us.teamronda.briscola.gui.controllers.StartController">
 
    <children>
       <AnchorPane prefHeight="181.0" prefWidth="600.0">
@@ -25,7 +25,7 @@
             </Text>
             <ImageView fitHeight="227.0" fitWidth="429.0" layoutX="354.0" layoutY="-26.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@images/carte-napoletane-fotor-bg-remover-20240506232928.png" />
+                  <Image url="@../../../../../assets/images/carte-napoletane-fotor-bg-remover-20240506232928.png" />
                </image></ImageView>
             <Text layoutX="237.0" layoutY="157.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="Label" text="USERNAME:">
                <font>
@@ -40,7 +40,7 @@
       </AnchorPane>
       <AnchorPane prefHeight="200.0" prefWidth="200.0">
          <children>
-            <Button fx:id="playButton" layoutX="238.0" layoutY="17.0" mnemonicParsing="false" onAction="#initialize" prefHeight="70.0" prefWidth="143.0" styleClass="button-29" stylesheets="@css/unified.css" text="PLAY">
+            <Button fx:id="playButton" layoutX="238.0" layoutY="17.0" mnemonicParsing="false" onAction="#initialize" prefHeight="70.0" prefWidth="143.0" styleClass="button-29" stylesheets="@../../../../../assets/css/unified.css" text="PLAY">
                <font>
                   <Font name="DavidaOpti-Bold" size="16.0" />
                </font>
