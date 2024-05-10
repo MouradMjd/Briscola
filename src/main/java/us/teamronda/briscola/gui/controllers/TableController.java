@@ -1,11 +1,15 @@
 package us.teamronda.briscola.gui.controllers;
 
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
+import javafx.util.Duration;
 import lombok.Getter;
 import us.teamronda.briscola.LogicGame;
 import us.teamronda.briscola.api.player.IPlayer;
@@ -13,6 +17,7 @@ import us.teamronda.briscola.gui.components.CardAssets;
 import us.teamronda.briscola.gui.components.CardComponent;
 import us.teamronda.briscola.utils.TimerUtils;
 
+import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -29,6 +34,12 @@ public class TableController {
 
     @FXML @Getter private Label turnLabel;
     @FXML private Label timeLabel;
+
+    // We are formatting a time duration and not a date,
+    // but this works for our purposes (the hour value gets set
+    // automatically to 1 AM for some reason, but we do not show that)
+    private final SimpleDateFormat sdf = new SimpleDateFormat("mm:ss");
+    private Timeline timeline;
 
     // Viene chiamato automaticamente da JavaFX
     // appena viene mostrata la finestra
@@ -87,6 +98,25 @@ public class TableController {
                 .collect(Collectors.toCollection(ArrayList::new));
 
         box.getChildren().addAll(cardComponents);
+    }
+
+    public void startTimer(long startTime) {
+        // You never know...
+        if (timeline != null) timeline.stop();
+
+        timeline = new Timeline(new KeyFrame(
+                Duration.seconds(1D),
+                e -> {
+                    long elapsed = System.currentTimeMillis() - startTime;
+                    timeLabel.setText(sdf.format(new Date(elapsed)));
+                }
+        ));
+        timeline.setCycleCount(Animation.INDEFINITE); // loop forever
+        timeline.play();
+    }
+
+    public void stopTimer() {
+        if (timeline != null) timeline.stop();
     }
 
     public void clearTable() {

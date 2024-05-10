@@ -44,11 +44,12 @@ public class LogicGame extends AbstractGameLoop {
         // Shuffle play
         orderPlayers();
 
-        // Dai le carte in mano a tutti
+        // Distribute cards to all players
         fillHands(deck);
 
-        // Initialize the turn label
+        // Initialize the turn label and start the timer
         TableController.getInstance().updateTurnLabel(turnNumber);
+        TableController.getInstance().startTimer(System.currentTimeMillis());
 
         // Start game "loop"
         tickBots();
@@ -169,6 +170,9 @@ public class LogicGame extends AbstractGameLoop {
 
     @Override
     public void stop() {
+        // Stop the timer
+        TableController.getInstance().stopTimer();
+
         // LogicGame#getPlayers returns an immutable list
         List<IPlayer> players = new ArrayList<>(getPlayers());
         Collections.sort(players);
