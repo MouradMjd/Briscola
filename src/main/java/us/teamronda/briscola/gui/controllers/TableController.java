@@ -100,6 +100,22 @@ public class TableController {
         box.getChildren().addAll(cardComponents);
     }
 
+    public void popDeckCards(int amount) {
+        // If the deckBox has more children than the amount of cards
+        // this should never happen, but better safe than sorry
+        int childrenNumber = deckBox.getChildren().size();
+        if (childrenNumber > amount) {
+            // We are using a method exclusive to the ObservableList object:
+            // https://openjfx.io/javadoc/21/javafx.base/javafx/collections/ObservableList.html#remove(int,int)
+
+            // We need to remove the last elements in the list,
+            // because they are the ones visible
+            deckBox.getChildren().remove(childrenNumber - amount, childrenNumber);
+        } else {
+            deckBox.getChildren().clear();
+        }
+    }
+
     public void startTimer(long startTime) {
         // You never know...
         if (timeline != null) timeline.stop();

@@ -14,7 +14,7 @@
             <Insets top="10.0" />
          </VBox.margin>
       </HBox>
-      <HBox alignment="CENTER_LEFT" prefHeight="280.0" spacing="20.0">
+      <HBox alignment="CENTER" prefHeight="280.0" spacing="20.0">
          <children>
             <VBox alignment="CENTER" spacing="20.0">
                <children>
@@ -34,7 +34,7 @@
                   <Insets left="25.0" />
                </HBox.margin>
             </VBox>
-            <HBox fx:id="cardsPlayed" alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="440.0" spacing="20.0">
+            <HBox fx:id="cardsPlayed" alignment="CENTER_RIGHT" prefHeight="280.0" prefWidth="420.0" spacing="20.0">
                <padding>
                   <Insets left="50.0" right="50.0" />
                </padding></HBox>
@@ -51,7 +51,7 @@
                         <Font size="15.0" />
                      </font>
                   </Label>
-                  <Label fx:id="timeLabel" styleClass="Label" text="Tempo: 00:00:00" />
+                  <Label fx:id="timeLabel" styleClass="Label" text="Tempo: 00:00" />
                </children>
             </VBox>
          </children>

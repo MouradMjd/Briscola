@@ -149,7 +149,9 @@ public class LogicGame extends AbstractGameLoop {
                 controller.updateTurnLabel(turnNumber);
 
                 // Update the player's hands
-                getPlayers().forEach(TableController.getInstance()::updateHand);
+                getPlayers().forEach(controller::updateHand);
+                // Update the deck
+                controller.popDeckCards(getPlayerCount());
                 // Unblock the handBox of the player
                 TableController.getInstance().updateHandStatus(false);
 
