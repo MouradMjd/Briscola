@@ -100,8 +100,8 @@ public class TableController {
         alert.setTitle("Hey!");
         alert.setHeaderText(null);
         alert.setContentText("WINNER: " + winner.getUsername());
-        alert.show();
 
         TimerUtils.schedule(() -> Platform.runLater(alert::close), 1500);
+        alert.showAndWait();
     }
 }

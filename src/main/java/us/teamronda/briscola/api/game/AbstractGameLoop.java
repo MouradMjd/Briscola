@@ -47,7 +47,7 @@ public abstract class AbstractGameLoop implements GameLoop {
 
     @Override
     public IPlayer getWhoIsPlaying() {
-        return players.get(playerIndex);
+        return playerIndex < players.size() ? players.get(playerIndex) : null;
     }
 
     private boolean isUsernameDuplicate(String username) {

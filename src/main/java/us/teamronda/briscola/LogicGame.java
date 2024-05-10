@@ -112,8 +112,7 @@ public class LogicGame extends AbstractGameLoop {
 
             // Update the winner's points
             // and add them to the total
-            int cardsWorth = updatePoints(winnerPlayer, cardsPlayed.values());
-            totalPoints += cardsWorth;
+            totalPoints += updatePoints(winnerPlayer, cardsPlayed.values());
             // Increment turn number
             turnNumber++;
 
@@ -139,25 +138,19 @@ public class LogicGame extends AbstractGameLoop {
 
             // If the game is still ongoing
             if (isGameOngoing()) {
-                TimerUtils.schedule(() -> {
-                    // Switch back to the JavaFX thread
-                    // to operate on the GUI
-                    Platform.runLater(() -> {
-                        TableController controller = TableController.getInstance();
-                        // Clear the table
-                        controller.clearTable();
-                        // Update the turn label
-                        controller.updateTurnLabel(turnNumber);
+                TableController controller = TableController.getInstance();
+                // Clear the table
+                controller.clearTable();
+                // Update the turn label
+                controller.updateTurnLabel(turnNumber);
 
-                        // Update the player's hands
-                        getPlayers().forEach(TableController.getInstance()::updateHand);
-                        // Unblock the handBox of the player
-                        TableController.getInstance().updateHandStatus(false);
+                // Update the player's hands
+                getPlayers().forEach(TableController.getInstance()::updateHand);
+                // Unblock the handBox of the player
+                TableController.getInstance().updateHandStatus(false);
 
-                        // Make the bots play again
-                        this.tickBots();
-                    });
-                }, 3000);
+                // Make the bots play again
+                this.tickBots();
             } else {
                 stop();
             }

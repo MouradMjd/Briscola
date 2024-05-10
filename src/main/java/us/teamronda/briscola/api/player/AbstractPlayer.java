@@ -5,8 +5,10 @@ import us.teamronda.briscola.Deck;
 import us.teamronda.briscola.api.Card;
 import lombok.Getter;
 import us.teamronda.briscola.api.cards.ICard;
+import us.teamronda.briscola.utils.ScoringUtils;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 @Getter
@@ -41,13 +43,28 @@ public abstract class AbstractPlayer implements IPlayer {
     }
 
     @Override
+    public void addCard(Card card) {
+        if (card != null) hand.add(card);
+    }
+
+    @Override
+    public ICard pollCard(int index) {
+        return hand.remove(index);
+    }
+
+    @Override
+    public void pollCard(ICard card) {
+        hand.remove(card);
+    }
+
+    @Override
     public void fillHand(Deck deck) {
         // If we do not store the initial size of the hand,
         // it will change when we add cards!
         int initialSize = hand.size();
 
         for (int i = 0; i < DEFAULT_SIZE_HAND - initialSize; i++) {
-            hand.add(deck.popCard());
+            addCard(deck.popCard());
         }
     }
 
@@ -64,8 +81,8 @@ public abstract class AbstractPlayer implements IPlayer {
     @Override
     public String toString() {
         return "Player{" +
-                "username=" + username +
-                "points=" + points +
+                "username=" + username + ", " +
+                "points=" + points + ", " +
                 "hand=" + hand +
                 '}';
     }

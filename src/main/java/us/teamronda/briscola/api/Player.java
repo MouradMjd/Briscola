@@ -24,27 +24,11 @@ public class Player extends AbstractPlayer {
     }
 
     @Override
-    public void addCard(Card card) {
-        hand.add(card);
-    }
-
-    @Override
-    public ICard pollCard(int index) {
-        return hand.remove(index);
-    }
-
-    @Override
-    public void pollCard(ICard card) {
-        hand.remove(card);
-    }
-
-    @Override
     public int addPoints(Collection<ICard> cardsWon) {
         int addedPoints = ScoringUtils.calculatePoints(cardsWon);
         points += addedPoints;
         return addedPoints;
     }
-
 
     @Override
     public int subtractPoints(Collection<ICard> cards) {
