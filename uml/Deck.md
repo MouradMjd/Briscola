@@ -9,6 +9,7 @@ class IDeck {
 }
 
 class AbstractDeck {
+    <<abstract>>
     -static final int DEFAULT_DECK_SIZE
 
     #final List<Card> cards
