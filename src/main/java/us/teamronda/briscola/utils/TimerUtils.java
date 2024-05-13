@@ -15,15 +15,11 @@ import java.util.TimerTask;
 @UtilityClass
 public class TimerUtils {
 
-    private final Timer timer = new Timer();
-
-    /**
-     * Terminate the timer.
-     * You will not be able to schedule tasks anymore.
+    /*
+    Settings Thread#isDaemon to true will allow the JVM to exit
+    even if the thread is still running.
      */
-    public void terminate() {
-        timer.cancel();
-    }
+    private final Timer timer = new Timer(true);
 
     /**
      * Schedule a task to run after a delay.
