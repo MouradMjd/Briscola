@@ -3,6 +3,8 @@ package us.teamronda.briscola.api.game;
 import us.teamronda.briscola.api.cards.ICard;
 import us.teamronda.briscola.api.player.IPlayer;
 
+import java.io.IOException;
+
 /**
  * This interface represents a simple game loop
  */
@@ -13,7 +15,7 @@ public interface GameLoop {
 
     // This method stops the game and
     // prepares for the next game
-    void stop();
+    void stop() throws IOException;
 
     // This method returns true if the
     boolean isGameOngoing();

@@ -8,9 +8,11 @@ import us.teamronda.briscola.api.deck.AbstractDeck;
 import us.teamronda.briscola.api.game.AbstractGameLoop;
 import us.teamronda.briscola.api.player.IPlayer;
 import us.teamronda.briscola.gui.components.CardComponent;
+import us.teamronda.briscola.gui.controllers.StartController;
 import us.teamronda.briscola.gui.controllers.TableController;
 import us.teamronda.briscola.utils.ScoringUtils;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -18,7 +20,7 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class LogicGame extends AbstractGameLoop {
 
-    @Getter private static final LogicGame instance = new LogicGame();
+    @Getter private static LogicGame instance = new LogicGame();
 
     @Getter private final Deck deck;
     private int totalPoints;
@@ -122,9 +124,9 @@ public class LogicGame extends AbstractGameLoop {
 
             // Update the points on the GUI
             if (winnerPlayer.isBot()) {
-                TableController.getInstance().updatePointsLabel(player.getPoints(), 0);
+                TableController.getInstance().updatePointsLabel(winnerPlayer.getPoints(), 0);
             } else {
-                TableController.getInstance().updatePointsLabel(0, player.getPoints());
+                TableController.getInstance().updatePointsLabel(0, winnerPlayer.getPoints());
             }
 
             // Show who won
@@ -158,8 +160,23 @@ public class LogicGame extends AbstractGameLoop {
                 // Make the bots play again
                 this.tickBots();
             } else {
+                TableController controller = TableController.getInstance();
+                // Clear the table
+                controller.clearTable();
+                // Update the turn label
+                controller.updateTurnLabel(turnNumber);
+
+                // Update the player's hands
+                getPlayers().forEach(controller::updateHand);
+                // Unblock the handBox of the player
+                TableController.getInstance().updateHandStatus(false);
                 // Otherwise, just stop the game
-                stop();
+                try {
+                    stop();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+
             }
         } else if (!player.isBot()) { // If the real player has played
             playerIndex++;
@@ -171,7 +188,7 @@ public class LogicGame extends AbstractGameLoop {
     }
 
     @Override
-    public void stop() {
+    public void stop() throws IOException {
         // Stop the timer
         TableController.getInstance().stopTimer();
 
@@ -179,16 +196,20 @@ public class LogicGame extends AbstractGameLoop {
         List<IPlayer> players = new ArrayList<>(getPlayers());
         Collections.sort(players);
 
+        StringBuilder classifica=new StringBuilder();
         System.out.println("Classifica:");
         for (int i = 0; i < players.size(); i++) {
             IPlayer player = players.get(i);
-            System.out.printf("%d. %s con %d punti!%n", i + 1, player.getUsername(), player.getPoints());
+            classifica.append( i + 1+player.getUsername()+"con"+ player.getPoints()+"\n");
+
         }
+        TableController.getInstance().Popup(classifica.toString());
 
         // Reset the variables
         totalPoints = 0;
         playerIndex = 0;
         turnNumber = 1;
+        TableController.getInstance().swichtostart();
     }
 
     /**
@@ -209,5 +230,9 @@ public class LogicGame extends AbstractGameLoop {
     @Override
     public boolean isGameOngoing() {
         return totalPoints != ScoringUtils.MAX_POINTS;
+    }
+    public void reset()
+    {
+        instance=new LogicGame();
     }
 }

@@ -5,10 +5,14 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 import lombok.Getter;
 import us.teamronda.briscola.LogicGame;
@@ -17,6 +21,7 @@ import us.teamronda.briscola.gui.components.CardAssets;
 import us.teamronda.briscola.gui.components.CardComponent;
 import us.teamronda.briscola.utils.TimerUtils;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -147,7 +152,31 @@ public class TableController {
         alert.setHeaderText(null);
         alert.setContentText("WINNER: " + winner.getUsername());
 
-        TimerUtils.schedule(() -> Platform.runLater(alert::close), 1500);
+        TimerUtils.schedule(() -> Platform.runLater(alert::close), 1000);
         alert.showAndWait();
+    }
+    public void Popup(String s) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("CLASSIFICA:");
+        alert.setHeaderText(null);
+        alert.setContentText(s);
+
+        TimerUtils.schedule(() -> Platform.runLater(alert::close), 3000);
+        alert.showAndWait();
+
+    }
+    public void swichtostart() throws IOException {
+
+            LogicGame.getInstance().reset();
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/us/teamronda/briscola/gui/fxmls/start.fxml"));
+            Stage currentStage = (Stage) playerBox.getScene().getWindow();
+            currentStage.close();
+            Stage stage = new Stage();
+            stage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/assets/images/icon.png"))));
+            stage.setResizable(false);
+            stage.setTitle("Briscola v6.9");
+            stage.setScene(new Scene(fxmlLoader.load()));
+            stage.show();
+
     }
 }
