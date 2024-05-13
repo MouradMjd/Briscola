@@ -25,7 +25,7 @@
             </Text>
             <ImageView fitHeight="227.0" fitWidth="429.0" layoutX="354.0" layoutY="-26.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../../../../assets/images/carte-napoletane-fotor-bg-remover-20240506232928.png" />
+                  <Image url="@../../../../../assets/images/menu_icon.png" />
                </image></ImageView>
             <Text layoutX="237.0" layoutY="157.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="Label" text="USERNAME:">
                <font>
