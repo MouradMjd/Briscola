@@ -1,6 +1,7 @@
 package us.teamronda.briscola.api;
 
 import us.teamronda.briscola.api.cards.CardType;
+import us.teamronda.briscola.api.cards.ICard;
 import us.teamronda.briscola.api.cards.Seed;
 
 /**
@@ -9,7 +10,7 @@ import us.teamronda.briscola.api.cards.Seed;
  * @param type Number or figure of the card
  * @param seed Seed of the card
  */
-public record Card(CardType type, Seed seed) implements us.teamronda.briscola.api.cards.ICard {
+public record Card(CardType type, Seed seed) implements ICard {
 
     @Override
     public CardType getType() {

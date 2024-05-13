@@ -217,7 +217,7 @@ public class LogicGame extends AbstractGameLoop {
      *
      * @return the cards left in the deck
      */
-    public List<Card> getRemainingCards() {
+    public List<ICard> getRemainingCards() {
         return deck.getCards();
     }
 

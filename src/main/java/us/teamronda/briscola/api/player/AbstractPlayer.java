@@ -2,13 +2,10 @@ package us.teamronda.briscola.api.player;
 
 import lombok.AccessLevel;
 import us.teamronda.briscola.Deck;
-import us.teamronda.briscola.api.Card;
 import lombok.Getter;
 import us.teamronda.briscola.api.cards.ICard;
-import us.teamronda.briscola.utils.ScoringUtils;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 @Getter
@@ -19,7 +16,7 @@ public abstract class AbstractPlayer implements IPlayer {
     private static final int DEFAULT_STARTING_POINTS = 0;
 
     private final String username;
-    @Getter protected final List<ICard> hand;
+    @Getter private final List<ICard> hand;
 
     // Values used in overridden methods
     @Getter(AccessLevel.NONE) private final boolean bot;
@@ -43,7 +40,7 @@ public abstract class AbstractPlayer implements IPlayer {
     }
 
     @Override
-    public void addCard(Card card) {
+    public void addCard(ICard card) {
         if (card != null) hand.add(card);
     }
 
@@ -64,7 +61,7 @@ public abstract class AbstractPlayer implements IPlayer {
         int initialSize = hand.size();
 
         for (int i = 0; i < DEFAULT_SIZE_HAND - initialSize; i++) {
-            addCard(deck.popCard());
+            addCard(deck.popCardFromTop());
         }
     }
 
