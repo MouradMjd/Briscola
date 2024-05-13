@@ -1,7 +1,6 @@
 package us.teamronda.briscola.api.player;
 
 import us.teamronda.briscola.Deck;
-import us.teamronda.briscola.api.Card;
 import us.teamronda.briscola.api.cards.ICard;
 
 import java.util.Collection;
@@ -15,7 +14,7 @@ public interface IPlayer extends Comparable<IPlayer> {
 
     String getUsername();
 
-    void addCard(Card card);
+    void addCard(ICard card);
 
     ICard pollCard(int index);
 

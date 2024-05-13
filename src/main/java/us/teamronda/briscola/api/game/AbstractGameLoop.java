@@ -4,7 +4,6 @@ import us.teamronda.briscola.Deck;
 import us.teamronda.briscola.api.cards.ICard;
 import us.teamronda.briscola.api.player.AbstractPlayer;
 import us.teamronda.briscola.api.player.IPlayer;
-import us.teamronda.briscola.gui.controllers.TableController;
 
 import java.util.*;
 

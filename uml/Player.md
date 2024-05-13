@@ -30,7 +30,7 @@ class AbstractPlayer {
     +AbstractPlayer(String username)
 
     -final String username
-    #final List<ICard> hand
+    -final List<ICard> hand
     -final boolean bot
     #int points
 

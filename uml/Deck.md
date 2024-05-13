@@ -5,16 +5,23 @@ class IDeck {
 
     create() void
     shuffle() void
-    popCard() Card
+    getCardsRemaining() int
+    isEmpty() boolean
+    addCard(ICard card, int index) void
+    default addCardToTop(ICard card) void
+    default addCardToBottom(ICard card) void
+    popCard(int index) ICard
+    popCardFromTop() ICard
 }
 
 class AbstractDeck {
     <<abstract>>
     -static final int DEFAULT_DECK_SIZE
-
     #final List<Card> cards
 
-    getCards() List<Card>
+    addCard(ICard card, int index) void
+    popCard(int index) ICard
+    getCards() List<ICard>
     getMaxSize() int
     getCardsRemaining() int
     isEmpty() boolean

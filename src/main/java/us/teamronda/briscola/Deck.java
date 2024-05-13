@@ -12,7 +12,7 @@ import java.util.Collections;
 @Getter
 public class Deck extends AbstractDeck {
 
-    private Card trumpCard;
+    private ICard trumpCard;
 
     @Override
     public void create() {
@@ -26,22 +26,12 @@ public class Deck extends AbstractDeck {
             }
         }
 
-        // Mischialo sto mazzo
         this.shuffle();
     }
 
     @Override
     public void shuffle() {
         Collections.shuffle(cards);
-    }
-
-    @Override
-    public Card popCard() {
-        if (isEmpty()) {
-            return null;
-        }
-
-        return cards.removeFirst();
     }
 
     /**
@@ -51,12 +41,11 @@ public class Deck extends AbstractDeck {
      * @param card Card object to check
      */
     public boolean hasTrumpSeed(ICard card) {
-        return trumpCard != null && trumpCard.seed().equals(card.getSeed());
+        return trumpCard != null && trumpCard.getSeed().equals(card.getSeed());
     }
 
-    public void selectTrumpCard()
-    {
-        trumpCard = popCard();
+    public void selectTrumpCard() {
+        trumpCard = popCardFromTop();
         cards.addLast(trumpCard);
     }
 }
