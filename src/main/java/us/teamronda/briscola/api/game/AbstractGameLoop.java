@@ -93,6 +93,8 @@ public abstract class AbstractGameLoop implements GameLoop {
      * @param deck The {@link us.teamronda.briscola.api.deck.IDeck} to draw from
      */
     public void fillHands(Deck deck) {
+        if (deck.isEmpty()) return;
+
         for (IPlayer player : players) {
             player.fillHand(deck);
         }

@@ -27,6 +27,9 @@ public class Deck extends AbstractDeck {
         }
 
         this.shuffle();
+
+        trumpCard = popCardFromTop();
+        cards.addLast(trumpCard);
     }
 
     @Override
@@ -42,10 +45,5 @@ public class Deck extends AbstractDeck {
      */
     public boolean hasTrumpSeed(ICard card) {
         return trumpCard != null && trumpCard.getSeed().equals(card.getSeed());
-    }
-
-    public void selectTrumpCard() {
-        trumpCard = popCardFromTop();
-        cards.addLast(trumpCard);
     }
 }

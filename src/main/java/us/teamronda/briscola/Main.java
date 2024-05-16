@@ -1,13 +1,10 @@
 package us.teamronda.briscola;
 
 import javafx.application.Application;
-import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
-import lombok.Getter;
-import us.teamronda.briscola.utils.TimerUtils;
 
 import java.io.IOException;
 import java.util.Objects;
@@ -24,11 +21,6 @@ public class Main extends Application {
         stage.setTitle("Briscola v6.9");
         stage.setScene(new Scene(fxmlLoader.load()));
         stage.show();
-    }
-
-    @Override
-    public void stop() {
-        TimerUtils.terminate(); // Terminate all timer tasks
     }
 
     public static void main(String[] args) {

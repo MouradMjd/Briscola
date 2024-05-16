@@ -28,17 +28,28 @@ import java.util.stream.Collectors;
 
 public class TableController {
 
-    @Getter private static TableController instance = new TableController();
+    @Getter
+    private static TableController instance = new TableController();
 
-    @FXML private StackPane deckBox; // Rettangolo del mazzo
-    @FXML private HBox playerBox; // Rettangolo del giocatore
-    @FXML private HBox opponentBox; // Rettangolo del bot
-    @FXML @Getter private HBox cardsPlayed;
-    @FXML private Label opponentPointsLabel;
-    @FXML private Label playerPointsLabel;
+    @FXML
+    private StackPane deckBox; // Rettangolo del mazzo
+    @FXML
+    private HBox playerBox; // Rettangolo del giocatore
+    @FXML
+    private HBox opponentBox; // Rettangolo del bot
+    @FXML
+    @Getter
+    private HBox cardsPlayed;
+    @FXML
+    private Label opponentPointsLabel;
+    @FXML
+    private Label playerPointsLabel;
 
-    @FXML @Getter private Label turnLabel;
-    @FXML private Label timeLabel;
+    @FXML
+    @Getter
+    private Label turnLabel;
+    @FXML
+    private Label timeLabel;
 
     // We are formatting a time duration and not a date,
     // but this works for our purposes (the hour value gets set
@@ -155,6 +166,7 @@ public class TableController {
         TimerUtils.schedule(() -> Platform.runLater(alert::close), 1000);
         alert.showAndWait();
     }
+
     public void Popup(String s) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("CLASSIFICA:");
@@ -163,20 +175,24 @@ public class TableController {
 
         TimerUtils.schedule(() -> Platform.runLater(alert::close), 3000);
         alert.showAndWait();
-
     }
-    public void swichtostart() throws IOException {
 
-            LogicGame.getInstance().reset();
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/us/teamronda/briscola/gui/fxmls/start.fxml"));
-            Stage currentStage = (Stage) playerBox.getScene().getWindow();
-            currentStage.close();
-            Stage stage = new Stage();
-            stage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/assets/images/icon.png"))));
-            stage.setResizable(false);
-            stage.setTitle("Briscola v6.9");
+    public void switchToStart() {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/us/teamronda/briscola/gui/fxmls/start.fxml"));
+        Stage currentStage = (Stage) playerBox.getScene().getWindow();
+
+        currentStage.close();
+        Stage stage = new Stage();
+        stage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/assets/images/icon.png"))));
+        stage.setResizable(false);
+        stage.setTitle("Briscola v6.9");
+
+        try {
             stage.setScene(new Scene(fxmlLoader.load()));
-            stage.show();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        stage.show();
 
     }
 }
