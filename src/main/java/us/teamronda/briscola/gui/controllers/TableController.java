@@ -94,7 +94,7 @@ public class TableController {
     }
 
     public void updateTurnLabel(int turns) {
-        turnLabel.setText("Turn #" + turns);
+        turnLabel.setText("Turno #" + turns);
     }
 
     public void updatePointsLabel(int opPoints, int playerPoints) {
