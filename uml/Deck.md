@@ -17,7 +17,7 @@ class IDeck {
 class AbstractDeck {
     <<abstract>>
     -static final int DEFAULT_DECK_SIZE
-    #final List<Card> cards
+    #final List<ICard> cards
 
     addCard(ICard card, int index) void
     popCard(int index) ICard
@@ -29,7 +29,7 @@ class AbstractDeck {
 AbstractDeck ..|> IDeck
 
 class Deck {
-    -Card trumpCard
+    -ICard trumpCard
 
     +create() void
     +shuffle() void

@@ -30,7 +30,11 @@ class ICard {
 
 class Card {
     -final CardType type
-    -Seed seed
+    -final Seed seed
+
+    +getCardType() CardType
+    +getSeed() Seed
+    +getPoints() int
 }
 
 Card ..|> ICard

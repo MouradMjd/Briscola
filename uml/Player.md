@@ -9,7 +9,7 @@ class IPlayer {
     <<interface>>
 
     +getUsername() String 
-    +addCard(Card card) void
+    +addCard(ICard card) void
     +pollCard(int index) ICard
     +pollCard(ICard card) void
     +fillHand(Deck deck) void
@@ -35,7 +35,7 @@ class AbstractPlayer {
     #int points
 
     +getUsername() String
-    +addCard(Card card) void
+    +addCard(ICard card) void
     +pollCard(int index) ICard
     +pollCard(ICard card) void
     +getHand() List<ICard>

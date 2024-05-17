@@ -183,7 +183,7 @@ public class TableController {
 
         currentStage.close();
         Stage stage = new Stage();
-        stage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/assets/images/icon.png"))));
+        stage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/assets/images/program_icon.png"))));
         stage.setResizable(false);
         stage.setTitle("Briscola v6.9");
 

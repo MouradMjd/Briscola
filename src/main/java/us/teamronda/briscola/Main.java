@@ -16,7 +16,7 @@ public class Main extends Application {
         // Load the main FXML file
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("gui/fxmls/start.fxml"));
         // Set the program icon
-        stage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/assets/images/icon.png"))));
+        stage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/assets/images/program_icon.png"))));
         stage.setResizable(false);
         stage.setTitle("Briscola v6.9");
         stage.setScene(new Scene(fxmlLoader.load()));
