@@ -202,13 +202,20 @@ public class LogicGame extends AbstractGameLoop {
         List<IPlayer> players = new ArrayList<>(getPlayers());
         Collections.sort(players);
 
-        StringBuilder classifica = new StringBuilder();
-        for (int i = 0; i < players.size(); i++) {
-            IPlayer player = players.get(i);
-            classifica.append( (i + 1 + ". ") + player.getUsername()+ " con "+ player.getPoints()+ "\n");
+        if(isDraw())
+        {
+            TableController.getInstance().Popup("PAREGGIO!!!");
         }
-        TableController.getInstance().Popup(classifica.toString());
+        else {
+            StringBuilder classifica = new StringBuilder();
+            System.out.println("Classifica:");
+            for (int i = 0; i < players.size(); i++) {
+                IPlayer player = players.get(i);
+                classifica.append(i + 1 + player.getUsername() + "con" + player.getPoints() + "\n");
 
+            }
+            TableController.getInstance().Popup(classifica.toString());
+        }
         TableController.getInstance().switchToStart();
     }
 
@@ -230,5 +237,15 @@ public class LogicGame extends AbstractGameLoop {
     @Override
     public boolean isGameOngoing() {
         return totalPoints != ScoringUtils.MAX_POINTS && totalCardsPlayed != deck.getMaxSize();
+    }
+    public boolean isDraw()
+    {
+        for (int i = 0; i < instance.getPlayers().size()-1 ; i++) {
+            if (instance.getPlayers().get(i)!=instance.getPlayers().get(i+1))
+            {
+                return false;
+            }
+        }
+        return true;
     }
 }
