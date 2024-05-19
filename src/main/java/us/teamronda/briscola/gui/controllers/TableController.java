@@ -57,13 +57,12 @@ public class TableController {
     private final SimpleDateFormat sdf = new SimpleDateFormat("mm:ss");
     private Timeline timeline;
 
-    // Viene chiamato automaticamente da JavaFX
-    // appena viene mostrata la finestra
+    // This method is called automatically by JavaFX
     @FXML
     public void initialize() {
         // JavaFX uses reflection to access the controller
         // and inject the FXML fields, so creating a new static
-        // instance (like for this controller) will not work.
+        // instance will not work.
         instance = this;
         CardAssets.load(); // Load card assets
 
@@ -73,7 +72,7 @@ public class TableController {
         // Fill the players' hands
         game.getPlayers().forEach(this::updateHand);
 
-        // Fill the deck box with CardComponents
+        // Fill the deck box with downwards-facing CardComponents
         List<CardComponent> cardComponents = game.getRemainingCards().stream()
                 .map(card -> new CardComponent(card, false, true))
                 .collect(Collectors.toCollection(ArrayList::new));
@@ -82,8 +81,8 @@ public class TableController {
         trumpCard.rotateHorizontally();
         trumpCard.flip();
 
-        // The stackpane places the first elements of the list
-        // at the bottom, so we need to reverse it
+        // The first elements of the list are placed at the bottom
+        // of the StackPane, so we need to reverse it
         Collections.reverse(cardComponents);
 
         deckBox.getChildren().addAll(cardComponents);
@@ -93,10 +92,17 @@ public class TableController {
         playerBox.setDisable(disable);
     }
 
+    // Used to update the time every second
     public void updateTurnLabel(int turns) {
         turnLabel.setText("Turno #" + turns);
     }
 
+    /**
+     * Updates the points label of the player or the opponent.
+     *
+     * @param opPoints the points of the bot
+     * @param playerPoints the points of the player
+     */
     public void updatePointsLabel(int opPoints, int playerPoints) {
         if (opPoints == 0) {
             playerPointsLabel.setText("Punti: " + playerPoints);
@@ -105,17 +111,31 @@ public class TableController {
         }
     }
 
+    /**
+     * Update the HBox corresponding to the player's hand
+     *
+     * @param player {@link IPlayer} object who needs their hand updated
+     */
     public void updateHand(IPlayer player) {
+        // We need to know which HBox to update
         HBox box = player.isBot() ? opponentBox : playerBox;
-        box.getChildren().clear();
+        box.getChildren().clear(); // Remove every child
 
+        // Map the ICards to CardComponents...
         List<CardComponent> cardComponents = player.getHand().stream()
                 .map(card -> new CardComponent(card, !player.isBot(), player.isBot()))
                 .collect(Collectors.toCollection(ArrayList::new));
 
+        // ...and add them to the HBox
         box.getChildren().addAll(cardComponents);
     }
 
+    /**
+     * Removes the last x of cards from the deckBox,
+     * aka the cards that are visible.
+     *
+     * @param amount the amount of cards to remove
+     */
     public void popDeckCards(int amount) {
         // If the deckBox has more children than the amount of cards
         // this should never happen, but better safe than sorry
@@ -132,19 +152,21 @@ public class TableController {
         }
     }
 
-    public void startTimer(long startTime) {
+    public void startTimer() {
         // You never know...
         if (timeline != null) timeline.stop();
 
+        long startTime = System.currentTimeMillis();
+        // Every second, update the timeLabel with the elapsed time
         timeline = new Timeline(new KeyFrame(
                 Duration.seconds(1D),
-                e -> {
+                event -> {
                     long elapsed = System.currentTimeMillis() - startTime;
                     timeLabel.setText(sdf.format(new Date(elapsed)));
                 }
         ));
         timeline.setCycleCount(Animation.INDEFINITE); // loop forever
-        timeline.play();
+        timeline.play(); // start the loop
     }
 
     public void stopTimer() {

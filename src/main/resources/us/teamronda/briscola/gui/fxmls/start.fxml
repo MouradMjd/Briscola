@@ -40,7 +40,7 @@
       </AnchorPane>
       <AnchorPane prefHeight="200.0" prefWidth="200.0">
          <children>
-            <Button fx:id="playButton" layoutX="238.0" layoutY="17.0" mnemonicParsing="false" onAction="#initialize" prefHeight="70.0" prefWidth="143.0" styleClass="button-29" stylesheets="@../../../../../assets/css/unified.css" text="PLAY">
+            <Button fx:id="playButton" layoutX="238.0" layoutY="17.0" mnemonicParsing="false" onAction="#onButtonClicked" prefHeight="70.0" prefWidth="143.0" styleClass="button-29" stylesheets="@../../../../../assets/css/unified.css" text="PLAY">
                <font>
                   <Font name="DavidaOpti-Bold" size="16.0" />
                </font>

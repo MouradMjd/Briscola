@@ -17,9 +17,11 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class LogicGame extends AbstractGameLoop {
 
-    @Getter private static final LogicGame instance = new LogicGame();
+    @Getter
+    private static final LogicGame instance = new LogicGame();
 
-    @Getter private final Deck deck;
+    @Getter
+    private final Deck deck;
     private int totalPoints;
     private int totalCardsPlayed;
     private int ticksNumber;
@@ -48,7 +50,7 @@ public class LogicGame extends AbstractGameLoop {
 
         // Initialize the turn label and start the timer
         TableController.getInstance().updateTurnLabel(ticksNumber);
-        TableController.getInstance().startTimer(System.currentTimeMillis());
+        TableController.getInstance().startTimer();
 
         // Start game "loop"
         tickBots();
@@ -61,7 +63,7 @@ public class LogicGame extends AbstractGameLoop {
     private void tickBots() {
         IPlayer currentPlayer;
         while ((currentPlayer = getWhoIsPlaying()) != null && currentPlayer.isBot()) {
-            // Make the player played
+            // The bots play a random card
             this.tick(currentPlayer, currentPlayer.pollCard(ThreadLocalRandom.current().nextInt(0, currentPlayer.getHand().size())));
         }
     }
@@ -82,9 +84,10 @@ public class LogicGame extends AbstractGameLoop {
             ICard winnerCard = null;
             IPlayer winnerPlayer = null;
 
-            // Evaluate correctly the card order
+            // We are taking in account player order when checking who won the round
             for (IPlayer listPlayer : getPlayers()) {
                 ICard card = cardsPlayed.get(listPlayer);
+                // This if covers the first iteration of the for loop
                 if (winnerCard == null) {
                     winnerCard = card;
                     winnerPlayer = listPlayer;
@@ -95,7 +98,8 @@ public class LogicGame extends AbstractGameLoop {
                         winnerPlayer = listPlayer;
                     } else if (card.getPoints() == winnerCard.getPoints() &&
                             card.getType().ordinal() > winnerCard.getType().ordinal()) {
-                        // If the points are the same, the highest card wins
+                        // If the cards are worth the same points, the highest card wins:
+                        // we use the ordinal of the CardType enum to evaluate that
                         winnerCard = card;
                         winnerPlayer = listPlayer;
                     }
@@ -202,11 +206,9 @@ public class LogicGame extends AbstractGameLoop {
         List<IPlayer> players = new ArrayList<>(getPlayers());
         Collections.sort(players);
 
-        if(isDraw())
-        {
+        if (isDraw()) {
             TableController.getInstance().Popup("PAREGGIO!!!");
-        }
-        else {
+        } else {
             StringBuilder classifica = new StringBuilder();
             System.out.println("Classifica:");
             for (int i = 0; i < players.size(); i++) {
@@ -229,20 +231,23 @@ public class LogicGame extends AbstractGameLoop {
     }
 
     /**
-     * Method that stops the game by seeing if the deck is empty
-     * and if the player have no cards in hand
+     * Checks if the sum of the players' points is different from the maximum possible value
+     * and if there are other cards that still have to be played.
      *
      * @return true if the game can still continue, false otherwise
      */
     @Override
     public boolean isGameOngoing() {
-        return totalPoints != ScoringUtils.MAX_POINTS && totalCardsPlayed != deck.getMaxSize();
+        // We are using integer variables incremented manually
+        // to avoid looping over the players' hands and over the deck every time.
+        // Since this method is called every tick it should be pretty fast:
+        // but we have only two players, so it does not really matter.
+        return totalPoints != ScoringUtils.MAX_POINTS || totalCardsPlayed != deck.getMaxSize();
     }
-    public boolean isDraw()
-    {
-        for (int i = 0; i < instance.getPlayers().size()-1 ; i++) {
-            if (instance.getPlayers().get(i)!=instance.getPlayers().get(i+1))
-            {
+
+    public boolean isDraw() {
+        for (int i = 0; i < instance.getPlayers().size() - 1; i++) {
+            if (instance.getPlayers().get(i) != instance.getPlayers().get(i + 1)) {
                 return false;
             }
         }
