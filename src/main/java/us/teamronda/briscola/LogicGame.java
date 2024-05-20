@@ -72,6 +72,10 @@ public class LogicGame extends AbstractGameLoop {
     public void tick(IPlayer player, ICard playedCard) {
         // Register the played card
         cardsPlayed.put(player, playedCard);
+
+        // Increment the player loops variable
+        playerIndex++;
+        // Increment the number of cards played
         totalCardsPlayed++;
 
         // Update the player's hand
@@ -131,9 +135,6 @@ public class LogicGame extends AbstractGameLoop {
                 TableController.getInstance().updatePointsLabel(0, winnerPlayer.getPoints());
             }
 
-            // Show who won
-            TableController.getInstance().winnerPopup(winnerPlayer);
-
             // Clear played cards
             cardsPlayed.clear();
 
@@ -144,46 +145,48 @@ public class LogicGame extends AbstractGameLoop {
             // Make the players draw a card from the deck
             fillHands(deck);
 
-            // If the game is still ongoing
-            TableController controller = TableController.getInstance();
-            if (isGameOngoing()) {
-                // Clear the table
-                controller.clearTable();
-                // Update the turn label
-                controller.updateTurnLabel(ticksNumber);
-
-                // Update the player's hands
-                getPlayers().forEach(controller::updateHand);
-                // Update the deck
-                controller.popDeckCards(getPlayerCount());
-                // Unblock the handBox of the player
-                TableController.getInstance().updateHandStatus(false);
-
-                // Make the bots play again
-                this.tickBots();
-            } else {
-                // Clear the table
-                controller.clearTable();
-                // Update the turn label
-                controller.updateTurnLabel(ticksNumber);
-
-                // Update the player's hands
-                getPlayers().forEach(controller::updateHand);
-                // Unblock the handBox of the player
-                TableController.getInstance().updateHandStatus(false);
-                // Otherwise, just stop the game
-                stop();
-            }
+            // Wait for the player to click the button
+            TableController.getInstance().setNextButtonVisibility(true);
         } else {
-            // If another player has to play
-            // update the player index
-            playerIndex++;
-
             // If the human has already played
             // check if other bots need to play as well
             if (!player.isBot()) {
                 this.tickBots();
             }
+        }
+    }
+
+    /**
+     * Update the gui and start another turn.
+     */
+    public void nextTurn() {
+        // The players already drew cards (look at the tick() method)
+        // and were ordered correctly already.
+        // So let's just update every element in the gui.
+        TableController controller = TableController.getInstance();
+        // Clear the table
+        controller.clearTable();
+        // Update the turn label
+        controller.updateTurnLabel(ticksNumber);
+
+        // Update the players' hands
+        getPlayers().forEach(controller::updateHand);
+        // Update the deck
+        controller.popDeckCards(getPlayerCount());
+        // Unlock the handBox of the player,
+        // which were blocked by the CardComponent#setOnMouseClicked method.
+        controller.updateHandStatus(false);
+
+        if (isGameOngoing()) {
+            // Make sure we can loop again
+            // through all the players
+            playerIndex = 0;
+
+            // Make the bots play again
+            tickBots();
+        } else {
+            // If the game is over just stop, duh
+            stop();
         }
     }
 
@@ -243,6 +246,13 @@ public class LogicGame extends AbstractGameLoop {
         // Since this method is called every tick it should be pretty fast:
         // but we have only two players, so it does not really matter.
         return totalPoints != ScoringUtils.MAX_POINTS || totalCardsPlayed != deck.getMaxSize();
+    }
+
+    /**
+     * Returns {@code true} if every player has played a card.
+     */
+    private boolean isTurnFinished() {
+        return cardsPlayed.size() == getPlayerCount();
     }
 
     public boolean isDraw() {

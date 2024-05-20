@@ -4,10 +4,12 @@ import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.layout.HBox;
@@ -44,6 +46,8 @@ public class TableController {
     private Label opponentPointsLabel;
     @FXML
     private Label playerPointsLabel;
+    @FXML
+    private Button nextTurnBtt;
 
     @FXML
     @Getter
@@ -69,6 +73,9 @@ public class TableController {
         LogicGame game = LogicGame.getInstance();
         game.start();
 
+        // Hide the "Next turn" button initially
+        setNextButtonVisibility(false);
+
         // Fill the players' hands
         game.getPlayers().forEach(this::updateHand);
 
@@ -86,6 +93,21 @@ public class TableController {
         Collections.reverse(cardComponents);
 
         deckBox.getChildren().addAll(cardComponents);
+    }
+
+    @FXML
+    public void onNextClicked(ActionEvent event) {
+        setNextButtonVisibility(false);
+        LogicGame.getInstance().nextTurn();
+    }
+
+    /**
+     * Enables or disables the button using the {@code visibility} parameter
+     * passed to this method.
+     */
+    public void setNextButtonVisibility(boolean visibility) {
+        nextTurnBtt.setVisible(visibility);
+        nextTurnBtt.setDisable(!visibility);
     }
 
     public void updateHandStatus(boolean disable) {
@@ -177,16 +199,6 @@ public class TableController {
         opponentBox.getChildren().clear();
         playerBox.getChildren().clear();
         cardsPlayed.getChildren().clear();
-    }
-
-    public void winnerPopup(IPlayer winner) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Hey!");
-        alert.setHeaderText(null);
-        alert.setContentText("WINNER: " + winner.getUsername());
-
-        TimerUtils.schedule(() -> Platform.runLater(alert::close), 1000);
-        alert.showAndWait();
     }
 
     public void Popup(String s) {

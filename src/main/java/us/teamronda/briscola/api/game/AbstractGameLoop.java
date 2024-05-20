@@ -115,7 +115,5 @@ public abstract class AbstractGameLoop implements GameLoop {
     public void orderPlayers(IPlayer winner) {
         players.remove(winner);
         players.addFirst(winner);
-
-        playerIndex = 0;
     }
 }
