@@ -23,7 +23,7 @@ class AbstractGameLoop {
     +getPlayers() List<IPlayer> 
     +getPlayerCount() int
     +fillHands(Deck deck) void
-    +orderPlayers() void
+    +shufflePlayers() void
     +orderPlayers(IPlayer winner) void
 }
 AbstractGameLoop ..|> GameLoop

@@ -21,7 +21,7 @@ public interface GameLoop {
 
     /**
      * This method checks if the game is ongoing
-     * @return True if the game should continue, false otherwise
+     * @return {@code true} if the game should continue, {@code false} otherwise
      */
     boolean isGameOngoing();
 

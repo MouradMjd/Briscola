@@ -9,8 +9,9 @@ import java.util.*;
 
 public abstract class AbstractGameLoop implements GameLoop {
 
-    // We use a set since players need to be unique:
-    // two players cannot share the same username.
+    // Technically we could have used a set for players,
+    // but we would not have been able to use
+    // Collections#shuffle and to guarantee the player order.
     private final List<IPlayer> players;
 
     protected Map<IPlayer, ICard> cardsPlayed;
@@ -57,13 +58,13 @@ public abstract class AbstractGameLoop implements GameLoop {
      * Update the points of a player using the points
      * from a set of cards
      *
-     * @param winner {@link IPlayer} player
-     * @param cards A {@link Collection} of {@link ICard}
-     * @return the points the cards were worth
+     * @param player {@link IPlayer} object
+     * @param cards A {@link Collection} of {@link ICard cards}
+     * @return the points the cards were worth or {@code -1} if the {@code winner} is not found.
      */
-    public int updatePoints(IPlayer winner, Collection<ICard> cards) {
+    public int updatePoints(IPlayer player, Collection<ICard> cards) {
         for (IPlayer otherPlayer : players) {
-            if (otherPlayer.equals(winner)) {
+            if (otherPlayer.equals(player)) {
                 return otherPlayer.addPoints(cards);
             }
         }
@@ -101,9 +102,9 @@ public abstract class AbstractGameLoop implements GameLoop {
     }
 
     /**
-     * Used at game start to select a random order
+     * Used at game start to select a starting playing order
      */
-    public void orderPlayers() {
+    public void shufflePlayers() {
         Collections.shuffle(players);
     }
 
@@ -113,7 +114,11 @@ public abstract class AbstractGameLoop implements GameLoop {
      * @param winner The {@link IPlayer} that won the round
      */
     public void orderPlayers(IPlayer winner) {
-        players.remove(winner);
-        players.addFirst(winner);
+        int winnerIndex = players.indexOf(winner);
+        if (winnerIndex == -1) return; // This should neven happen!
+
+        for (int i = 0; i < winnerIndex; i++) {
+            players.addLast(players.removeFirst());
+        }
     }
 }

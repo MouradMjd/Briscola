@@ -43,7 +43,7 @@ public class LogicGame extends AbstractGameLoop {
         addPlayer(new Player("bot_lillo", true));
 
         // Shuffle play
-        orderPlayers();
+        shufflePlayers();
 
         // Distribute cards to all players
         fillHands(deck);
