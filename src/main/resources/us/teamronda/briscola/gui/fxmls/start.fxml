@@ -27,7 +27,7 @@
                <image>
                   <Image url="@../../../../../assets/images/menu_icon.png" />
                </image></ImageView>
-            <Text layoutX="237.0" layoutY="157.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="Label" text="USERNAME:">
+            <Text layoutX="167.0" layoutY="167.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="Label" text="WHAT'S YOUR NAME?" textAlignment="CENTER" wrappingWidth="280.0">
                <font>
                   <Font name="DavidaOpti-Bold" size="28.0" />
                </font></Text>
@@ -35,12 +35,12 @@
       </AnchorPane>
       <AnchorPane prefHeight="200.0" prefWidth="200.0">
          <children>
-            <TextField fx:id="usernameField" layoutX="144.0" layoutY="30.0" prefHeight="43.0" prefWidth="313.0" />
+            <TextField fx:id="usernameField" layoutX="171.0" layoutY="30.0" prefHeight="43.0" prefWidth="280.0" />
          </children>
       </AnchorPane>
       <AnchorPane prefHeight="200.0" prefWidth="200.0">
          <children>
-            <Button fx:id="playButton" layoutX="238.0" layoutY="17.0" mnemonicParsing="false" onAction="#onButtonClicked" prefHeight="70.0" prefWidth="143.0" styleClass="button-29" stylesheets="@../../../../../assets/css/unified.css" text="PLAY">
+            <Button fx:id="playButton" layoutX="229.0" layoutY="17.0" mnemonicParsing="false" onAction="#onButtonClicked" prefHeight="70.0" prefWidth="143.0" styleClass="button-29" stylesheets="@../../../../../assets/css/unified.css" text="PLAY">
                <font>
                   <Font name="DavidaOpti-Bold" size="16.0" />
                </font>

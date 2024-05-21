@@ -16,6 +16,7 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import lombok.Getter;
 import us.teamronda.briscola.LogicGame;
+import us.teamronda.briscola.api.cards.ICard;
 import us.teamronda.briscola.api.player.IPlayer;
 import us.teamronda.briscola.gui.components.CardAssets;
 import us.teamronda.briscola.gui.components.CardComponent;
@@ -30,6 +31,7 @@ public class TableController {
 
     @Getter
     private static TableController instance = new TableController();
+    private static final long DELTA_LABEL_ANIMATION_DURATION = 750L;
 
     @FXML
     private StackPane deckBox; // Deck rectangle
@@ -38,23 +40,26 @@ public class TableController {
     @FXML
     private HBox opponentBox; // HBox containing the bots' cards
     @FXML
-    @Getter
-    private HBox cardsPlayed;
+    private HBox playedCardsBox; // HBox containing the played cards
+
+    // Labels used to display the points of players
     @FXML
     private Label opponentPointsLabel;
     @FXML
     private Label opponentDeltaPointsLabel;
+
+    // Labels used to display variation in points
     @FXML
     private Label playerPointsLabel;
     @FXML
     private Label playerDeltaPointsLabel;
+
     @FXML
-    private Button nextTurnBtt;
+    private Button nextTurnBtt; // Button to go to the next turn
     @FXML
-    @Getter
-    private Label turnLabel;
+    private Label turnLabel; // Turn number label
     @FXML
-    private Label timeLabel;
+    private Label timeLabel; // Timer label
 
     // We are formatting a time duration and not a date,
     // but this works for our purposes (the hour value gets set
@@ -131,13 +136,13 @@ public class TableController {
         Timeline animation = new Timeline();
         // Slowly decrease the opacity of the label
         KeyFrame fadeOut = new KeyFrame(
-                Duration.millis(500L),
+                Duration.millis(DELTA_LABEL_ANIMATION_DURATION),
                 new KeyValue(label.opacityProperty(), 0D)
         );
         // Slowly move the label upwards or downwards
         // depending on the label that was chosen
         KeyFrame translate = new KeyFrame(
-                Duration.millis(500L),
+                Duration.millis(DELTA_LABEL_ANIMATION_DURATION),
                 new KeyValue(label.translateYProperty(), deltaY)
         );
         // Add the keyframes to the animation
@@ -183,6 +188,10 @@ public class TableController {
 
         // ...and add them to the HBox
         box.getChildren().addAll(cardComponents);
+    }
+
+    public void addPlayedCard(ICard card) {
+        playedCardsBox.getChildren().add(new CardComponent(card, false));
     }
 
     /**
@@ -231,7 +240,7 @@ public class TableController {
     public void clearTable() {
         opponentBox.getChildren().clear();
         playerBox.getChildren().clear();
-        cardsPlayed.getChildren().clear();
+        playedCardsBox.getChildren().clear();
     }
 
     public void Popup(String s) {

@@ -81,7 +81,7 @@ public class LogicGame extends AbstractGameLoop {
         // Update the player's hand
         TableController.getInstance().updateHand(player);
         // Update the table
-        TableController.getInstance().getCardsPlayed().getChildren().add(new CardComponent(playedCard, false));
+        TableController.getInstance().addPlayedCard(playedCard);
 
         // Everyone has played, so let's see who won!
         if (cardsPlayed.size() == getPlayerCount()) {
