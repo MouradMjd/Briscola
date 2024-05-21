@@ -1,8 +1,6 @@
 package us.teamronda.briscola.gui.controllers;
 
-import javafx.animation.Animation;
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
+import javafx.animation.*;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -34,21 +32,24 @@ public class TableController {
     private static TableController instance = new TableController();
 
     @FXML
-    private StackPane deckBox; // Rettangolo del mazzo
+    private StackPane deckBox; // Deck rectangle
     @FXML
-    private HBox playerBox; // Rettangolo del giocatore
+    private HBox playerBox; // HBox containing the player's cards
     @FXML
-    private HBox opponentBox; // Rettangolo del bot
+    private HBox opponentBox; // HBox containing the bots' cards
     @FXML
     @Getter
     private HBox cardsPlayed;
     @FXML
     private Label opponentPointsLabel;
     @FXML
+    private Label opponentDeltaPointsLabel;
+    @FXML
     private Label playerPointsLabel;
     @FXML
+    private Label playerDeltaPointsLabel;
+    @FXML
     private Button nextTurnBtt;
-
     @FXML
     @Getter
     private Label turnLabel;
@@ -59,7 +60,7 @@ public class TableController {
     // but this works for our purposes (the hour value gets set
     // automatically to 1 AM for some reason, but we do not show that)
     private final SimpleDateFormat sdf = new SimpleDateFormat("mm:ss");
-    private Timeline timeline;
+    private Timeline timerTimeline;
 
     // This method is called automatically by JavaFX
     @FXML
@@ -83,7 +84,8 @@ public class TableController {
         List<CardComponent> cardComponents = game.getRemainingCards().stream()
                 .map(card -> new CardComponent(card, false, true))
                 .collect(Collectors.toCollection(ArrayList::new));
-
+        // Get the last card, aka our trump card
+        // and make it visible by rotating it horizontally
         CardComponent trumpCard = cardComponents.getLast();
         trumpCard.rotateHorizontally();
         trumpCard.flip();
@@ -117,6 +119,37 @@ public class TableController {
     // Used to update the time every second
     public void updateTurnLabel(int turns) {
         turnLabel.setText("Turno #" + turns);
+    }
+
+    public void showDeltaPoints(boolean player, int points) {
+        Label label = player ? playerDeltaPointsLabel : opponentDeltaPointsLabel;
+        double deltaY = player ? 25 : -25;
+
+        label.setText("+" + points);
+        label.setVisible(true);
+
+        Timeline animation = new Timeline();
+        // Slowly decrease the opacity of the label
+        KeyFrame fadeOut = new KeyFrame(
+                Duration.millis(500L),
+                new KeyValue(label.opacityProperty(), 0D)
+        );
+        // Slowly move the label upwards or downwards
+        // depending on the label that was chosen
+        KeyFrame translate = new KeyFrame(
+                Duration.millis(500L),
+                new KeyValue(label.translateYProperty(), deltaY)
+        );
+        // Add the keyframes to the animation
+        animation.getKeyFrames().addAll(fadeOut, translate);
+        // Reset the label's opacity and visibility
+        // at the end of the animation
+        animation.setOnFinished(event -> {
+            label.setOpacity(1D);
+            label.setVisible(false);
+            label.translateYProperty().set(0D);
+        });
+        animation.play(); // Start the animation
     }
 
     /**
@@ -176,23 +209,23 @@ public class TableController {
 
     public void startTimer() {
         // You never know...
-        if (timeline != null) timeline.stop();
+        if (timerTimeline != null) timerTimeline.stop();
 
         long startTime = System.currentTimeMillis();
         // Every second, update the timeLabel with the elapsed time
-        timeline = new Timeline(new KeyFrame(
+        timerTimeline = new Timeline(new KeyFrame(
                 Duration.seconds(1D),
                 event -> {
                     long elapsed = System.currentTimeMillis() - startTime;
                     timeLabel.setText(sdf.format(new Date(elapsed)));
                 }
         ));
-        timeline.setCycleCount(Animation.INDEFINITE); // loop forever
-        timeline.play(); // start the loop
+        timerTimeline.setCycleCount(Animation.INDEFINITE); // loop forever
+        timerTimeline.play(); // start the loop
     }
 
     public void stopTimer() {
-        if (timeline != null) timeline.stop();
+        if (timerTimeline != null) timerTimeline.stop();
     }
 
     public void clearTable() {

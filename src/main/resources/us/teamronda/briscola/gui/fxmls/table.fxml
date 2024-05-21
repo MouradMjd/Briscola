@@ -19,6 +19,14 @@
          <children>
             <VBox alignment="CENTER" spacing="20.0">
                <children>
+                  <Label fx:id="opponentDeltaPointsLabel" styleClass="Label" text="+ 0 " textFill="#fffe38" visible="false">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                     <padding>
+                        <Insets bottom="-15.0" />
+                     </padding>
+                  </Label>
                   <Label fx:id="opponentPointsLabel" styleClass="Label" text="Punti: 0">
                      <font>
                         <Font size="20.0" />
@@ -29,6 +37,14 @@
                      <font>
                         <Font size="20.0" />
                      </font>
+                  </Label>
+                  <Label fx:id="playerDeltaPointsLabel" styleClass="Label" text="+ 0 " textFill="#fffe38" visible="false">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                     <padding>
+                        <Insets top="-15.0" />
+                     </padding>
                   </Label>
                </children>
                <HBox.margin>

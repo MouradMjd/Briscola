@@ -124,7 +124,8 @@ public class LogicGame extends AbstractGameLoop {
 
             // Update the winner's points
             // and add them to the total
-            totalPoints += updatePoints(winnerPlayer, cardsPlayed.values());
+            int deltaPoints = updatePoints(winnerPlayer, cardsPlayed.values());
+            totalPoints += deltaPoints;
             // Increment turn number
             ticksNumber++;
 
@@ -146,6 +147,7 @@ public class LogicGame extends AbstractGameLoop {
             fillHands(deck);
 
             // Wait for the player to click the button
+            TableController.getInstance().showDeltaPoints(!winnerPlayer.isBot(), deltaPoints);
             TableController.getInstance().setNextButtonVisibility(true);
         } else {
             // If the human has already played
