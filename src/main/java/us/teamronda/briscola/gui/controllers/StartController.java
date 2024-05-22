@@ -9,6 +9,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import lombok.Getter;
 import us.teamronda.briscola.LogicGame;
@@ -27,16 +29,31 @@ public class StartController {
     private Button playButton;
 
     @FXML
+    public void onKeyPressed(KeyEvent event) throws IOException {
+        if (event.getCode() == KeyCode.ENTER) startGame();
+    }
+
+    @FXML
     public void onButtonClicked(ActionEvent event) throws IOException {
+        startGame();
+    }
+
+    private void startGame() throws IOException {
+        playButton.setDisable(true);
+
         // Check if the username is not empty
         if (verification()) {
             // Try to add the player to the game
             if (LogicGame.getInstance().addPlayer(new Player(usernameField.getText()))) {
                 switchToTable();
+                return;
             } else {
                 showErrorAlert("Username already taken!");
             }
         }
+
+        // If we get here, it means that something went wrong
+        playButton.setDisable(false);
     }
 
     public boolean verification() {

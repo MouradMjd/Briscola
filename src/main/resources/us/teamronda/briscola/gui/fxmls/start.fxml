@@ -10,7 +10,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="409.0" prefWidth="601.0" styleClass="wood-background" stylesheets="@../../../../../assets/css/unified.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="us.teamronda.briscola.gui.controllers.StartController">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onKeyPressed="#onKeyPressed" prefHeight="409.0" prefWidth="601.0" styleClass="wood-background" stylesheets="@../../../../../assets/css/unified.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="us.teamronda.briscola.gui.controllers.StartController">
 
    <children>
       <AnchorPane prefHeight="181.0" prefWidth="600.0">
