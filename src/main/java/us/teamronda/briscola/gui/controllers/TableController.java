@@ -18,6 +18,7 @@ import lombok.Getter;
 import us.teamronda.briscola.LogicGame;
 import us.teamronda.briscola.api.cards.ICard;
 import us.teamronda.briscola.api.player.IPlayer;
+import us.teamronda.briscola.gui.SceneSwitcher;
 import us.teamronda.briscola.gui.components.CardAssets;
 import us.teamronda.briscola.gui.components.CardComponent;
 import us.teamronda.briscola.utils.TimerUtils;
@@ -27,7 +28,7 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class TableController {
+public class TableController extends SceneSwitcher {
 
     @Getter
     private static TableController instance = new TableController();
@@ -70,10 +71,11 @@ public class TableController {
     // This method is called automatically by JavaFX
     @FXML
     public void initialize() {
-        // JavaFX uses reflection to access the controller
+        // JavaFX uses reflection magic to access the controller
         // and inject the FXML fields, so creating a new static
         // instance will not work.
         instance = this;
+        setSceneHolder(deckBox); // Arbitrarily set the node to switch the scene later (it could be set to any node)
         CardAssets.load(); // Load card assets
 
         LogicGame game = LogicGame.getInstance();
@@ -251,24 +253,5 @@ public class TableController {
 
         TimerUtils.schedule(() -> Platform.runLater(alert::close), 3000);
         alert.showAndWait();
-    }
-
-    public void switchToStart() {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/us/teamronda/briscola/gui/fxmls/start.fxml"));
-        Stage currentStage = (Stage) playerBox.getScene().getWindow();
-
-        currentStage.close();
-        Stage stage = new Stage();
-        stage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/assets/images/program_icon.png"))));
-        stage.setResizable(false);
-        stage.setTitle("Briscola v6.9");
-
-        try {
-            stage.setScene(new Scene(fxmlLoader.load()));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        stage.show();
-
     }
 }

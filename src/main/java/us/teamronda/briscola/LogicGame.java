@@ -6,6 +6,7 @@ import us.teamronda.briscola.api.cards.ICard;
 import us.teamronda.briscola.api.deck.AbstractDeck;
 import us.teamronda.briscola.api.game.AbstractGameLoop;
 import us.teamronda.briscola.api.player.IPlayer;
+import us.teamronda.briscola.gui.Guis;
 import us.teamronda.briscola.gui.components.CardComponent;
 import us.teamronda.briscola.gui.controllers.TableController;
 import us.teamronda.briscola.utils.ScoringUtils;
@@ -223,7 +224,7 @@ public class LogicGame extends AbstractGameLoop {
             }
             TableController.getInstance().Popup(classifica.toString());
         }
-        TableController.getInstance().switchToStart();
+        TableController.getInstance().switchTo(Guis.START);
     }
 
     /**

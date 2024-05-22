@@ -15,18 +15,21 @@ import javafx.stage.Stage;
 import lombok.Getter;
 import us.teamronda.briscola.LogicGame;
 import us.teamronda.briscola.api.Player;
+import us.teamronda.briscola.gui.Guis;
+import us.teamronda.briscola.gui.SceneSwitcher;
 
 import java.io.IOException;
 
-public class StartController {
-
-    @Getter
-    private static final StartController instance = new StartController();
+public class StartController extends SceneSwitcher {
 
     @FXML
     public TextField usernameField;
     @FXML
     private Button playButton;
+
+    public void initialize() {
+        setSceneHolder(playButton);
+    }
 
     @FXML
     public void onKeyPressed(KeyEvent event) throws IOException {
@@ -39,13 +42,16 @@ public class StartController {
     }
 
     private void startGame() throws IOException {
+        // Disable the button to prevent the user
+        // from pressing enter and clicking the button
+        // multiple times
         playButton.setDisable(true);
 
         // Check if the username is not empty
         if (verification()) {
             // Try to add the player to the game
             if (LogicGame.getInstance().addPlayer(new Player(usernameField.getText()))) {
-                switchToTable();
+                switchTo(Guis.TABLE);
                 return;
             } else {
                 showErrorAlert("Username already taken!");
@@ -64,6 +70,7 @@ public class StartController {
         return true;
     }
 
+    /*
     public void switchToTable() throws IOException {
         Stage currentStage = (Stage) playButton.getScene().getWindow();
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/us/teamronda/briscola/gui/fxmls/table.fxml"));
@@ -72,6 +79,8 @@ public class StartController {
         currentStage.setScene(newScene);
         currentStage.show();
     }
+
+     */
 
     private void showErrorAlert(String message) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
