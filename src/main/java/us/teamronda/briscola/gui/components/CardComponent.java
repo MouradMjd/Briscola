@@ -95,11 +95,11 @@ public class CardComponent extends StackPane {
         Thanks, Sergey!
         https://stackoverflow.com/a/19896794
         */
-        ScaleTransition hideSide = new ScaleTransition(Duration.millis(ANIMATION_DURATION), obscured ? back : front);
+        ScaleTransition hideSide = new ScaleTransition(Duration.millis(ANIMATION_DURATION * 2L), obscured ? back : front);
         hideSide.setFromX(1);
         hideSide.setToX(0);
 
-        ScaleTransition showSide = new ScaleTransition(Duration.millis(ANIMATION_DURATION), obscured ? front : back);
+        ScaleTransition showSide = new ScaleTransition(Duration.millis(ANIMATION_DURATION * 2L), obscured ? front : back);
         showSide.setFromX(0);
         showSide.setToX(1);
 
