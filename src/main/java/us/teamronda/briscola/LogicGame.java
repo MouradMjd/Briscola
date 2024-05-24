@@ -7,7 +7,6 @@ import us.teamronda.briscola.api.deck.AbstractDeck;
 import us.teamronda.briscola.api.game.AbstractGameLoop;
 import us.teamronda.briscola.api.player.IPlayer;
 import us.teamronda.briscola.gui.Guis;
-import us.teamronda.briscola.gui.components.CardComponent;
 import us.teamronda.briscola.gui.controllers.TableController;
 import us.teamronda.briscola.utils.ScoringUtils;
 
@@ -213,7 +212,7 @@ public class LogicGame extends AbstractGameLoop {
         Collections.sort(players);
 
         if (isDraw()) {
-            TableController.getInstance().Popup("PAREGGIO!!!");
+            TableController.getInstance().showScoreboard("PAREGGIO!!!");
         } else {
             StringBuilder classifica = new StringBuilder();
             System.out.println("Classifica:");
@@ -222,7 +221,7 @@ public class LogicGame extends AbstractGameLoop {
                 classifica.append(i + 1 + player.getUsername() + "con" + player.getPoints() + "\n");
 
             }
-            TableController.getInstance().Popup(classifica.toString());
+            TableController.getInstance().showScoreboard(classifica.toString());
         }
         TableController.getInstance().switchTo(Guis.START);
     }

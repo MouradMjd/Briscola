@@ -1,18 +1,17 @@
 package us.teamronda.briscola.gui.controllers;
 
-import javafx.animation.*;
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
-import javafx.stage.Stage;
 import javafx.util.Duration;
 import lombok.Getter;
 import us.teamronda.briscola.LogicGame;
@@ -21,11 +20,14 @@ import us.teamronda.briscola.api.player.IPlayer;
 import us.teamronda.briscola.gui.SceneSwitcher;
 import us.teamronda.briscola.gui.components.CardAssets;
 import us.teamronda.briscola.gui.components.CardComponent;
+import us.teamronda.briscola.utils.AlertBuilder;
 import us.teamronda.briscola.utils.TimerUtils;
 
-import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Date;
+import java.util.List;
 import java.util.stream.Collectors;
 
 public class TableController extends SceneSwitcher {
@@ -162,7 +164,7 @@ public class TableController extends SceneSwitcher {
     /**
      * Updates the points label of the player or the opponent.
      *
-     * @param opPoints the points of the bot
+     * @param opPoints     the points of the bot
      * @param playerPoints the points of the player
      */
     public void updatePointsLabel(int opPoints, int playerPoints) {
@@ -245,12 +247,12 @@ public class TableController extends SceneSwitcher {
         playedCardsBox.getChildren().clear();
     }
 
-    public void Popup(String s) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("CLASSIFICA:");
-        alert.setHeaderText(null);
-        alert.setContentText(s);
-
+    public void showScoreboard(String s) {
+        Alert alert = AlertBuilder.withType(Alert.AlertType.INFORMATION)
+                .title("CLASSIFICA:")
+                .header(null)
+                .content(s)
+                .build();
         TimerUtils.schedule(() -> Platform.runLater(alert::close), 3000);
         alert.showAndWait();
     }
