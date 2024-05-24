@@ -4,12 +4,13 @@ import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.stage.Stage;
 import lombok.AccessLevel;
 import lombok.Setter;
+import us.teamronda.briscola.utils.AlertBuilder;
 
 import java.io.IOException;
-import java.util.Objects;
 
 /**
  * Enables a controller to switch between {@link Scene scenes}
@@ -22,11 +23,27 @@ public class SceneSwitcher {
     private Node sceneHolder;
 
     public void switchTo(Guis gui) {
-        Objects.requireNonNull(sceneHolder);
+        if (sceneHolder == null) {
+            AlertBuilder.withType(Alert.AlertType.ERROR)
+                    .title("Fatal Error")
+                    .content("This gui was not initialized correctly! (null stageHolder)")
+                    .showAndWait();
+
+            Platform.exit();
+            return;
+        }
 
         // Get the current stage from the node
-        Stage stage = (Stage) sceneHolder.getScene().getWindow();
-        Objects.requireNonNull(stage);
+        Stage stage;
+        try {
+            stage = (Stage) sceneHolder.getScene().getWindow();
+        } catch (ClassCastException ex) {
+            AlertBuilder.withType(Alert.AlertType.ERROR)
+                    .title("Fatal Error")
+                    .content("This gui was not initialized correctly! (window is not a Stage)")
+                    .showAndWait();
+            return;
+        }
 
         // Try to load the new scene
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(gui.getPath()));

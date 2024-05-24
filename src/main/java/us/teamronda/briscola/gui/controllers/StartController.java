@@ -17,6 +17,7 @@ import us.teamronda.briscola.LogicGame;
 import us.teamronda.briscola.api.Player;
 import us.teamronda.briscola.gui.Guis;
 import us.teamronda.briscola.gui.SceneSwitcher;
+import us.teamronda.briscola.utils.AlertBuilder;
 
 import java.io.IOException;
 
@@ -41,7 +42,7 @@ public class StartController extends SceneSwitcher {
         startGame();
     }
 
-    private void startGame() throws IOException {
+    private void startGame() {
         // Disable the button to prevent the user
         // from pressing enter and clicking the button
         // multiple times
@@ -54,7 +55,9 @@ public class StartController extends SceneSwitcher {
                 switchTo(Guis.TABLE);
                 return;
             } else {
-                showErrorAlert("Username already taken!");
+                AlertBuilder.withType(Alert.AlertType.WARNING)
+                        .content("Username already taken!")
+                        .showAndWait();
             }
         }
 
@@ -64,29 +67,11 @@ public class StartController extends SceneSwitcher {
 
     public boolean verification() {
         if (usernameField.getText().isEmpty()) {
-            showErrorAlert("Please enter a username!");
+            AlertBuilder.withType(Alert.AlertType.WARNING)
+                    .content("The username must not be empty!")
+                    .showAndWait();
             return false;
         }
         return true;
-    }
-
-    /*
-    public void switchToTable() throws IOException {
-        Stage currentStage = (Stage) playButton.getScene().getWindow();
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/us/teamronda/briscola/gui/fxmls/table.fxml"));
-        Parent root = fxmlLoader.load();
-        Scene newScene = new Scene(root);
-        currentStage.setScene(newScene);
-        currentStage.show();
-    }
-
-     */
-
-    private void showErrorAlert(String message) {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("Hey!");
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.showAndWait();
     }
 }
