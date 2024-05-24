@@ -20,7 +20,6 @@ import us.teamronda.briscola.api.player.IPlayer;
 import us.teamronda.briscola.gui.SceneSwitcher;
 import us.teamronda.briscola.gui.components.CardAssets;
 import us.teamronda.briscola.gui.components.CardComponent;
-import us.teamronda.briscola.utils.AlertBuilder;
 import us.teamronda.briscola.utils.TimerUtils;
 
 import java.text.SimpleDateFormat;
@@ -248,11 +247,10 @@ public class TableController extends SceneSwitcher {
     }
 
     public void showScoreboard(String s) {
-        Alert alert = AlertBuilder.withType(Alert.AlertType.INFORMATION)
-                .title("CLASSIFICA:")
-                .header(null)
-                .content(s)
-                .build();
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("CLASSIFICA:");
+        alert.setHeaderText(null);
+        alert.setContentText(s);
         TimerUtils.schedule(() -> Platform.runLater(alert::close), 3000);
         alert.showAndWait();
     }

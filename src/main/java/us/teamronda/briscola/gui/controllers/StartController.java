@@ -3,21 +3,15 @@ package us.teamronda.briscola.gui.controllers;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.stage.Stage;
-import lombok.Getter;
 import us.teamronda.briscola.LogicGame;
 import us.teamronda.briscola.api.Player;
 import us.teamronda.briscola.gui.Guis;
 import us.teamronda.briscola.gui.SceneSwitcher;
-import us.teamronda.briscola.utils.AlertBuilder;
 
 import java.io.IOException;
 
@@ -55,9 +49,10 @@ public class StartController extends SceneSwitcher {
                 switchTo(Guis.TABLE);
                 return;
             } else {
-                AlertBuilder.withType(Alert.AlertType.WARNING)
-                        .content("Username already taken!")
-                        .showAndWait();
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Warning!");
+                alert.setContentText("Username already taken!");
+                alert.showAndWait();
             }
         }
 
@@ -67,9 +62,10 @@ public class StartController extends SceneSwitcher {
 
     public boolean verification() {
         if (usernameField.getText().isEmpty()) {
-            AlertBuilder.withType(Alert.AlertType.WARNING)
-                    .content("The username must not be empty!")
-                    .showAndWait();
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Warning!");
+            alert.setContentText("The username must not be empty!");
+            alert.showAndWait();
             return false;
         }
         return true;
