@@ -22,12 +22,12 @@ public class SceneSwitcher {
     private Node sceneHolder;
 
     public void switchTo(Guis gui) {
-        Objects.requireNonNull(sceneHolder);
+        if (sceneHolder == null) {
+            throw new IllegalStateException("Scene holder not set");
+        }
 
         // Get the current stage from the node
         Stage stage = (Stage) sceneHolder.getScene().getWindow();
-        Objects.requireNonNull(stage);
-
         // Try to load the new scene
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(gui.getPath()));
         try {
