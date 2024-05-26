@@ -5,7 +5,7 @@ A Java implementation of the Italian card game Briscola written by [Mourad](http
 ---
 ## How was it made
 We have written a minimalistic api that enables everyone to build their own simple card game.
-All the classes are located in the package [`us.teamronda.briscola.api`]() and are split into:
+All the classes are located in the package [`us.teamronda.briscola.api`](src/main/java/us/teamronda/briscola/api) and are split into:
 - interfaces: they hold the necessary methods and their respective javadocs
 - abstract classes: they implement their respective interface and hold some code that is shared between different card games. For example the class `AbstractDeck` holds a list of cards and implements some methods to take out cards from the deck itself, which likely does not need any custom implementation from other developers.
 
