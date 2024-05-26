@@ -31,12 +31,6 @@ public interface IDeck {
     boolean isEmpty();
 
     /**
-     * Adds a card to the deck at a specified index
-     * @param index index an integer between 0 and {@link #getCardsRemaining()} (inclusive)
-     */
-    void addCard(ICard card, int index);
-
-    /**
      * Adds a card at the top of the deck.
      * Internally calls {@link #addCard(ICard, int)}
      * @param card {@link ICard} object
@@ -55,11 +49,17 @@ public interface IDeck {
     }
 
     /**
-     * Pops a card from the top of the deck
-     * @param index an integer between 0 and {@link #getCardsRemaining()} - 1  (inclusive)
-     * @return {@link ICard} object
+     * Adds a card to the deck at a specified index
+     * @param index index an integer between 0 and {@link #getCardsRemaining()} (inclusive)
      */
-    ICard popCard(int index);
+    void addCard(ICard card, int index);
+
+    /**
+     * Reads a card in a certain position from the deck without removing it.
+     * @param index an integer between 0 and {@link #getCardsRemaining()} - 1  (inclusive)
+     * @return a {@link ICard} object or {@code null} if the deck is empty
+     */
+    ICard peekCard(int index);
 
     /**
      * Pops a card from the top of the deck
@@ -68,4 +68,11 @@ public interface IDeck {
     default ICard popCardFromTop() {
         return popCard(0);
     }
+
+    /**
+     * Pops a card from the top of the deck
+     * @param index an integer between 0 and {@link #getCardsRemaining()} - 1  (inclusive)
+     * @return {@link ICard} object or {@code null} if the deck is empty
+     */
+    ICard popCard(int index);
 }

@@ -1,6 +1,6 @@
 package us.teamronda.briscola.api.player;
 
-import us.teamronda.briscola.Deck;
+import us.teamronda.briscola.objects.Deck;
 import us.teamronda.briscola.api.cards.ICard;
 
 import java.util.Collection;

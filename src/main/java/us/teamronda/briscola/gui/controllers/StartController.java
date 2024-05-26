@@ -9,7 +9,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import us.teamronda.briscola.LogicGame;
-import us.teamronda.briscola.api.Player;
+import us.teamronda.briscola.objects.Player;
 import us.teamronda.briscola.gui.Guis;
 import us.teamronda.briscola.gui.SceneSwitcher;
 

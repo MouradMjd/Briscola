@@ -1,4 +1,4 @@
-package us.teamronda.briscola.api;
+package us.teamronda.briscola.objects;
 
 import lombok.Getter;
 import us.teamronda.briscola.api.cards.ICard;

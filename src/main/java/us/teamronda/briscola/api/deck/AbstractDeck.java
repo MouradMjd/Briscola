@@ -32,6 +32,19 @@ public abstract class AbstractDeck implements IDeck {
     }
 
     @Override
+    public ICard peekCard(int index) {
+        // Range check on the index
+        if (index < 0 || index > getCardsRemaining() - 1) {
+            throw new IndexOutOfBoundsException("Index must be between 0 and " + (getCardsRemaining() - 1));
+        }
+
+        // Return null if there are no cards
+        if (isEmpty()) return null;
+
+        return cards.get(index);
+    }
+
+    @Override
     public ICard popCard(int index) {
         // Range check on the index
         if (index < 0 || index > getCardsRemaining() - 1) {

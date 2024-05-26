@@ -18,7 +18,7 @@ public class Main extends Application {
         // Set the program icon
         stage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/assets/images/program_icon.png"))));
         stage.setResizable(false);
-        stage.setTitle("Briscola v6.9");
+        stage.setTitle("Briscola v1.0");
         stage.setScene(new Scene(fxmlLoader.load()));
         stage.show();
     }

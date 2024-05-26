@@ -1,7 +1,7 @@
 package us.teamronda.briscola.api.player;
 
 import lombok.AccessLevel;
-import us.teamronda.briscola.Deck;
+import us.teamronda.briscola.objects.Deck;
 import lombok.Getter;
 import us.teamronda.briscola.api.cards.ICard;
 
@@ -12,7 +12,7 @@ import java.util.List;
 public abstract class AbstractPlayer implements IPlayer {
 
     // These are default values related to our implementation
-    public static final int DEFAULT_SIZE_HAND = 3;
+    private static final int DEFAULT_SIZE_HAND = 3;
     private static final int DEFAULT_STARTING_POINTS = 0;
 
     private final String username;

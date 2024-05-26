@@ -1,7 +1,6 @@
 package us.teamronda.briscola.utils;
 
 import lombok.experimental.UtilityClass;
-import us.teamronda.briscola.api.Card;
 import us.teamronda.briscola.api.cards.ICard;
 
 import java.util.Collection;

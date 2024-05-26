@@ -4,6 +4,7 @@ import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.stage.Stage;
 import lombok.AccessLevel;
 import lombok.Setter;
@@ -33,6 +34,11 @@ public class SceneSwitcher {
         try {
             stage.setScene(new Scene(fxmlLoader.load()));
         } catch (IOException e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Fatal Error");
+            alert.setContentText("Could not load the fxml file: " + gui.getPath());
+            alert.showAndWait();
+
             Platform.exit();
         }
     }

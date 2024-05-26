@@ -87,12 +87,13 @@ public class CardComponent extends StackPane {
     }
 
     public void flip() {
+        // Wait for the animation to complete
+        // if there is one in progress
         if (transitioning) return;
         transitioning = true;
 
         /*
-        Using 3D is cringe, all my homies use 2D transitions.
-        Thanks, Sergey!
+        Thank you, Sergey, for allowing me not to work with 3D objects.
         https://stackoverflow.com/a/19896794
         */
         ScaleTransition hideSide = new ScaleTransition(Duration.millis(ANIMATION_DURATION * 2L), obscured ? back : front);

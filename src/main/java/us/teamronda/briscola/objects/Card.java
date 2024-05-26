@@ -1,4 +1,4 @@
-package us.teamronda.briscola.api;
+package us.teamronda.briscola.objects;
 
 import us.teamronda.briscola.api.cards.CardType;
 import us.teamronda.briscola.api.cards.ICard;

@@ -2,7 +2,6 @@ package us.teamronda.briscola.gui.components;
 
 import javafx.scene.image.Image;
 import lombok.experimental.UtilityClass;
-import us.teamronda.briscola.api.Card;
 import us.teamronda.briscola.api.cards.CardType;
 import us.teamronda.briscola.api.cards.ICard;
 import us.teamronda.briscola.api.cards.Seed;

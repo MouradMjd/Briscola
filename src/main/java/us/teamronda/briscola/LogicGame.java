@@ -1,13 +1,14 @@
 package us.teamronda.briscola;
 
 import lombok.Getter;
-import us.teamronda.briscola.api.Player;
 import us.teamronda.briscola.api.cards.ICard;
 import us.teamronda.briscola.api.deck.AbstractDeck;
 import us.teamronda.briscola.api.game.AbstractGameLoop;
 import us.teamronda.briscola.api.player.IPlayer;
 import us.teamronda.briscola.gui.Guis;
 import us.teamronda.briscola.gui.controllers.TableController;
+import us.teamronda.briscola.objects.Deck;
+import us.teamronda.briscola.objects.Player;
 import us.teamronda.briscola.utils.ScoringUtils;
 
 import java.util.ArrayList;
