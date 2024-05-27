@@ -33,6 +33,6 @@ Instead of directly implementing this interface, we advise to extend the abstrac
 Want an example? Check out our [Player.java](src/main/java/us/teamronda/briscola/objects/Player.java) class.
 
 ### [GameLoop](src/main/java/us/teamronda/briscola/api/game/GameLoop.java)
-This interface defines a few methods which define some functions that need to be called in various moments of the game.
+This interface defines a few methods which define some functions that need to be called in various moments of the game. This is the heart of the project since most of the game logic will be implemented here.
 
-The most important method is the `tick()` method, which takes a IPlayer object and the ICard that they played and executes their turn.
+As always we provide an abstract class [AbstractGameLoop](src/main/java/us/teamronda/briscola/api/game/AbstractGameLoop.java) with some methods already implemented, let's briefly see how does it work.

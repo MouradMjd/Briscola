@@ -125,7 +125,8 @@ public class LogicGame extends AbstractGameLoop {
 
             // Update the winner's points
             // and add them to the total
-            int deltaPoints = updatePoints(winnerPlayer, cardsPlayed.values());
+            int deltaPoints = winnerPlayer.addPoints(cardsPlayed.values());
+            //int deltaPoints = updatePoints(winnerPlayer, cardsPlayed.values());
             totalPoints += deltaPoints;
             // Increment turn number
             ticksNumber++;
@@ -195,16 +196,6 @@ public class LogicGame extends AbstractGameLoop {
 
     @Override
     public void stop() {
-        // Reset the objects
-        cardsPlayed.clear();
-        getPlayers().forEach(this::removePlayer);
-
-        // Reset the variables
-        totalPoints = 0;
-        totalCardsPlayed = 0;
-        playerIndex = 0;
-        ticksNumber = 1;
-
         // Stop the timer
         TableController.getInstance().stopTimer();
 
@@ -224,6 +215,17 @@ public class LogicGame extends AbstractGameLoop {
             }
             TableController.getInstance().showScoreboard(classifica.toString());
         }
+
+        // Reset the objects
+        cardsPlayed.clear();
+        getPlayers().forEach(this::removePlayer);
+
+        // Reset the variables
+        totalPoints = 0;
+        totalCardsPlayed = 0;
+        playerIndex = 0;
+        ticksNumber = 1;
+
         TableController.getInstance().switchTo(Guis.START);
     }
 
@@ -251,16 +253,9 @@ public class LogicGame extends AbstractGameLoop {
         return totalPoints != ScoringUtils.MAX_POINTS || totalCardsPlayed != deck.getMaxSize();
     }
 
-    /**
-     * Returns {@code true} if every player has played a card.
-     */
-    private boolean isTurnFinished() {
-        return cardsPlayed.size() == getPlayerCount();
-    }
-
     public boolean isDraw() {
         for (int i = 0; i < instance.getPlayers().size() - 1; i++) {
-            if (instance.getPlayers().get(i) != instance.getPlayers().get(i + 1)) {
+            if (instance.getPlayers().get(i).getPoints() != instance.getPlayers().get(i + 1).getPoints()) {
                 return false;
             }
         }
