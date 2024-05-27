@@ -2,8 +2,8 @@
 A Java implementation of the Italian card game Briscola written by [Mourad](https://github.com/Mourad261103) and [Starless](https://github.com/StarlessDev).
 
 ![](https://i.imgur.com/JW8uiHY.gif)
----
-## How was it made
+
+## How was it made 🧐
 We have written a minimalistic api that enables everyone to build their own simple card game.
 All the classes are located in the package [`us.teamronda.briscola.api`](src/main/java/us/teamronda/briscola/api) and are split into:
 - interfaces: they hold the necessary methods and their respective javadocs
@@ -22,17 +22,26 @@ It holds two methods returning an Enum:
 ### [IDeck](src/main/java/us/teamronda/briscola/api/deck/IDeck.java)
 This interface represents a Deck, aka a glorified collection of cards with all sorts of methods to interact with said collection.
 
-Instead of directly implementing this interface, we advise to extend the abstract class [AbstractDeck.java](src/main/java/us/teamronda/briscola/api/deck/AbstractDeck.java) and to start working from there.
-Want an example? Check out our [Deck.java](src/main/java/us/teamronda/briscola/objects/Deck.java) class.
+Instead of directly implementing this interface, we advise to extend the abstract class [AbstractDeck](src/main/java/us/teamronda/briscola/api/deck/AbstractDeck.java) and to start working from there.
+Want an example? Check out our [Deck](src/main/java/us/teamronda/briscola/objects/Deck.java) class.
 
 ### [IPlayer](src/main/java/us/teamronda/briscola/api/player/IPlayer.java)
 This interface represents any Player participating in the game, being either a human or a bot. The object holds the integer representing the points of the player and a collection of cards representing the player's hand.
 IPlayer also extends the [Comparable](https://docs.oracle.com/en%2Fjava%2Fjavase%2F21%2Fdocs%2Fapi%2F%2F/java.base/java/lang/Comparable.html) interface, so you need to implement the `compareTo()` to create a scoreboard at the end of the game.
+Remember that all players are supposed to have **unique** usernames.
 
-Instead of directly implementing this interface, we advise to extend the abstract class [AbstractPlayer.java](src/main/java/us/teamronda/briscola/api/player/AbstractPlayer.java) and to start working from there.
-Want an example? Check out our [Player.java](src/main/java/us/teamronda/briscola/objects/Player.java) class.
+Instead of directly implementing this interface, we advise to extend the abstract class [AbstractPlayer](src/main/java/us/teamronda/briscola/api/player/AbstractPlayer.java) and to start working from there.
+Want an example? Check out our [Player](src/main/java/us/teamronda/briscola/objects/Player.java) class.
 
 ### [GameLoop](src/main/java/us/teamronda/briscola/api/game/GameLoop.java)
 This interface defines a few methods which define some functions that need to be called in various moments of the game. This is the heart of the project since most of the game logic will be implemented here.
 
-As always we provide an abstract class [AbstractGameLoop](src/main/java/us/teamronda/briscola/api/game/AbstractGameLoop.java) with some methods already implemented, let's briefly see how does it work.
+As always we provide an abstract class [AbstractGameLoop](src/main/java/us/teamronda/briscola/api/game/AbstractGameLoop.java) with some methods already implemented, let's briefly see how does it work:
+- All the players are stored in a list (why not a set? see the code for an explanation) and said players can be accessed calling the `getWhoIsPlaying()` method.
+- The `getWhoIsPlaying()` method accesses a player in a certain index, defined as `playerIndex` in the code, which needs to be **manually** incremented to get to the next player (and **manually** reset to zero at the end of the game).
+- The cards played in a turn by the players are stored in a `Map<String, ICard>`, which associates the player's (unique) username to the card they played.
+
+Our game logic is located in the class [LogicGame](src/main/java/us/teamronda/briscola/LogicGame.java), check it out to see and example implementation of this interface.
+
+## The Game Flow
+This paragraph will explain what happens in the code during a standard turn.

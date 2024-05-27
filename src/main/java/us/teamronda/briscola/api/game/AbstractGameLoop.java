@@ -14,7 +14,7 @@ public abstract class AbstractGameLoop implements GameLoop {
     // Collections#shuffle and to guarantee the player order.
     private final List<IPlayer> players;
 
-    protected Map<IPlayer, ICard> cardsPlayed;
+    protected Map<String, ICard> cardsPlayed;
     protected int playerIndex;
 
     public AbstractGameLoop() {
@@ -52,23 +52,6 @@ public abstract class AbstractGameLoop implements GameLoop {
 
     private boolean isUsernameDuplicate(String username) {
         return players.stream().anyMatch(player -> player.getUsername().equalsIgnoreCase(username));
-    }
-
-    /**
-     * Update the points of a player using the points
-     * from a set of cards
-     *
-     * @param player {@link IPlayer} object
-     * @param cards A {@link Collection} of {@link ICard cards}
-     * @return the points the cards were worth or {@code -1} if the {@code winner} is not found.
-     */
-    public int updatePoints(IPlayer player, Collection<ICard> cards) {
-        for (IPlayer otherPlayer : players) {
-            if (otherPlayer.equals(player)) {
-                return otherPlayer.addPoints(cards);
-            }
-        }
-        return -1;
     }
 
     /**

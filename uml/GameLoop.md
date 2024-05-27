@@ -12,7 +12,7 @@ class GameLoop {
 
 class AbstractGameLoop {
     -List<IPlayer> players
-    #Map<IPlayer, ICard> cardsPlayed
+    #Map<String, ICard> cardsPlayed
     #int playerIndex
 
     +addPlayer(IPlayer player) boolean

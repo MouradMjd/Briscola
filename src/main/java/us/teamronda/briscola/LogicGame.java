@@ -72,7 +72,7 @@ public class LogicGame extends AbstractGameLoop {
     @Override
     public void tick(IPlayer player, ICard playedCard) {
         // Register the played card
-        cardsPlayed.put(player, playedCard);
+        cardsPlayed.put(player.getUsername(), playedCard);
 
         // Increment the player loops variable
         playerIndex++;
@@ -91,7 +91,7 @@ public class LogicGame extends AbstractGameLoop {
 
             // We are taking in account player order when checking who won the round
             for (IPlayer listPlayer : getPlayers()) {
-                ICard card = cardsPlayed.get(listPlayer);
+                ICard card = cardsPlayed.get(listPlayer.getUsername());
                 // This if covers the first iteration of the for loop
                 if (winnerCard == null) {
                     winnerCard = card;
