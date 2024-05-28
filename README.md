@@ -75,10 +75,14 @@ Obviously our api is not perfect and was made only for simple card games, not to
 
 ## Other questions:
 ❓ How does the bot play?<p>
-💬 It just plays a random card. Implementing an algorithm for the bot is outside the scope of this project. If everyone wants to work on it, feel free to implement it yourself!
+💬 It just plays a random card. Implementing an algorithm for the bot is outside the scope of this project. If anyone wants to work on it, feel free to implement it yourself!
+
+---
 
 ❓ Where did you get the cards' assets from?<p>
-💬 They are from [another repo](https://github.com/profumato4/Briscola), they implemented Briscola as well using Swing. Go check them out. (The repo is under MIT License).
+💬 They are from [another repo](https://github.com/profumato4/Briscola), they implemented Briscola as well using Swing as the gui framework. Go check them out. (The repo is under MIT License).
+
+---
 
 ❓ Why is your base backage `us.teamronda.briscola`?<p>
-💬 "Ronda" is a moroccan card game, so since we are a team of two people, we thought of this package name. It just sounded cool.
+💬 "Ronda" is a moroccan card game, so since we are a team of two people we thought of this package name. It just sounded cool.
