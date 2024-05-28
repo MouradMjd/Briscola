@@ -1,11 +1,13 @@
 package us.teamronda.briscola;
 
+import javafx.scene.control.Label;
 import lombok.Getter;
 import us.teamronda.briscola.api.cards.ICard;
 import us.teamronda.briscola.api.deck.AbstractDeck;
 import us.teamronda.briscola.api.game.AbstractGameLoop;
 import us.teamronda.briscola.api.player.IPlayer;
 import us.teamronda.briscola.gui.Guis;
+import us.teamronda.briscola.gui.controllers.RankingController;
 import us.teamronda.briscola.gui.controllers.TableController;
 import us.teamronda.briscola.objects.Deck;
 import us.teamronda.briscola.objects.Player;
@@ -13,6 +15,7 @@ import us.teamronda.briscola.utils.ScoringUtils;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -215,7 +218,11 @@ public class LogicGame extends AbstractGameLoop {
             }
             TableController.getInstance().showScoreboard(classifica.toString());
         }
-
+        //creating the rank list
+        players.sort(Comparator.comparingInt(IPlayer::getPoints));
+        //labels
+        TableController.getInstance().switchTo(Guis.RANKING);
+        RankingController.getInstace().putranking(players);
         // Reset the objects
         cardsPlayed.clear();
         getPlayers().forEach(this::removePlayer);
@@ -225,8 +232,6 @@ public class LogicGame extends AbstractGameLoop {
         totalCardsPlayed = 0;
         playerIndex = 0;
         ticksNumber = 1;
-
-        TableController.getInstance().switchTo(Guis.START);
     }
 
     /**

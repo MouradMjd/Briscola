@@ -32,7 +32,7 @@ import java.util.stream.Collectors;
 public class TableController extends SceneSwitcher {
 
     @Getter
-    private static TableController instance = new TableController();
+    private static TableController instance;
     private static final long DELTA_LABEL_ANIMATION_DURATION = 750L;
 
     @FXML

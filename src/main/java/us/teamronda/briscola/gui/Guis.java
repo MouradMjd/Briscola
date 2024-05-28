@@ -6,8 +6,8 @@ import lombok.RequiredArgsConstructor;
 public enum Guis {
 
     START("start.fxml"),
-    TABLE("table.fxml");
-
+    TABLE("table.fxml"),
+    RANKING("ranking.fxml");
     private final String name;
 
     public String getPath() {
