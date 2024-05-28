@@ -67,3 +67,18 @@ flowchart LR
     isOver --> |no|player["tick()"]
     player --> bots
 ```
+
+## Issues
+Obviously our api is not perfect and was made only for simple card games, not to be perfect in every aspect. Here's how could it be improved:
+- We assign to each card a value, so games where cards are evaluated in groups (like poker for example) will not be implementable.
+- We support only one type of cards, if someone wants to use a different one they will have to rewrite the CardType and Seed enums
+
+## Other questions:
+❓ How does the bot play?<p>
+💬 It just plays a random card. Implementing an algorithm for the bot is outside the scope of this project. If everyone wants to work on it, feel free to implement it yourself!
+
+❓ Where did you get the cards' assets from?<p>
+💬 They are from [another repo](https://github.com/profumato4/Briscola), they implemented Briscola as well using Swing. Go check them out. (The repo is under MIT License).
+
+❓ Why is your base backage `us.teamronda.briscola`?<p>
+💬 "Ronda" is a moroccan card game, so since we are a team of two people, we thought of this package name. It just sounded cool.
