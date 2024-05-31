@@ -16,11 +16,14 @@ public abstract class AbstractPlayer implements IPlayer {
     private static final int DEFAULT_STARTING_POINTS = 0;
 
     private final String username;
-    @Getter private final List<ICard> hand;
+    @Getter
+    private final List<ICard> hand;
 
     // Values used in overridden methods
-    @Getter(AccessLevel.NONE) private final boolean bot;
-    @Getter(AccessLevel.NONE) protected int points;
+    @Getter(AccessLevel.NONE)
+    private final boolean bot;
+    @Getter(AccessLevel.NONE)
+    protected int points;
 
     public AbstractPlayer(String username) {
         this(username, false);
@@ -46,16 +49,27 @@ public abstract class AbstractPlayer implements IPlayer {
 
     @Override
     public ICard pollCard(int index) {
+        if (index < 0 || index >= hand.size()) {
+            throw new IllegalArgumentException("The card index is invalid!");
+        }
+
         return hand.remove(index);
     }
 
     @Override
     public void pollCard(ICard card) {
+        if (card == null) {
+            throw new IllegalArgumentException("The card cannot be null!");
+        }
+
         hand.remove(card);
     }
 
     @Override
     public void fillHand(Deck deck) {
+        // Some small checks to avoid looping if unnecessary
+        if (deck == null || deck.isEmpty()) return;
+
         // If we do not store the initial size of the hand,
         // it will change when we add cards!
         int initialSize = hand.size();
