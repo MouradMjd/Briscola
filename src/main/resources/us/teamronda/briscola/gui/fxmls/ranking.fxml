@@ -6,14 +6,18 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onKeyPressed="#onKeyPressed" prefHeight="399.0" prefWidth="299.0" styleClass="ranking" stylesheets="@../../../../../assets/css/unified.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="us.teamronda.briscola.gui.controllers.RankingController">
+<AnchorPane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onKeyPressed="#onKeyPressed" prefHeight="399.0" prefWidth="299.0" styleClass="wood-background" stylesheets="@../../../../../assets/css/unified.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="us.teamronda.briscola.gui.controllers.RankingController">
    <children>
-      <Button fx:id="NextGame" layoutX="84.0" layoutY="288.0" mnemonicParsing="false" onAction="#onButtonClicked" styleClass="button-29" text="next game" />
-      <Label layoutX="72.0" layoutY="59.0" styleClass="Label" stylesheets="@../../../../../assets/css/unified.css" text="RANKInG">
-         <font>
-            <Font size="39.0" />
-         </font>
-      </Label>
-      <VBox fx:id="boxforid" alignment="CENTER"  layoutX="19.0" layoutY="97.0" prefHeight="186.0" prefWidth="261.0" />
+      <VBox alignment="CENTER" prefHeight="399.0" prefWidth="299.0" styleClass="ranking">
+         <children>
+            <Label styleClass="Label" stylesheets="@../../../../../assets/css/unified.css" text="RANKInG">
+               <font>
+                  <Font size="39.0" />
+               </font>
+            </Label>
+            <VBox fx:id="leadersBox" alignment="CENTER" prefHeight="186.0" prefWidth="261.0" />
+            <Button fx:id="nextGameBtt" mnemonicParsing="false" onAction="#onButtonClicked" styleClass="button-29" text="next game" />
+         </children>
+      </VBox>
    </children>
 </AnchorPane>

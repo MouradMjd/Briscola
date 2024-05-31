@@ -1,6 +1,5 @@
 package us.teamronda.briscola;
 
-import javafx.scene.control.Label;
 import lombok.Getter;
 import us.teamronda.briscola.api.cards.ICard;
 import us.teamronda.briscola.api.deck.AbstractDeck;
@@ -204,25 +203,12 @@ public class LogicGame extends AbstractGameLoop {
 
         // LogicGame#getPlayers returns an immutable list
         List<IPlayer> players = new ArrayList<>(getPlayers());
-        Collections.sort(players);
+        Collections.sort(players); // Sort the players
 
-        if (isDraw()) {
-            TableController.getInstance().showScoreboard("PAREGGIO!!!");
-        } else {
-            StringBuilder classifica = new StringBuilder();
-            System.out.println("Classifica:");
-            for (int i = 0; i < players.size(); i++) {
-                IPlayer player = players.get(i);
-                classifica.append(i + 1 + player.getUsername() + "con" + player.getPoints() + "\n");
-
-            }
-            TableController.getInstance().showScoreboard(classifica.toString());
-        }
-        //creating the rank list
-        players.sort(Comparator.comparingInt(IPlayer::getPoints));
-        //labels
+        // Switch to the new gui
         TableController.getInstance().switchTo(Guis.RANKING);
-        RankingController.getInstace().putranking(players);
+        RankingController.getInstance().putRanking(players);
+
         // Reset the objects
         cardsPlayed.clear();
         getPlayers().forEach(this::removePlayer);

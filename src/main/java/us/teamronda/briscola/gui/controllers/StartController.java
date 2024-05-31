@@ -27,12 +27,12 @@ public class StartController extends SceneSwitcher {
     }
 
     @FXML
-    public void onKeyPressed(KeyEvent event) throws IOException {
+    public void onKeyPressed(KeyEvent event) {
         if (event.getCode() == KeyCode.ENTER) startGame();
     }
 
     @FXML
-    public void onButtonClicked(ActionEvent event) throws IOException {
+    public void onButtonClicked(ActionEvent event) {
         startGame();
     }
 

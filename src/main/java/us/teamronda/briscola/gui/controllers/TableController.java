@@ -70,7 +70,6 @@ public class TableController extends SceneSwitcher {
     private Timeline timerTimeline;
 
     // This method is called automatically by JavaFX
-    @FXML
     public void initialize() {
         // JavaFX uses reflection magic to access the controller
         // and inject the FXML fields, so creating a new static
@@ -244,14 +243,5 @@ public class TableController extends SceneSwitcher {
         opponentBox.getChildren().clear();
         playerBox.getChildren().clear();
         playedCardsBox.getChildren().clear();
-    }
-
-    public void showScoreboard(String s) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("CLASSIFICA:");
-        alert.setHeaderText(null);
-        alert.setContentText(s);
-        TimerUtils.schedule(() -> Platform.runLater(alert::close), 3000);
-        alert.showAndWait();
     }
 }
