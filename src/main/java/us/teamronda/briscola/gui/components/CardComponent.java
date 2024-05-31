@@ -28,8 +28,8 @@ public class CardComponent extends StackPane {
 
     // Some constants used throughout this class
     private static final long ANIMATION_DURATION = 125L;
-    private static final int CARD_WIDTH = 89;
-    private static final int CARD_HEIGHT = 168;
+    public static final int CARD_WIDTH = 89;
+    public static final int CARD_HEIGHT = 168;
 
     // The front and back of the card
     private final Rectangle front;

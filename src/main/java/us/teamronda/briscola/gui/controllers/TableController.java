@@ -20,6 +20,7 @@ import us.teamronda.briscola.api.player.IPlayer;
 import us.teamronda.briscola.gui.SceneSwitcher;
 import us.teamronda.briscola.gui.components.CardAssets;
 import us.teamronda.briscola.gui.components.CardComponent;
+import us.teamronda.briscola.objects.Card;
 import us.teamronda.briscola.utils.TimerUtils;
 
 import java.text.SimpleDateFormat;
@@ -86,6 +87,9 @@ public class TableController extends SceneSwitcher {
 
         // Fill the players' hands
         game.getPlayers().forEach(this::updateHand);
+
+        // Setup the deckbox's minimum size
+        deckBox.setMinSize(CardComponent.CARD_WIDTH, CardComponent.CARD_HEIGHT);
 
         // Fill the deck box with downwards-facing CardComponents
         List<CardComponent> cardComponents = game.getRemainingCards().stream()

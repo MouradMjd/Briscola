@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="BOTTOM_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="660.0" prefWidth="700.0" styleClass="wood-background" stylesheets="@../../../../../assets/css/unified.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="us.teamronda.briscola.gui.controllers.TableController">
+<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="660.0" prefWidth="700.0" styleClass="wood-background" stylesheets="@../../../../../assets/css/unified.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="us.teamronda.briscola.gui.controllers.TableController">
    <children>
       <HBox fx:id="opponentBox" alignment="CENTER" prefHeight="100.0" prefWidth="700.0" spacing="10.0">
          <VBox.margin>
@@ -17,7 +17,7 @@
       </HBox>
       <HBox alignment="CENTER" prefHeight="280.0" spacing="10.0">
          <children>
-            <VBox alignment="CENTER" prefHeight="280.0" prefWidth="95.0" spacing="20.0">
+            <VBox alignment="CENTER" prefHeight="280.0" prefWidth="110.0" spacing="20.0">
                <children>
                   <Label fx:id="opponentDeltaPointsLabel" styleClass="Label" text="+ 0 " textFill="#fffe38" visible="false">
                      <font>
