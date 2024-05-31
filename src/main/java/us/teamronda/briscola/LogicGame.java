@@ -14,7 +14,6 @@ import us.teamronda.briscola.utils.ScoringUtils;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -242,14 +241,5 @@ public class LogicGame extends AbstractGameLoop {
         // Since this method is called every tick it should be pretty fast:
         // but we have only two players, so it does not really matter.
         return totalPoints != ScoringUtils.MAX_POINTS || totalCardsPlayed != deck.getMaxSize();
-    }
-
-    public boolean isDraw() {
-        for (int i = 0; i < instance.getPlayers().size() - 1; i++) {
-            if (instance.getPlayers().get(i).getPoints() != instance.getPlayers().get(i + 1).getPoints()) {
-                return false;
-            }
-        }
-        return true;
     }
 }
