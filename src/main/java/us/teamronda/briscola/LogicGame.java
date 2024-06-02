@@ -80,10 +80,11 @@ public class LogicGame extends AbstractGameLoop {
         // Increment the number of cards played
         totalCardsPlayed++;
 
+        TableController controller = TableController.getInstance();
         // Update the player's hand
-        TableController.getInstance().updateHand(player);
+        controller.updateHand(player);
         // Update the table
-        TableController.getInstance().addPlayedCard(playedCard);
+        controller.addPlayedCard(playedCard);
 
         // Everyone has played, so let's see who won!
         if (cardsPlayed.size() == getPlayerCount()) {
@@ -134,9 +135,9 @@ public class LogicGame extends AbstractGameLoop {
 
             // Update the points on the GUI
             if (winnerPlayer.isBot()) {
-                TableController.getInstance().updatePointsLabel(winnerPlayer.getPoints(), 0);
+                controller.updatePointsLabel(winnerPlayer.getPoints(), 0);
             } else {
-                TableController.getInstance().updatePointsLabel(0, winnerPlayer.getPoints());
+                controller.updatePointsLabel(0, winnerPlayer.getPoints());
             }
 
             // Clear played cards
@@ -150,14 +151,17 @@ public class LogicGame extends AbstractGameLoop {
             fillHands(deck);
 
             // Wait for the player to click the button
-            TableController.getInstance().showDeltaPoints(!winnerPlayer.isBot(), deltaPoints);
-            TableController.getInstance().setNextButtonVisibility(true);
-        } else {
+            controller.showDeltaPoints(!winnerPlayer.isBot(), deltaPoints);
+            controller.setNextButtonVisibility(true);
+        } else if (!player.isBot()) {
             // If the human has already played
-            // check if other bots need to play as well
-            if (!player.isBot()) {
-                this.tickBots();
-            }
+            // check if other bots need to play as well.
+            //
+            // Without this if statement, tickBots would
+            // be called even when bots play, and we would be
+            // stuck in an infinite loop.
+
+            this.tickBots();
         }
     }
 
@@ -238,8 +242,8 @@ public class LogicGame extends AbstractGameLoop {
     public boolean isGameOngoing() {
         // We are using integer variables incremented manually
         // to avoid looping over the players' hands and over the deck every time.
-        // Since this method is called every tick it should be pretty fast:
-        // but we have only two players, so it does not really matter.
+        // Since this method is called every tick it should be pretty fast
+        // in terms of performance: but we have only two players, so it does not really matter.
         return totalPoints != ScoringUtils.MAX_POINTS || totalCardsPlayed != deck.getMaxSize();
     }
 }
