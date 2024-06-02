@@ -1,3 +1,4 @@
+/* Load the font from the resource folder */
 @font-face {
     font-family: 'DavidaOpti';
     font-style: bold;
@@ -9,7 +10,7 @@
     -fx-background-image: url('../images/table_bg.jpg'); /* Percorso dell'immagine di sfondo */
     -fx-background-size: cover; /* Dimensioni dell'immagine di sfondo */
 }
-.ranking{
+.ranking-background{
     -fx-background-image: url('../images/ranking_bg.png');
     -fx-background-size: 100% 100%;
 }
@@ -20,7 +21,7 @@
 }
 
 /* Bottone "PLAY" */
-.button-29 {
+.play-button {
     -fx-background-color: #fbeee0;
     -fx-border-color: #422800;
     -fx-border-width: 2px;
@@ -38,11 +39,11 @@
     -fx-effect: dropshadow(gaussian, rgba(66, 40, 0, 0.5), 4, 4, 0, 0); /* Effetto ombra */
 }
 
-.button-29:hover {
+.play-button:hover {
     -fx-background-color: #fff; /* Cambia colore al passaggio del mouse */
 }
 
-.button-29:pressed {
+.play-button:pressed {
     -fx-effect: dropshadow(gaussian, rgba(66, 40, 0, 0.5), 2, 2, 0, 0); /* Effetto ombra più leggero al click */
     -fx-translate-x: 2px; /* Traslazione del pulsante al click */
     -fx-translate-y: 2px;
