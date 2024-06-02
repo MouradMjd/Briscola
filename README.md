@@ -73,6 +73,24 @@ Obviously our api is not perfect and was made only for simple card games, not to
 - We assign to each card a value, so games where cards are evaluated in groups (like poker for example) will not be implementable.
 - We support only one type of cards, if someone wants to use a different one they will have to rewrite the CardType and Seed enums
 
+## GUI(s) :eyes:
+Learning about what's under the hood is sure interesting, but also what the user sees is important. So in this paragraph we will dive into how our ~~beautiful~~ ui was made and what (not) to do to achieve this result.
+
+### CardComponent ♠️
+This is the custom JavaFX object we made to represent a playing card: it uses two [Rectangle](https://openjfx.io/javadoc/21/javafx.graphics/javafx/scene/shape/Rectangle.html) objects to show the front and the back of the card, which are "held together" by a [Stackpane](https://openjfx.io/javadoc/21/javafx.graphics/javafx/scene/layout/StackPane.html).
+To show only one side, the other Rectangle's width is scaled down to zero (using the [Node#setScaleX](https://openjfx.io/javadoc/21/javafx.graphics/javafx/scene/Node.html#setScaleX(double)) method); we also provide a method to flip a card at runtime ([CardComponent#flip](src/main/java/us/teamronda/briscola/gui/components/CardComponent.java#L89)).
+The CardComponent class itself extends StackPane, this means that we can use this object as a JavaFX node and add it to the gui without any hassle.
+
+### Scene switching 🔄️
+At one point we were in a bit of a pickle with this one: not because switching scenes was difficult, but because we had a lot of repeated code in all the Controllers (and we don't do that here).
+After some trial and error (caused by how objects are initialized in JavaFX), we ended up writing the [SceneSwitcher](src/main/java/us/teamronda/briscola/gui/SceneSwitcher.java) class. 
+The class has a single [Node](https://openjfx.io/javadoc/21/javafx.graphics/javafx/scene/Node.html) variable called the `sceneHolder` and a single `switchTo` method which takes a [Guis](src/main/java/us/teamronda/briscola/gui/Guis.java) enum as a parameter and (yes, you guessed it) switches the Scene.
+Let's unpack the class slowly:
+- The `sceneHolder` is needed to get a Stage instance through the Node#getScene#getWindow methods, although this returns a [Window](https://openjfx.io/javadoc/21/javafx.graphics/javafx/stage/Window.html) object which is a super class of Stage: so we need to cast it to Stage to get everything working. <br>Are unchecked casts bad? Yes... <br>But does it work? Also yes... soooo we are gonna keep it that way.
+- Why use a protected setter insted of passing the Node object directly via constructor? The JavaFX variables are not initialized when the constructor is called, so when the switchTo method will be called a NullPointerException will be thrown.
+
+Every controller extends SceneSwitcher and in their `initialize()` methods the `sceneHolder` is set using the setter and we're set!
+
 ## Other questions:
 ❓ How does the bot play?<p>
 💬 It just plays a random card. Implementing an algorithm for the bot is outside the scope of this project. If anyone wants to work on it, feel free to implement it yourself!
