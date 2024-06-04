@@ -9,6 +9,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import us.teamronda.briscola.LogicGame;
+import us.teamronda.briscola.api.cards.CardType;
+import us.teamronda.briscola.api.cards.ICard;
 import us.teamronda.briscola.objects.Player;
 import us.teamronda.briscola.gui.Guis;
 import us.teamronda.briscola.gui.SceneSwitcher;
@@ -49,7 +51,19 @@ public class StartController extends SceneSwitcher {
         if (verification()) {
             // Try to add the player to the game
             if (LogicGame.getInstance().addPlayer(new Player(usernameField.getText()))) {
-                switchTo(Guis.TABLE);
+                //a little
+                if(usernameField.getText().equals("nbicocchi")){
+                    Alert alert = new Alert(Alert.AlertType.WARNING);
+                    alert.setTitle("Warning!");
+                    alert.setContentText("YOU HAVE ALREADY WON");
+                    alert.showAndWait();
+                    LogicGame.getInstance().stop();
+                    switchTo(Guis.RANKING);
+                }
+                else
+                {
+                    switchTo(Guis.TABLE);
+                }
                 return;
             } else {
                 Alert alert = new Alert(Alert.AlertType.WARNING);

@@ -208,15 +208,22 @@ public class LogicGame extends AbstractGameLoop {
     @Override
     public void stop() {
         // Stop the timer
-        TableController.getInstance().stopTimer();
+        try {
+            TableController.getInstance().stopTimer();
+        } catch (NullPointerException e){
+        }
 
         // LogicGame#getPlayers returns an immutable list
         List<IPlayer> players = new ArrayList<>(getPlayers());
         Collections.sort(players); // Sort the players
 
         // Switch to the new gui
-        TableController.getInstance().switchTo(Guis.RANKING);
-        RankingController.getInstance().putRanking(players);
+        try {
+            TableController.getInstance().switchTo(Guis.RANKING);
+            RankingController.getInstance().putRanking(players);
+        } catch (NullPointerException e){
+        }
+
 
         // Reset the objects
         cardsPlayed.clear();
