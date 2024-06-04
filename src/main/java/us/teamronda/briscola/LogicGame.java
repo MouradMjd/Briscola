@@ -35,6 +35,9 @@ public class LogicGame extends AbstractGameLoop {
         this.ticksNumber = 1;
     }
 
+    /**
+     * This method handle the start part of the game
+     */
     @Override
     public void start() {
         // Create the deck
@@ -59,8 +62,9 @@ public class LogicGame extends AbstractGameLoop {
     }
 
     /**
-     * This method makes the bots play
-     * until a real player is found.
+     * This method makes the bots play using the tick method
+     * until a real player is found when is found by clicking one card in the player hand the
+     * tick method is called again.
      */
     private void tickBots() {
         IPlayer currentPlayer;
@@ -198,7 +202,9 @@ public class LogicGame extends AbstractGameLoop {
             stop();
         }
     }
-
+    /**
+     * this method stops the game
+     */
     @Override
     public void stop() {
         // Stop the timer

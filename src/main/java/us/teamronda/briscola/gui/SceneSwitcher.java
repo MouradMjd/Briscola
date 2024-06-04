@@ -22,6 +22,10 @@ public class SceneSwitcher {
 
     private Node sceneHolder;
 
+    /**
+     *
+     * This method allow to switch from a  gui to another gui
+     */
     public void switchTo(Guis gui) {
         if (sceneHolder == null) {
             throw new IllegalStateException("Scene holder not set");

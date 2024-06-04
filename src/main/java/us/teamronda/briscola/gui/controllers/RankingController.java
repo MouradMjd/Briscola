@@ -43,6 +43,9 @@ public class RankingController extends SceneSwitcher {
         switchTo(Guis.START);
     }
 
+    /**
+     * This method is used to create the ranking  to put in the gui
+     */
     public void putRanking(List<IPlayer> players) {
         Font font = new Font(20);
         for (int i = 0; i < players.size(); i++) {

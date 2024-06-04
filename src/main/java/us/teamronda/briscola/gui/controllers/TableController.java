@@ -70,7 +70,9 @@ public class TableController extends SceneSwitcher {
     private final SimpleDateFormat sdf = new SimpleDateFormat("mm:ss");
     private Timeline timerTimeline;
 
-    // This method is called automatically by JavaFX
+    /**
+     *  This method is called automatically by JavaFX
+     */
     public void initialize() {
         // JavaFX uses reflection magic to access the controller
         // and inject the FXML fields, so creating a new static

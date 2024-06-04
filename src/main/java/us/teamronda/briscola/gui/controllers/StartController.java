@@ -36,6 +36,9 @@ public class StartController extends SceneSwitcher {
         startGame();
     }
 
+    /***
+     * this method handle the initial part of the game for the gui
+     */
     private void startGame() {
         // Disable the button to prevent the user
         // from pressing enter and clicking the button
@@ -60,6 +63,10 @@ public class StartController extends SceneSwitcher {
         playButton.setDisable(false);
     }
 
+    /**
+     *
+     * this method prevent the case where the player  don't put a name by showing a warning
+     */
     public boolean verification() {
         if (usernameField.getText().isEmpty()) {
             Alert alert = new Alert(Alert.AlertType.WARNING);
