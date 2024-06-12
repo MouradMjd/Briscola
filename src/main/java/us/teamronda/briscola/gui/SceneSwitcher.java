@@ -10,7 +10,6 @@ import lombok.AccessLevel;
 import lombok.Setter;
 
 import java.io.IOException;
-import java.util.Objects;
 
 /**
  * Enables a controller to switch between {@link Scene scenes}

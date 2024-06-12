@@ -1,9 +1,9 @@
 package us.teamronda.briscola.api.player;
 
 import lombok.AccessLevel;
-import us.teamronda.briscola.objects.Deck;
 import lombok.Getter;
 import us.teamronda.briscola.api.cards.ICard;
+import us.teamronda.briscola.objects.Deck;
 
 import java.util.ArrayList;
 import java.util.List;
