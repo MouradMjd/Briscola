@@ -38,8 +38,8 @@ public class StartController extends SceneSwitcher {
         startGame();
     }
 
-    /***
-     * this method handle the initial part of the game for the gui
+    /**
+     * This method handle the initial part of the game for the gui
      */
     private void startGame() {
         // Disable the button to prevent the user
@@ -52,16 +52,18 @@ public class StartController extends SceneSwitcher {
             // Try to add the player to the game
             if (LogicGame.getInstance().addPlayer(new Player(usernameField.getText()))) {
                 //a little
-                if(usernameField.getText().equals("nbicocchi")){
+                if (usernameField.getText().equalsIgnoreCase("nbicocchi")) {
                     Alert alert = new Alert(Alert.AlertType.WARNING);
                     alert.setTitle("Warning!");
-                    alert.setContentText("YOU HAVE ALREADY WON");
+                    alert.setContentText("YOU HAVE ALREADY WON! 🎉");
                     alert.showAndWait();
-                    LogicGame.getInstance().stop();
+
+                    // We need to switch to the ranking gui first
+                    // because the stop method uses the RankingController#getInstance
+                    // singleton, which is not initialized until we switch to said gui.
                     switchTo(Guis.RANKING);
-                }
-                else
-                {
+                    LogicGame.getInstance().stop();
+                } else {
                     switchTo(Guis.TABLE);
                 }
                 return;

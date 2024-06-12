@@ -23,8 +23,7 @@ public class SceneSwitcher {
     private Node sceneHolder;
 
     /**
-     *
-     * This method allow to switch from a  gui to another gui
+     * This method allow to switch between guis
      */
     public void switchTo(Guis gui) {
         if (sceneHolder == null) {
@@ -32,6 +31,7 @@ public class SceneSwitcher {
         }
 
         // Get the current stage from the node
+        // (Unchecked cast moment: do not do this at home)
         Stage stage = (Stage) sceneHolder.getScene().getWindow();
         // Try to load the new scene
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(gui.getPath()));

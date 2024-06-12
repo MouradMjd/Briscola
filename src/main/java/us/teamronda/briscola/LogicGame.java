@@ -207,23 +207,23 @@ public class LogicGame extends AbstractGameLoop {
      */
     @Override
     public void stop() {
-        // Stop the timer
-        try {
-            TableController.getInstance().stopTimer();
-        } catch (NullPointerException e){
-        }
+        // When the easter egg is triggered the table gui
+        // does not get initialized, so we need to insert
+        // here a null check to prevent NullPointerExceptions.
+        TableController controller = TableController.getInstance();
+        if (controller != null) TableController.getInstance().stopTimer();
 
         // LogicGame#getPlayers returns an immutable list
         List<IPlayer> players = new ArrayList<>(getPlayers());
         Collections.sort(players); // Sort the players
 
-        // Switch to the new gui
-        try {
+        // Switch to the new gui, if necessary.
+        // If the easter egg is triggered, another controller
+        // will handle the gui switching.
+        if (controller != null) {
             TableController.getInstance().switchTo(Guis.RANKING);
-            RankingController.getInstance().putRanking(players);
-        } catch (NullPointerException e){
         }
-
+        RankingController.getInstance().putRanking(players);
 
         // Reset the objects
         cardsPlayed.clear();
