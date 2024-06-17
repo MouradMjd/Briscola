@@ -27,7 +27,6 @@ Want an example? Check out our [Deck](src/main/java/us/teamronda/briscola/object
 
 ### [IPlayer](src/main/java/us/teamronda/briscola/api/player/IPlayer.java)
 This interface represents any Player participating in the game, being either a human or a bot. The object holds the integer representing the points of the player and a collection of cards representing the player's hand.
-IPlayer also extends the [Comparable](https://docs.oracle.com/en%2Fjava%2Fjavase%2F21%2Fdocs%2Fapi%2F%2F/java.base/java/lang/Comparable.html) interface, so you need to implement the `compareTo()` to create a scoreboard at the end of the game.
 Remember that all players are supposed to have **unique** usernames.
 
 Instead of directly implementing this interface, we advise to extend the abstract class [AbstractPlayer](src/main/java/us/teamronda/briscola/api/player/AbstractPlayer.java) and to start working from there.

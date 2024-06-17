@@ -13,8 +13,6 @@ import java.util.Objects;
 @Getter
 public class Player extends AbstractPlayer {
 
-    private static final Comparator<Integer> POINTS_COMPARATOR = Comparator.reverseOrder();
-
     public Player(String username) {
         super(username);
     }
@@ -47,10 +45,5 @@ public class Player extends AbstractPlayer {
         if (!(obj instanceof Player otherPlayer)) return true;
 
         return this.getUsername().equals(otherPlayer.getUsername());
-    }
-
-    @Override
-    public int compareTo(IPlayer o) {
-        return POINTS_COMPARATOR.compare(points, o.getPoints());
     }
 }

@@ -1,9 +1,5 @@
 ```mermaid
 classDiagram
-class Comparable {
-    <<interface>>
-    compareTo(T o) int
-}
 
 class IPlayer {
     <<interface>>
@@ -19,7 +15,6 @@ class IPlayer {
     +getPoints() int
     +isBot() boolean
 }
-IPlayer --|> Comparable
 
 class AbstractPlayer {
     <<abstract>>
@@ -46,8 +41,6 @@ class AbstractPlayer {
 AbstractPlayer ..|> IPlayer
 
 class Player {
-    -static final Comparator<Integer> POINTS_COMPARATOR
-
     +Player(String username)
     +Player(String username, boolean bot)
 

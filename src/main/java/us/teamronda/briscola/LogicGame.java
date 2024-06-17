@@ -14,6 +14,7 @@ import us.teamronda.briscola.utils.ScoringUtils;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -30,9 +31,7 @@ public class LogicGame extends AbstractGameLoop {
 
     public LogicGame() {
         this.deck = new Deck();
-        this.totalPoints = 0;
-        this.totalCardsPlayed = 0;
-        this.ticksNumber = 1;
+
     }
 
     /**
@@ -43,7 +42,9 @@ public class LogicGame extends AbstractGameLoop {
         // Create the deck
         // and choose the trump card
         deck.create();
-
+        this.totalPoints = 0;
+        this.totalCardsPlayed = 0;
+        this.ticksNumber = 1;
         // Add the bot
         addPlayer(new Player("bot_lillo", true));
 
@@ -202,6 +203,7 @@ public class LogicGame extends AbstractGameLoop {
             stop();
         }
     }
+
     /**
      * this method stops the game
      */
@@ -215,7 +217,7 @@ public class LogicGame extends AbstractGameLoop {
 
         // LogicGame#getPlayers returns an immutable list
         List<IPlayer> players = new ArrayList<>(getPlayers());
-        Collections.sort(players); // Sort the players
+        players.sort((p1, p2) -> -Integer.compare(p1.getPoints(), p2.getPoints())); // Sort the players
 
         // Switch to the new gui, if necessary.
         // If the easter egg is triggered, another controller

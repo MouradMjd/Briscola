@@ -74,7 +74,9 @@ public class CardComponent extends StackPane {
             // Prevent double-clicking
             this.setOnMouseClicked(MouseEvent::consume);
 
-            // Block the handBox of the player
+            // Block the handBox of the player:
+            // if we do not do so, we are able to play
+            // multiple cards even if we have played one already.
             TableController.getInstance().updateHandStatus(true);
 
             // Get the player who is playing

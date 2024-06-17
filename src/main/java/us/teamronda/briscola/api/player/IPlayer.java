@@ -10,7 +10,7 @@ import java.util.List;
  * This interfaces define some generic methods
  * needed for the Player object
  */
-public interface IPlayer extends Comparable<IPlayer> {
+public interface IPlayer {
 
     String getUsername();
 
